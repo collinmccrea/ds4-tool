@@ -7,7 +7,7 @@ namespace DS4Control
 {
     class Mapping
     {
-        public static void mapButtons(DS4State cState, DS4State prevState, DS4State MappedState, Mouse touchpad)
+        public static void mapButtons(DS4State cState, DS4State prevState, DS4State MappedState)
         {
             foreach (KeyValuePair<DS4Controls, ushort> customKey in Global.getCustomKeys())
             {
@@ -20,18 +20,18 @@ namespace DS4Control
                     {
 
                         if (keyType.HasFlag(DS4KeyType.ScanCode))
-                            touchpad.performSCKeyPress(customKey.Value);
-                        else touchpad.performKeyPress(customKey.Value);
+                            InputMethods.performSCKeyPress(customKey.Value);
+                        else InputMethods.performKeyPress(customKey.Value);
                     }
                     else if (keyType.HasFlag(DS4KeyType.Repeat))
                         if (keyType.HasFlag(DS4KeyType.ScanCode))
-                            touchpad.performSCKeyPress(customKey.Value);
-                        else touchpad.performKeyPress(customKey.Value);
+                            InputMethods.performSCKeyPress(customKey.Value);
+                        else InputMethods.performKeyPress(customKey.Value);
                 }
                 else if (PrevOn)
                     if (keyType.HasFlag(DS4KeyType.ScanCode))
-                        touchpad.performSCKeyRelease(customKey.Value);
-                    else touchpad.performKeyRelease(customKey.Value);
+                        InputMethods.performSCKeyRelease(customKey.Value);
+                    else InputMethods.performKeyRelease(customKey.Value);
             }
 
             cState.Copy(MappedState);
@@ -161,25 +161,25 @@ namespace DS4Control
                         bool PrevOn = getBoolMapping(customButton.Key, prevState);
                         bool CurOn = getBoolMapping(customButton.Key, cState);
                         if (!PrevOn && CurOn)
-                            touchpad.MouseEvent(Mouse.MOUSEEVENTF_LEFTDOWN);
+                            InputMethods.MouseEvent(InputMethods.MOUSEEVENTF_LEFTDOWN);
                         else if (PrevOn && !CurOn)
-                            touchpad.MouseEvent(Mouse.MOUSEEVENTF_LEFTUP);
+                            InputMethods.MouseEvent(InputMethods.MOUSEEVENTF_LEFTUP);
                         break;
                     case X360Controls.RightMouse:
                         PrevOn = getBoolMapping(customButton.Key, prevState);
                         CurOn = getBoolMapping(customButton.Key, cState);
                         if (!PrevOn && CurOn)
-                            touchpad.MouseEvent(Mouse.MOUSEEVENTF_RIGHTDOWN);
+                            InputMethods.MouseEvent(InputMethods.MOUSEEVENTF_RIGHTDOWN);
                         else if (PrevOn && !CurOn)
-                            touchpad.MouseEvent(Mouse.MOUSEEVENTF_RIGHTUP);
+                            InputMethods.MouseEvent(InputMethods.MOUSEEVENTF_RIGHTUP);
                         break;
                     case X360Controls.MiddleMouse:
                         PrevOn = getBoolMapping(customButton.Key, prevState);
                         CurOn = getBoolMapping(customButton.Key, cState);
                         if (!PrevOn && CurOn)
-                            touchpad.MouseEvent(Mouse.MOUSEEVENTF_MIDDLEDOWN);
+                            InputMethods.MouseEvent(InputMethods.MOUSEEVENTF_MIDDLEDOWN);
                         else if (PrevOn && !CurOn)
-                            touchpad.MouseEvent(Mouse.MOUSEEVENTF_MIDDLEUP);
+                            InputMethods.MouseEvent(InputMethods.MOUSEEVENTF_MIDDLEUP);
                         break;
                     case X360Controls.Unbound:
                         resetToDefaultValue(customButton.Key, MappedState);

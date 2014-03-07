@@ -9,7 +9,7 @@ namespace DS4Control
     {
         X360Device x360Bus;
         DS4Device[] DS4Controllers = new DS4Device[4];
-        Mouse[] virtualMouse = new Mouse[4];
+        ITouchpadBehaviour[] virtualMouse = new Mouse[4];
         private bool running = false;
         private DS4State[] MappedState = new DS4State[4];
         public event EventHandler<DebugEventArgs> Debug = null;
@@ -121,7 +121,7 @@ namespace DS4Control
                             device.Removal += this.On_DS4Removal;
                             if (Global.getTouchEnabled(Index))
                                 device.TouchEnabled = true;
-                            Mouse mouse = new Mouse(Index);
+                            ITouchpadBehaviour mouse = new Mouse(Index);
                             virtualMouse[Index] = mouse;
                             device.Touchpad.TouchButtonDown += mouse.touchButtonDown;
                             device.Touchpad.TouchButtonUp += mouse.touchButtonUp;
@@ -189,7 +189,7 @@ namespace DS4Control
                 
                 if (Global.getHasCustomKeysorButtons(ind))
                 {
-                    Mapping.mapButtons(cState, pState, MappedState[ind], virtualMouse[ind]);
+                    Mapping.mapButtons(cState, pState, MappedState[ind]);
                     cState = MappedState[ind];
                 }
 

@@ -43,6 +43,8 @@
   <ItemGroup>
     <Compile Include="DS4LightBar.cs" />
     <Compile Include="Control.cs" />
+    <Compile Include="InputMethods.cs" />
+    <Compile Include="ITouchpadBehaviour.cs" />
     <Compile Include="X360Device.cs">
       <SubType>Component</SubType>
     </Compile>
