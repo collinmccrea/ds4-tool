@@ -17,6 +17,10 @@ namespace DS4Control
             deviceNum = deviceID;
         }
 
+        public override string ToString()
+        {
+            return "standard scrollable touchpad";
+        }
 
         public void touchesMoved(object sender, TouchpadEventArgs arg)
         {

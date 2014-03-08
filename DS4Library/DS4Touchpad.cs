@@ -52,7 +52,7 @@ namespace DS4Library
         public event EventHandler<TouchpadEventArgs> TouchesEnded = null;
         public event EventHandler<TouchpadEventArgs> TouchButtonDown = null;
         public event EventHandler<TouchpadEventArgs> TouchButtonUp = null;
-        internal static int TOUCHPAD_DATA_OFFSET = 35;
+        public readonly static int TOUCHPAD_DATA_OFFSET = 35;
         internal static int lastTouchPadX, lastTouchPadY,
             lastTouchPadX2, lastTouchPadY2;
         internal static bool lastTouchPadIsDown;
@@ -60,11 +60,8 @@ namespace DS4Library
         internal static bool lastIsActive2;
         internal static byte lastTouchID, lastTouchID2;
 
-        public void handleTouchpad(byte[] data, bool touchPadIsDown)
+        public void handleTouchpad(byte[] data, bool isActive, bool isActive2, bool touchPadIsDown)
         {
-
-            bool _isActive = (data[0 + TOUCHPAD_DATA_OFFSET] >> 7) != 0 ? false : true; // >= 1 touch detected
-            bool _isActive2 = (data[4 + TOUCHPAD_DATA_OFFSET] >> 7) != 0 ? false : true; // > 1 touch detected
             byte touchID = (byte)(data[0 + TOUCHPAD_DATA_OFFSET] & 0x7F);
             byte touchID2 = (byte)(data[4 + TOUCHPAD_DATA_OFFSET] & 0x7F);
             int currentX = data[1 + TOUCHPAD_DATA_OFFSET] + ((data[2 + TOUCHPAD_DATA_OFFSET] & 0xF) * 255);
@@ -73,14 +70,14 @@ namespace DS4Library
             int currentX2 = data[5 + TOUCHPAD_DATA_OFFSET] + ((data[6 + TOUCHPAD_DATA_OFFSET] & 0xF) * 255);
             int currentY2 = ((data[6 + TOUCHPAD_DATA_OFFSET] & 0xF0) >> 4) + (data[7 + TOUCHPAD_DATA_OFFSET] * 16);
 
-            if (_isActive)
+            if (isActive)
             {
 
                 if (!lastTouchPadIsDown && touchPadIsDown && TouchButtonDown != null)
                 {
                     TouchpadEventArgs args = null;
                     Touch t0 = new Touch(currentX, currentY, touchID);
-                    if (_isActive2)
+                    if (isActive2)
                     {
                         Touch t1 = new Touch(currentX2, currentY2, touchID2);
                         args = new TouchpadEventArgs(touchPadIsDown, t0, t1);
@@ -93,7 +90,7 @@ namespace DS4Library
                 {
                     TouchpadEventArgs args = null;
                     Touch t0 = new Touch(currentX, currentY, touchID);
-                    if (_isActive2)
+                    if (isActive2)
                     {
                         Touch t1 = new Touch(currentX2, currentY2, touchID2);
                         args = new TouchpadEventArgs(touchPadIsDown, t0, t1);
@@ -103,13 +100,13 @@ namespace DS4Library
                     TouchButtonUp(this, args);
                 }
 
-                if (!lastIsActive || (_isActive2 && !lastIsActive2))
+                if (!lastIsActive || (isActive2 && !lastIsActive2))
                 {
                     if (TouchesBegan != null)
                     {
                         TouchpadEventArgs args = null;
                         Touch t0 = new Touch(currentX, currentY, touchID);
-                        if (_isActive2 && !lastIsActive2)
+                        if (isActive2 && !lastIsActive2)
                         {
                             Touch t1 = new Touch(currentX2, currentY2, touchID2);
                             args = new TouchpadEventArgs(touchPadIsDown, t0, t1);
@@ -127,7 +124,7 @@ namespace DS4Library
 
                         Touch t0Prev = new Touch(lastTouchPadX, lastTouchPadY, lastTouchID);
                         Touch t0 = new Touch(currentX, currentY, touchID, t0Prev);
-                        if (_isActive && _isActive2)
+                        if (isActive && isActive2)
                         {
                             Touch t1Prev = new Touch(lastTouchPadX2, lastTouchPadY2, lastTouchID2);
                             Touch t1 = new Touch(currentX2, currentY2, touchID2, t1Prev);
@@ -178,8 +175,8 @@ namespace DS4Library
                 }
             }
 
-            lastIsActive = _isActive;
-            lastIsActive2 = _isActive2;
+            lastIsActive = isActive;
+            lastIsActive2 = isActive2;
             lastTouchID = touchID;
             lastTouchID2 = touchID2;
             lastTouchPadIsDown = touchPadIsDown;

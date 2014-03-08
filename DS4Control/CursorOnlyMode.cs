@@ -6,17 +6,18 @@ using System.Runtime.InteropServices;
 using DS4Library;
 namespace DS4Control
 {
-    public class CursorOnlyMode : ITouchpadBehaviour
+    public class MouseCursorOnly : ITouchpadBehaviour
     {
-        private DateTime pastTime;
-        private Touch firstTouch;
         private int deviceNum;
-        private bool rightClick = false;
-        public CursorOnlyMode(int deviceID)
+        public MouseCursorOnly(int deviceID)
         {
             deviceNum = deviceID;
         }
 
+        public override string ToString()
+        {
+            return "cursor movement only";
+        }
 
         public void touchesMoved(object sender, TouchpadEventArgs arg)
         {

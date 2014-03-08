@@ -10,7 +10,7 @@ namespace DS4Library
         public bool Square, Triangle, Circle, Cross;
         public bool DpadUp, DpadDown, DpadLeft, DpadRight;
         public bool L1, L3, R1, R3;
-        public bool Share, Options, PS, TouchButton;
+        public bool Share, Options, PS, Touch1, Touch2, TouchButton;
         public byte LX, RX, LY, RY, L2, R2;
         public int Battery;
 
@@ -19,7 +19,7 @@ namespace DS4Library
             Square = Triangle = Circle = Cross = false;
             DpadUp = DpadDown = DpadLeft = DpadRight = false;
             L1 = L3 = R1 = R3 = false;
-            Share = Options = PS = TouchButton = false;
+            Share = Options = PS = Touch1 = Touch2 = TouchButton = false;
             LX = RX = LY = RY = 127;
             L2 = R2 = 0;
             Battery = 0;
@@ -44,6 +44,8 @@ namespace DS4Library
             Share = state.Share;
             Options = state.Options;
             PS = state.PS;
+            Touch1 = state.Touch1;
+            Touch2 = state.Touch2;
             TouchButton = state.TouchButton;
             LX = state.LX;
             RX = state.RX;
@@ -76,6 +78,8 @@ namespace DS4Library
             state.Share = Share;
             state.Options = Options;
             state.PS = PS;
+            state.Touch1 = Touch1;
+            state.Touch2 = Touch2;
             state.TouchButton = TouchButton;
             state.LX = LX;
             state.RX = RX;

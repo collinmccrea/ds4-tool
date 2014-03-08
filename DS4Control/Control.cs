@@ -52,7 +52,7 @@ namespace DS4Control
                         device.Removal += this.On_DS4Removal;
                         if (Global.getTouchEnabled(ind))
                             device.TouchEnabled = true;
-                        TPadModeSwitcher m_switcher = new TPadModeSwitcher(device.Touchpad, ind);
+                        TPadModeSwitcher m_switcher = new TPadModeSwitcher(this, device.Touchpad, ind);
                         m_switcher.setMode(0);
                         modeSwitcher[ind] = m_switcher;
                         DS4Color color = Global.loadColor(ind);
@@ -117,7 +117,7 @@ namespace DS4Control
                             device.Removal += this.On_DS4Removal;
                             if (Global.getTouchEnabled(Index))
                                 device.TouchEnabled = true;
-                            TPadModeSwitcher m_switcher = new TPadModeSwitcher(device.Touchpad, Index);
+                            TPadModeSwitcher m_switcher = new TPadModeSwitcher(this, device.Touchpad, Index);
                             modeSwitcher[Index] = m_switcher;
                             m_switcher.setMode(0);
                             device.LightBarColor = Global.loadColor(Index);
@@ -208,13 +208,16 @@ namespace DS4Control
             {
                 d.TouchEnabled = false;
             }
-            else if ((!pState.Share || !pState.PS) && cState.PS && cState.Share)
+            else if (cState.Touch1 && !pState.Share && !pState.Options)
             {
-                modeSwitcher[deviceID].goToNextMode();
+                if (cState.Share)
+                    modeSwitcher[deviceID].previousMode();
+                else if (cState.Options)
+                    modeSwitcher[deviceID].nextMode();
             }
         }
 
-        protected virtual void LogDebug(String Data)
+        public virtual void LogDebug(String Data)
         {
             if (Debug != null)
             {

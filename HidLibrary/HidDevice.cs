@@ -245,10 +245,6 @@ namespace HidLibrary
             {
                 return ReadStatus.ReadError;
             }
-
-
-
-
         }
 
         public ReadStatus ReadWithFileStream(byte[] inputBuffer, int timeout)

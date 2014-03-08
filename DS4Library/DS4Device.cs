@@ -269,8 +269,11 @@ namespace DS4Library
                 cState.Battery = charge;
                 battery = charge;
 
+                cState.Touch1 = (inputReport[0 + DS4Touchpad.TOUCHPAD_DATA_OFFSET] >> 7) != 0 ? false : true; // >= 1 touch detected
+                cState.Touch2 = (inputReport[4 + DS4Touchpad.TOUCHPAD_DATA_OFFSET] >> 7) != 0 ? false : true; // > 1 touch detected
+
                 if (isTouchEnabled)
-                    touchpad.handleTouchpad(inputReport, cState.TouchButton);
+                    touchpad.handleTouchpad(inputReport, cState.Touch1, cState.Touch2, cState.TouchButton);
 
                 sendOutputReport();
 
