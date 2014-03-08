@@ -9,7 +9,7 @@ namespace DS4Control
     {
         X360Device x360Bus;
         DS4Device[] DS4Controllers = new DS4Device[4];
-        ITouchpadBehaviour[] virtualMouse = new Mouse[4];
+        TPadModeSwitcher[] modeSwitcher = new TPadModeSwitcher[4];
         private bool running = false;
         private DS4State[] MappedState = new DS4State[4];
         public event EventHandler<DebugEventArgs> Debug = null;
@@ -52,13 +52,9 @@ namespace DS4Control
                         device.Removal += this.On_DS4Removal;
                         if (Global.getTouchEnabled(ind))
                             device.TouchEnabled = true;
-                        Mouse mouse = new Mouse(ind);
-                        virtualMouse[ind] = mouse;
-                        device.Touchpad.TouchButtonDown += mouse.touchButtonDown;
-                        device.Touchpad.TouchButtonUp += mouse.touchButtonUp;
-                        device.Touchpad.TouchesBegan += mouse.touchesBegan;
-                        device.Touchpad.TouchesMoved += mouse.touchesMoved;
-                        device.Touchpad.TouchesEnded += mouse.touchesEnded;
+                        TPadModeSwitcher m_switcher = new TPadModeSwitcher(device.Touchpad, ind);
+                        m_switcher.setMode(0);
+                        modeSwitcher[ind] = m_switcher;
                         DS4Color color = Global.loadColor(ind);
                         device.LightBarColor = color;
                         x360Bus.Plugin(ind + 1);
@@ -88,7 +84,7 @@ namespace DS4Control
                 for (int i = 0; i < DS4Controllers.Length; i++)
                 {
                     DS4Controllers[i] = null;
-                    virtualMouse[i] = null;
+                    modeSwitcher[i] = null;
                 }
                 LogDebug("Stopped DS4 Tool");
             }
@@ -121,13 +117,9 @@ namespace DS4Control
                             device.Removal += this.On_DS4Removal;
                             if (Global.getTouchEnabled(Index))
                                 device.TouchEnabled = true;
-                            ITouchpadBehaviour mouse = new Mouse(Index);
-                            virtualMouse[Index] = mouse;
-                            device.Touchpad.TouchButtonDown += mouse.touchButtonDown;
-                            device.Touchpad.TouchButtonUp += mouse.touchButtonUp;
-                            device.Touchpad.TouchesBegan += mouse.touchesBegan;
-                            device.Touchpad.TouchesMoved += mouse.touchesMoved;
-                            device.Touchpad.TouchesEnded += mouse.touchesEnded;
+                            TPadModeSwitcher m_switcher = new TPadModeSwitcher(device.Touchpad, Index);
+                            modeSwitcher[Index] = m_switcher;
+                            m_switcher.setMode(0);
                             device.LightBarColor = Global.loadColor(Index);
                             x360Bus.Plugin(Index + 1);
                             break;
@@ -180,10 +172,7 @@ namespace DS4Control
                 DS4State pState = device.getPreviousState();
                 DS4State cState = device.getCurrentState();
 
-                if (cState.L2 > 127 && cState.R2 > 127 && cState.TouchButton)
-                    device.TouchEnabled = true;
-                else if (cState.L2 > 127 && cState.TouchButton && cState.R2 <= 127)
-                    device.TouchEnabled = false;
+                CheckForHotkeys(ind, cState, pState);
 
                 DS4LightBar.updateBatteryStatus(cState.Battery, device, ind);
                 
@@ -204,6 +193,24 @@ namespace DS4Control
                         setRumble(Small, Big, ind);
                     }
                 }
+            }
+        }
+
+
+        protected virtual void CheckForHotkeys(int deviceID, DS4State cState, DS4State pState)
+        {
+            DS4Device d = DS4Controllers[deviceID];
+            if (cState.L2 > 127 && cState.R2 > 127 && cState.TouchButton)
+            {
+                d.TouchEnabled = true;
+            }
+            else if (cState.L2 > 127 && cState.TouchButton && cState.R2 <= 127)
+            {
+                d.TouchEnabled = false;
+            }
+            else if ((!pState.Share || !pState.PS) && cState.PS && cState.Share)
+            {
+                modeSwitcher[deviceID].goToNextMode();
             }
         }
 

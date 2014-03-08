@@ -41,6 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CursorOnlyMode.cs" />
+    <Compile Include="TPadModeSwitcher.cs" />
     <Compile Include="DS4LightBar.cs" />
     <Compile Include="Control.cs" />
     <Compile Include="InputMethods.cs" />

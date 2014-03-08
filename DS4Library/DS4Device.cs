@@ -278,11 +278,11 @@ namespace DS4Library
                 {
                     DisconnectBT();
                 }
+                if (Report != null)
+                    Report(this, EventArgs.Empty);
                 if (pState == null)
                     pState = new DS4State();
                 cState.Copy(pState);
-                if (Report != null)
-                    Report(this, EventArgs.Empty);
             }
         }
 
