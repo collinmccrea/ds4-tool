@@ -159,7 +159,7 @@ namespace ScpServer
             Global.setTouchpadJitterCompensation(device, touchpadJitterCompensation.Checked);
             Global.setLowerRCOff(device, lowerRCOffCheckBox.Checked);
             Global.setTapSensitivity(device, (byte)tapSensitivityBar.Value);
-            Global.setScrollSensitivity(device, (byte)scrollSensitivityBar.Value);
+            Global.setScrollSensitivity(device, scrollSensitivityBar.Value);
         }
 
         private void saveButton_Click(object sender, EventArgs e)

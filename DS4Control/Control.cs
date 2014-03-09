@@ -50,10 +50,8 @@ namespace DS4Control
                         DS4Controllers[ind] = device;
                         device.Report += this.On_Report;
                         device.Removal += this.On_DS4Removal;
-                        if (Global.getTouchEnabled(ind))
-                            device.TouchEnabled = true;
-                        TPadModeSwitcher m_switcher = new TPadModeSwitcher(this, device.Touchpad, ind);
-                        m_switcher.setMode(0);
+                        TPadModeSwitcher m_switcher = new TPadModeSwitcher(this, device, ind);
+                        m_switcher.setMode(Global.getTouchEnabled(ind) ? 1 : 0);
                         modeSwitcher[ind] = m_switcher;
                         DS4Color color = Global.loadColor(ind);
                         device.LightBarColor = color;
@@ -115,11 +113,9 @@ namespace DS4Control
                             DS4Controllers[Index] = device;
                             device.Report += this.On_Report;
                             device.Removal += this.On_DS4Removal;
-                            if (Global.getTouchEnabled(Index))
-                                device.TouchEnabled = true;
-                            TPadModeSwitcher m_switcher = new TPadModeSwitcher(this, device.Touchpad, Index);
+                            TPadModeSwitcher m_switcher = new TPadModeSwitcher(this, device, Index);
                             modeSwitcher[Index] = m_switcher;
-                            m_switcher.setMode(0);
+                            m_switcher.setMode(Global.getTouchEnabled(Index) ? 1 : 0);
                             device.LightBarColor = Global.loadColor(Index);
                             x360Bus.Plugin(Index + 1);
                             break;
@@ -134,7 +130,7 @@ namespace DS4Control
             if (DS4Controllers[index] != null)
             {
                 DS4Device d = DS4Controllers[index];
-                return d.MacAddress + ", Battery = " + d.Battery + "%," + " Touchpad Enabled = " + d.TouchEnabled + " (" + d.ConnectionType + ")";
+                return d.MacAddress + ", Battery = " + d.Battery + "%," + " Touchpad = " + modeSwitcher[index].ToString() + " (" + d.ConnectionType + ")";
             }
             else
                 return null;
@@ -200,15 +196,7 @@ namespace DS4Control
         protected virtual void CheckForHotkeys(int deviceID, DS4State cState, DS4State pState)
         {
             DS4Device d = DS4Controllers[deviceID];
-            if (cState.L2 > 127 && cState.R2 > 127 && cState.TouchButton)
-            {
-                d.TouchEnabled = true;
-            }
-            else if (cState.L2 > 127 && cState.TouchButton && cState.R2 <= 127)
-            {
-                d.TouchEnabled = false;
-            }
-            else if (cState.Touch1 && !pState.Share && !pState.Options)
+            if (cState.Touch1 && !pState.Share && !pState.Options)
             {
                 if (cState.Share)
                     modeSwitcher[deviceID].previousMode();

@@ -188,11 +188,11 @@ namespace DS4Control
         {
             return m_Config.tapSensitivity[device];
         }
-        public static void setScrollSensitivity(int device, byte sen)
+        public static void setScrollSensitivity(int device, int sen)
         {
             m_Config.scrollSensitivity[device] = sen;
         }
-        public static byte getScrollSensitivity(int device)
+        public static int getScrollSensitivity(int device)
         {
             return m_Config.scrollSensitivity[device];
         }
@@ -362,7 +362,7 @@ namespace DS4Control
         public Byte[] m_Rumble = { 100, 100, 100, 100 };
         public Byte[] touchSensitivity = { 100, 100, 100, 100 };
         public Byte[] tapSensitivity = { 0, 0, 0, 0 };
-        public Byte[] scrollSensitivity = { 0, 0, 0, 0 };
+        public int[] scrollSensitivity = { 0, 0, 0, 0 };
         public Byte[][] m_LowLeds = new Byte[][]
         {
             new Byte[] {0,0,0},
@@ -714,7 +714,7 @@ namespace DS4Control
                         catch { missingSetting = true; }
                         try { Item = m_Xdoc.SelectSingleNode("/ScpControl/Controller" + (i + 1) + "/tapSensitivity"); Byte.TryParse(Item.InnerText, out tapSensitivity[i]); }
                         catch { missingSetting = true; }
-                        try { Item = m_Xdoc.SelectSingleNode("/ScpControl/Controller" + (i + 1) + "/scrollSensitivity"); Byte.TryParse(Item.InnerText, out scrollSensitivity[i]); }
+                        try { Item = m_Xdoc.SelectSingleNode("/ScpControl/Controller" + (i + 1) + "/scrollSensitivity"); Int32.TryParse(Item.InnerText, out scrollSensitivity[i]); }
                         catch { missingSetting = true; }
                         // XXX This sucks, let's do better at removing old values that are no longer valid....
                         if (scrollSensitivity[i] > 10)

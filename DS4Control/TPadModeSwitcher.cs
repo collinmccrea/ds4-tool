@@ -8,13 +8,13 @@ namespace DS4Control
     class TPadModeSwitcher
     {
         List<ITouchpadBehaviour> modes = new List<ITouchpadBehaviour>();
-        private Control controller;
-        private DS4Touchpad touchpad;
+        private Control control;
+        private DS4Device device;
         Int32 currentTypeInd = 0;
-        public TPadModeSwitcher(Control control, DS4Touchpad tpad, int deviceID)
+        public TPadModeSwitcher(Control control, DS4Device device, int deviceID)
         {
-            controller = control;
-            touchpad = tpad;
+            this.control = control;
+            this.device = device;
             modes.Add(TouchpadDisabled.singleton);
             modes.Add(new Mouse(deviceID));
             modes.Add(new MouseCursorOnly(deviceID));
@@ -23,24 +23,29 @@ namespace DS4Control
         public void switchMode(int ind)
         {
             ITouchpadBehaviour currentMode = modes.ElementAt(currentTypeInd);
-            touchpad.TouchButtonDown -= currentMode.touchButtonDown;
-            touchpad.TouchButtonUp -= currentMode.touchButtonUp;
-            touchpad.TouchesBegan -= currentMode.touchesBegan;
-            touchpad.TouchesMoved -= currentMode.touchesMoved;
-            touchpad.TouchesEnded -= currentMode.touchesEnded;
+            device.touchpad.TouchButtonDown -= currentMode.touchButtonDown;
+            device.touchpad.TouchButtonUp -= currentMode.touchButtonUp;
+            device.touchpad.TouchesBegan -= currentMode.touchesBegan;
+            device.touchpad.TouchesMoved -= currentMode.touchesMoved;
+            device.touchpad.TouchesEnded -= currentMode.touchesEnded;
             setMode(ind);
         }
         
         public void setMode(int ind)
         {
             ITouchpadBehaviour tmode = modes.ElementAt(ind);
-            touchpad.TouchButtonDown += tmode.touchButtonDown;
-            touchpad.TouchButtonUp += tmode.touchButtonUp;
-            touchpad.TouchesBegan += tmode.touchesBegan;
-            touchpad.TouchesMoved += tmode.touchesMoved;
-            touchpad.TouchesEnded += tmode.touchesEnded;
+            device.touchpad.TouchButtonDown += tmode.touchButtonDown;
+            device.touchpad.TouchButtonUp += tmode.touchButtonUp;
+            device.touchpad.TouchesBegan += tmode.touchesBegan;
+            device.touchpad.TouchesMoved += tmode.touchesMoved;
+            device.touchpad.TouchesEnded += tmode.touchesEnded;
             currentTypeInd = ind;
-            controller.LogDebug("Touchpad mode set to " + tmode.ToString());
+            control.LogDebug("Touchpad mode for " + device.MacAddress + " is now " + tmode.ToString());
+        }
+
+        public override string ToString()
+        {
+            return modes.ElementAt(currentTypeInd).ToString();
         }
 
         public void previousMode()

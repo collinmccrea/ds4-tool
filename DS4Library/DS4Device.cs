@@ -33,12 +33,11 @@ namespace DS4Library
         private string Mac;
         private DS4State cState = new DS4State();
         private DS4State pState = new DS4State();
-        private bool isTouchEnabled;
         private ConnectionType conType;
         private byte[] inputReport = new byte[64];
         private byte[] btInputReport = null;
         private byte[] outputReport = null;
-        private DS4Touchpad touchpad = null;
+        public readonly DS4Touchpad touchpad = null;
         private byte lightRumble;
         private byte heavyRumble;
         private DS4Color ligtBarColor;
@@ -77,12 +76,6 @@ namespace DS4Library
                 heavyRumble = value;
                 isDirty = true;
             }
-        }
-
-        public bool TouchEnabled
-        {
-            get { return isTouchEnabled; }
-            set { isTouchEnabled = value; }
         }
 
         public DS4Color LightBarColor
@@ -270,10 +263,8 @@ namespace DS4Library
                 battery = charge;
 
                 cState.Touch1 = (inputReport[0 + DS4Touchpad.TOUCHPAD_DATA_OFFSET] >> 7) != 0 ? false : true; // >= 1 touch detected
-                cState.Touch2 = (inputReport[4 + DS4Touchpad.TOUCHPAD_DATA_OFFSET] >> 7) != 0 ? false : true; // > 1 touch detected
-
-                if (isTouchEnabled)
-                    touchpad.handleTouchpad(inputReport, cState.Touch1, cState.Touch2, cState.TouchButton);
+                cState.Touch2 = (inputReport[4 + DS4Touchpad.TOUCHPAD_DATA_OFFSET] >> 7) != 0 ? false : true; // 2 touches detected
+                touchpad.handleTouchpad(inputReport, cState);
 
                 sendOutputReport();
 
@@ -393,21 +384,14 @@ namespace DS4Library
             HeavyRumble = heavyMotor;
         }
 
-        public void enableTouchpad(bool enabled)
-        {
-            isTouchEnabled = enabled;
-        }
-
         public DS4State getCurrentState()
         {
-            if (cState != null)
-                return cState.Clone();
-            else return null;
+            return cState;
         }
 
         public DS4State getPreviousState()
         {
-            return pState.Clone();
+            return pState;
         }
 
         override

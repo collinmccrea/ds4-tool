@@ -51,18 +51,18 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(22, 17);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(74, 13);
+            this.label1.Size = new System.Drawing.Size(151, 13);
             this.label1.TabIndex = 0;
-            this.label1.Text = "L2+Touchpad";
+            this.label1.Text = "Finger on Touchpad + Options";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(22, 44);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(94, 13);
+            this.label2.Size = new System.Drawing.Size(143, 13);
             this.label2.TabIndex = 1;
-            this.label2.Text = "L2+R2+Touchpad";
+            this.label2.Text = "Finger on Touchpad + Share";
             // 
             // label3
             // 
@@ -87,18 +87,18 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(222, 17);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(99, 13);
+            this.label5.Size = new System.Drawing.Size(106, 13);
             this.label5.TabIndex = 4;
-            this.label5.Text = "Disables Touchpad";
+            this.label5.Text = "Next touchpad mode";
             // 
             // label6
             // 
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(222, 44);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(97, 13);
+            this.label6.Size = new System.Drawing.Size(125, 13);
             this.label6.TabIndex = 5;
-            this.label6.Text = "Enables Touchpad";
+            this.label6.Text = "Previous touchpad mode";
             // 
             // label7
             // 

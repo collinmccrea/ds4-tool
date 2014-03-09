@@ -567,11 +567,14 @@
             // scrollSensitivityBar
             // 
             this.scrollSensitivityBar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.scrollSensitivityBar.LargeChange = 2;
             this.scrollSensitivityBar.Location = new System.Drawing.Point(792, 50);
+            this.scrollSensitivityBar.Minimum = -10;
             this.scrollSensitivityBar.Name = "scrollSensitivityBar";
             this.scrollSensitivityBar.Orientation = System.Windows.Forms.Orientation.Vertical;
             this.scrollSensitivityBar.Size = new System.Drawing.Size(45, 104);
             this.scrollSensitivityBar.TabIndex = 51;
+            this.scrollSensitivityBar.TickFrequency = 5;
             this.scrollSensitivityBar.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
             this.scrollSensitivityBar.ValueChanged += new System.EventHandler(this.scrollSensitivityBar_ValueChanged);
             // 

@@ -19,7 +19,7 @@ namespace DS4Control
 
         public override string ToString()
         {
-            return "standard scrollable touchpad";
+            return "standard (relative) scrollable";
         }
 
         public void touchesMoved(object sender, TouchpadEventArgs arg)
@@ -60,7 +60,7 @@ namespace DS4Control
             if (Global.getTapSensitivity(deviceNum) != 0)
             {
                 DateTime test = DateTime.Now;
-                if (test <= (pastTime + TimeSpan.FromMilliseconds((double)Global.getTapSensitivity(deviceNum) * 2)) && !arg.touchButtonPressed)
+                if (test <= (pastTime + TimeSpan.FromMilliseconds((double)Global.getTapSensitivity(deviceNum) * 2)) && !arg.sensors.TouchButton)
                 {
                     if (Math.Abs(firstTouch.hwX - arg.touches[0].hwX) < 10 &&
                         Math.Abs(firstTouch.hwY - arg.touches[0].hwY) < 10)
