@@ -70,7 +70,7 @@ namespace ScpServer
 
         protected void Form_Load(object sender, EventArgs e)
         {
-            Icon = Properties.Resources.Scp_All;
+            Icon = Properties.Resources.DS4;
             rootHub = new DS4Control.Control();
             rootHub.Debug += On_Debug;
             tmrUpdate.Enabled = true;

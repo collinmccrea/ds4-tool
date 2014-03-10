@@ -293,9 +293,9 @@ namespace ScpServer.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
-        internal static System.Drawing.Icon Scp_All {
+        internal static System.Drawing.Icon DS4 {
             get {
-                object obj = ResourceManager.GetObject("Scp_All", resourceCulture);
+                object obj = ResourceManager.GetObject("DS4", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }

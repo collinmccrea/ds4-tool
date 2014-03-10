@@ -6,20 +6,18 @@ using System.Runtime.InteropServices;
 using DS4Library;
 namespace DS4Control
 {
-    public class Mouse : ITouchpadBehaviour
+    public class ButtonMouse : ITouchpadBehaviour
     {
-        private DateTime pastTime;
-        private Touch firstTouch;
         private int deviceNum;
-        private bool rightClick = false;
-        public Mouse(int deviceID)
+        private bool leftButton, middleButton, rightButton;
+        public ButtonMouse(int deviceID)
         {
             deviceNum = deviceID;
         }
 
         public override string ToString()
         {
-            return "standard (relative) scrollable";
+            return "physical-button scrollable mouse";
         }
 
         public void touchesMoved(object sender, TouchpadEventArgs arg)
@@ -47,70 +45,63 @@ namespace DS4Control
                 coefficient *= touchDistance / 960.0;
                 InputMethods.MouseWheel((int)(coefficient * (lastMidY - currentMidY)), (int)(coefficient * (currentMidX - lastMidX)));
             }
+            synthesizeMouseButtons(arg.sensors, false);
         }
 
         public void touchesBegan(object sender, TouchpadEventArgs arg)
         {
-            pastTime = DateTime.Now;
-            firstTouch = arg.touches[0];
+            synthesizeMouseButtons(arg.sensors, false);
         }
 
         public void touchesEnded(object sender, TouchpadEventArgs arg)
         {
-            if (Global.getTapSensitivity(deviceNum) != 0)
+            synthesizeMouseButtons(arg.sensors, true);
+        }
+
+        private void synthesizeMouseButtons(DS4State s, bool justRelease)
+        {
+            bool previousLeftButton = leftButton, previousMiddleButton = middleButton, previousRightButton = rightButton;
+            if (justRelease)
             {
-                DateTime test = DateTime.Now;
-                if (test <= (pastTime + TimeSpan.FromMilliseconds((double)Global.getTapSensitivity(deviceNum) * 2)) && !arg.sensors.TouchButton)
-                {
-                    if (Math.Abs(firstTouch.hwX - arg.touches[0].hwX) < 10 &&
-                        Math.Abs(firstTouch.hwY - arg.touches[0].hwY) < 10)
-                        InputMethods.performLeftClick();
-                }
+                leftButton = middleButton = rightButton = false;
             }
+            else
+            {
+                leftButton = s.L1 || s.R1 || s.DpadLeft || s.Square;
+                middleButton = s.DpadUp || s.DpadDown || s.Triangle || s.Cross;
+                rightButton = s.DpadRight || s.Circle;
+                s.L1 = s.R1 = s.DpadLeft = s.Square = s.DpadUp = s.DpadDown = s.Triangle = s.Cross = s.DpadRight = s.Circle = false;
+            }
+            if (leftButton != previousLeftButton)
+                InputMethods.MouseEvent(leftButton ? InputMethods.MOUSEEVENTF_LEFTDOWN : InputMethods.MOUSEEVENTF_LEFTUP);
+            if (middleButton != previousMiddleButton)
+                InputMethods.MouseEvent(middleButton ? InputMethods.MOUSEEVENTF_MIDDLEDOWN : InputMethods.MOUSEEVENTF_MIDDLEUP);
+            if (rightButton != previousRightButton)
+                InputMethods.MouseEvent(rightButton ? InputMethods.MOUSEEVENTF_RIGHTDOWN : InputMethods.MOUSEEVENTF_RIGHTUP);
+        
         }
 
         public void touchButtonUp(object sender, TouchpadEventArgs arg)
         {
-            if (arg.touches == null)
-            {
-                //No touches, finger on upper portion of touchpad
-                mapTouchPad(DS4Controls.TouchUpper,true);
-            }
+            if (arg.touches == null) //No touches, finger on upper portion of touchpad
+                mapTouchPad(DS4Controls.TouchUpper, true);
             else if (arg.touches.Length > 1)
                 mapTouchPad(DS4Controls.TouchMulti, true);
-            else if (!rightClick && arg.touches.Length == 1 && !mapTouchPad(DS4Controls.TouchButton, true))
-            {
-                InputMethods.MouseEvent(InputMethods.MOUSEEVENTF_LEFTUP);
-            }
+            else
+                mapTouchPad(DS4Controls.TouchButton, true);
         }
 
         public void touchButtonDown(object sender, TouchpadEventArgs arg)
         {
-            if (arg.touches == null)
-            {
-                //No touches, finger on upper portion of touchpad
-                if(!mapTouchPad(DS4Controls.TouchUpper))
-                    InputMethods.performMiddleClick();
-            }
-            else if (!Global.getLowerRCOff(deviceNum) && arg.touches[0].hwX > (1920 * 3)/4
-                && arg.touches[0].hwY > (960 * 3)/4)
-            {
-                rightClick = true;
-                InputMethods.performRightClick();
-            }
-            else if (arg.touches.Length>1 && !mapTouchPad(DS4Controls.TouchMulti))
-            {
-                rightClick = true;
-                InputMethods.performRightClick();
-            }
-            else if (arg.touches.Length==1 && !mapTouchPad(DS4Controls.TouchButton))
-            {
-                rightClick = false;
-                InputMethods.MouseEvent(InputMethods.MOUSEEVENTF_LEFTDOWN);
-            }
+            if (arg.touches == null) //No touches, finger on upper portion of touchpad
+                mapTouchPad(DS4Controls.TouchUpper, false);
+            else if (arg.touches.Length > 1)
+                mapTouchPad(DS4Controls.TouchMulti, false);
+            else
+                mapTouchPad(DS4Controls.TouchButton, false);
         }
 
-        bool mapTouchPad(DS4Controls padControl, bool release = false)
+        bool mapTouchPad(DS4Controls padControl, bool release)
         {
             ushort key = Global.getCustomKey(padControl);
             if (key == 0)

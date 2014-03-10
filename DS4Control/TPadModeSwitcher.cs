@@ -17,6 +17,7 @@ namespace DS4Control
             this.device = device;
             modes.Add(TouchpadDisabled.singleton);
             modes.Add(new Mouse(deviceID));
+            modes.Add(new ButtonMouse(deviceID));
             modes.Add(new MouseCursorOnly(deviceID));
         }
 
