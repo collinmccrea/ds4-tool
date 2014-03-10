@@ -171,10 +171,20 @@ namespace DS4Control
 
             if (ind!=-1)
             {
+                 DS4State cState;
+                if (modeSwitcher[ind].getCurrentMode() is ButtonMouse)
+                {
+                    ButtonMouse mode = (ButtonMouse)modeSwitcher[ind].getCurrentMode();
+                    cState = mode.getDS4State();
+                }
+                else
+                {
+                    device.getCurrentState(CurrentState[ind]); 
+                    cState = CurrentState[ind];
+                }
                 device.getPreviousState(PreviousState[ind]);
-                device.getCurrentState(CurrentState[ind]);
                 DS4State pState = PreviousState[ind];
-                DS4State cState = CurrentState[ind];
+               
 
                 CheckForHotkeys(ind, cState, pState);
 

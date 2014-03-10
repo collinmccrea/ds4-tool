@@ -126,5 +126,10 @@ namespace DS4Control
             }
         }
 
+        public DS4State getDS4State()
+        {
+            return s;
+        }
+
     }
 }

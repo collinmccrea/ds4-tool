@@ -69,5 +69,10 @@ namespace DS4Control
             if (Debug != null)
                 Debug(this, new DebugEventArgs(data));
         }
+
+        public ITouchpadBehaviour getCurrentMode()
+        {
+            return modes.ElementAt(currentTypeInd);
+        }
     }
 }
