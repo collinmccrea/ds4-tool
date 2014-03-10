@@ -73,7 +73,7 @@ namespace DS4Control
         {
             if (IsActive)
             {
-                Unplug(0);
+                //Unplug(0);
             }
 
             return base.Stop();

@@ -26,7 +26,7 @@ namespace HidLibrary
         private void DeviceEventMonitor()
         {
             _device.Tick();
-            if ((!_device.IsConnected || _device.IsTimedOut) && Removed != null)
+            if (_device.IsTimedOut && Removed != null)
                 Removed();
 
             Thread.Sleep(500);

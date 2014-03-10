@@ -35,8 +35,8 @@
             this.chData = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tmrUpdate = new System.Windows.Forms.Timer(this.components);
             this.pnlButton = new System.Windows.Forms.Panel();
+            this.AboutButton = new System.Windows.Forms.Button();
             this.btnStartStop = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
             this.btnClear = new System.Windows.Forms.Button();
             this.btnStop = new System.Windows.Forms.Button();
             this.lnkControllers = new System.Windows.Forms.LinkLabel();
@@ -93,8 +93,8 @@
             // 
             // pnlButton
             // 
+            this.pnlButton.Controls.Add(this.AboutButton);
             this.pnlButton.Controls.Add(this.btnStartStop);
-            this.pnlButton.Controls.Add(this.label1);
             this.pnlButton.Controls.Add(this.btnClear);
             this.pnlButton.Controls.Add(this.btnStop);
             this.pnlButton.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -102,6 +102,16 @@
             this.pnlButton.Name = "pnlButton";
             this.pnlButton.Size = new System.Drawing.Size(794, 35);
             this.pnlButton.TabIndex = 10;
+            // 
+            // AboutButton
+            // 
+            this.AboutButton.Location = new System.Drawing.Point(9, 5);
+            this.AboutButton.Name = "AboutButton";
+            this.AboutButton.Size = new System.Drawing.Size(75, 23);
+            this.AboutButton.TabIndex = 11;
+            this.AboutButton.Text = "About";
+            this.AboutButton.UseVisualStyleBackColor = true;
+            this.AboutButton.Click += new System.EventHandler(this.AboutButton_Click);
             // 
             // btnStartStop
             // 
@@ -113,16 +123,6 @@
             this.btnStartStop.Text = "Start";
             this.btnStartStop.UseVisualStyleBackColor = true;
             this.btnStartStop.Click += new System.EventHandler(this.btnStartStop_Click);
-            // 
-            // label1
-            // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 15);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(314, 13);
-            this.label1.TabIndex = 10;
-            this.label1.Text = "Created by InhexSTER,  based on open source by Scarlet.Crush ";
             // 
             // btnClear
             // 
@@ -331,7 +331,6 @@
             this.Load += new System.EventHandler(this.Form_Load);
             this.Resize += new System.EventHandler(this.Form_Resize);
             this.pnlButton.ResumeLayout(false);
-            this.pnlButton.PerformLayout();
             this.pnlDebug.ResumeLayout(false);
             this.pnlStatus.ResumeLayout(false);
             this.gpPads.ResumeLayout(false);
@@ -351,7 +350,6 @@
         private System.Windows.Forms.Button btnStartStop;
         private System.Windows.Forms.Panel pnlDebug;
         private System.Windows.Forms.Button btnClear;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel pnlStatus;
         private System.Windows.Forms.GroupBox gpPads;
         private System.Windows.Forms.Button optionsButton;
@@ -365,6 +363,7 @@
         private System.Windows.Forms.CheckBox startMinimizedCheckBox;
         private System.Windows.Forms.Label lbLastMessage;
         private System.Windows.Forms.LinkLabel lnkControllers;
+        private System.Windows.Forms.Button AboutButton;
     }
 }
 

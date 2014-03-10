@@ -235,6 +235,13 @@ namespace ScpServer
             Global.Save();
         }
 
+        private void AboutButton_Click(object sender, EventArgs e)
+        {
+            AboutBox box = new AboutBox();
+            box.Icon = this.Icon;
+            box.ShowDialog();
+        }
+
     }
 
     public class ThemeUtil

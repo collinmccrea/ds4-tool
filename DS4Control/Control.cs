@@ -81,14 +81,15 @@ namespace DS4Control
             {
                 running = false;
                 LogDebug("Stopping X360 Controllers");
-                x360Bus.Stop();
-                LogDebug("Stopping DS4 Controllers");
-                DS4Devices.stopControllers();
                 for (int i = 0; i < DS4Controllers.Length; i++)
                 {
+                    x360Bus.Unplug(i + 1);
                     DS4Controllers[i] = null;
                     modeSwitcher[i] = null;
                 }
+                x360Bus.Stop();
+                LogDebug("Stopping DS4 Controllers");
+                DS4Devices.stopControllers();
                 LogDebug("Stopped DS4 Tool");
             }
             return true;
