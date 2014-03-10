@@ -122,7 +122,7 @@ namespace DS4Library
         public DS4Device(HidDevice hidDevice)
         {            
             hDevice = hidDevice;
-            hDevice.MonitorDeviceEvents = false;
+            hDevice.MonitorDeviceEvents = true;
             conType = hDevice.Capabilities.InputReportByteLength == 64 ? ConnectionType.USB : ConnectionType.BT;
             Mac = hDevice.readSerial();
             if (conType == ConnectionType.USB)
