@@ -12,6 +12,8 @@ namespace DS4Control
         TPadModeSwitcher[] modeSwitcher = new TPadModeSwitcher[4];
         private bool running = false;
         private DS4State[] MappedState = new DS4State[4];
+        private DS4State[] CurrentState = new DS4State[4];
+        private DS4State[] PreviousState = new DS4State[4];
         public event EventHandler<DebugEventArgs> Debug = null;
 
         private class X360Data
@@ -28,6 +30,8 @@ namespace DS4Control
             {
                 processingData[i] = new X360Data();
                 MappedState[i] = new DS4State();
+                CurrentState[i] = new DS4State();
+                PreviousState[i] = new DS4State();
             }
         }
 
@@ -50,7 +54,8 @@ namespace DS4Control
                         DS4Controllers[ind] = device;
                         device.Report += this.On_Report;
                         device.Removal += this.On_DS4Removal;
-                        TPadModeSwitcher m_switcher = new TPadModeSwitcher(this, device, ind);
+                        TPadModeSwitcher m_switcher = new TPadModeSwitcher(device, ind);
+                        m_switcher.Debug += OnDebug;
                         m_switcher.setMode(Global.getTouchEnabled(ind) ? 1 : 0);
                         modeSwitcher[ind] = m_switcher;
                         DS4Color color = Global.loadColor(ind);
@@ -113,7 +118,8 @@ namespace DS4Control
                             DS4Controllers[Index] = device;
                             device.Report += this.On_Report;
                             device.Removal += this.On_DS4Removal;
-                            TPadModeSwitcher m_switcher = new TPadModeSwitcher(this, device, Index);
+                            TPadModeSwitcher m_switcher = new TPadModeSwitcher(device, Index);
+                            m_switcher.Debug += OnDebug;
                             modeSwitcher[Index] = m_switcher;
                             m_switcher.setMode(Global.getTouchEnabled(Index) ? 1 : 0);
                             device.LightBarColor = Global.loadColor(Index);
@@ -165,8 +171,10 @@ namespace DS4Control
 
             if (ind!=-1)
             {
-                DS4State pState = device.getPreviousState();
-                DS4State cState = device.getCurrentState();
+                device.getPreviousState(PreviousState[ind]);
+                device.getCurrentState(CurrentState[ind]);
+                DS4State pState = PreviousState[ind];
+                DS4State cState = CurrentState[ind];
 
                 CheckForHotkeys(ind, cState, pState);
 
@@ -210,8 +218,14 @@ namespace DS4Control
             if (Debug != null)
             {
                 DebugEventArgs args = new DebugEventArgs(Data);
-                Debug(this, args);
+                OnDebug(this, args);
             }
+        }
+
+        public virtual void OnDebug(object sender, DebugEventArgs args)
+        {
+            if (Debug != null)
+                Debug(this, args);
         }
 
         //sets the rumble adjusted with rumble boost

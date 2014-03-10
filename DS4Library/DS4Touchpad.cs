@@ -8,8 +8,9 @@ namespace DS4Library
     public class TouchpadEventArgs : EventArgs
     {
         public readonly Touch[] touches = null;
-        public readonly DS4State sensors;
-        public TouchpadEventArgs(DS4State sensors, Touch t0, Touch t1 = null)
+        //public readonly DS4State sensors;
+        public readonly bool touchButtonPressed;
+        public TouchpadEventArgs(bool tButtonDown, Touch t0, Touch t1 = null)
         {
             if (t1 != null)
             {
@@ -22,7 +23,8 @@ namespace DS4Library
                 touches = new Touch[1];
                 touches[0] = t0;
             }
-            this.sensors = sensors;
+            touchButtonPressed = tButtonDown;
+            //this.sensors = sensors;
         }
     }
 
@@ -79,10 +81,10 @@ namespace DS4Library
                     if (sensors.Touch2)
                     {
                         Touch t1 = new Touch(currentX2, currentY2, touchID2);
-                        args = new TouchpadEventArgs(sensors, t0, t1);
+                        args = new TouchpadEventArgs(sensors.TouchButton, t0, t1);
                     }
                     else
-                        args = new TouchpadEventArgs(sensors, t0);
+                        args = new TouchpadEventArgs(sensors.TouchButton, t0);
                     TouchButtonDown(this, args);
                 }
                 else if (lastTouchPadIsDown && !touchPadIsDown && TouchButtonUp != null)
@@ -92,10 +94,10 @@ namespace DS4Library
                     if (sensors.Touch2)
                     {
                         Touch t1 = new Touch(currentX2, currentY2, touchID2);
-                        args = new TouchpadEventArgs(sensors, t0, t1);
+                        args = new TouchpadEventArgs(sensors.TouchButton, t0, t1);
                     }
                     else
-                        args = new TouchpadEventArgs(sensors, t0);
+                        args = new TouchpadEventArgs(sensors.TouchButton, t0);
                     TouchButtonUp(this, args);
                 }
 
@@ -108,10 +110,10 @@ namespace DS4Library
                         if (sensors.Touch2 && !lastIsActive2)
                         {
                             Touch t1 = new Touch(currentX2, currentY2, touchID2);
-                            args = new TouchpadEventArgs(sensors, t0, t1);
+                            args = new TouchpadEventArgs(sensors.TouchButton, t0, t1);
                         }
                         else
-                            args = new TouchpadEventArgs(sensors, t0);
+                            args = new TouchpadEventArgs(sensors.TouchButton, t0);
                         TouchesBegan(this, args);
                     }
                 }
@@ -127,10 +129,10 @@ namespace DS4Library
                         {
                             Touch t1Prev = new Touch(lastTouchPadX2, lastTouchPadY2, lastTouchID2);
                             Touch t1 = new Touch(currentX2, currentY2, touchID2, t1Prev);
-                            args = new TouchpadEventArgs(sensors, t0, t1);
+                            args = new TouchpadEventArgs(sensors.TouchButton, t0, t1);
                         }
                         else
-                            args = new TouchpadEventArgs(sensors, t0);
+                            args = new TouchpadEventArgs(sensors.TouchButton, t0);
                         TouchesMoved(this, args);
                     }
                 }
@@ -152,21 +154,21 @@ namespace DS4Library
                         if (lastIsActive2)
                         {
                             Touch t1 = new Touch(currentX2, currentY2, touchID2);
-                            args = new TouchpadEventArgs(sensors, t0, t1);
+                            args = new TouchpadEventArgs(sensors.TouchButton, t0, t1);
                         }
                         else
-                            args = new TouchpadEventArgs(sensors, t0);
+                            args = new TouchpadEventArgs(sensors.TouchButton, t0);
                         TouchesEnded(this, args);
                     }
                 }
 
                 if (touchPadIsDown && !lastTouchPadIsDown)
                 {
-                    TouchButtonDown(this, new TouchpadEventArgs(sensors, null, null));
+                    TouchButtonDown(this, new TouchpadEventArgs(sensors.TouchButton, null, null));
                 }
                 else if (!touchPadIsDown && lastTouchPadIsDown)
                 {
-                    TouchButtonUp(this, new TouchpadEventArgs(sensors, null, null));
+                    TouchButtonUp(this, new TouchpadEventArgs(sensors.TouchButton, null, null));
                 }
             }
 

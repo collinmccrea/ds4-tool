@@ -10,9 +10,12 @@ namespace DS4Control
     {
         private int deviceNum;
         private bool leftButton, middleButton, rightButton;
-        public ButtonMouse(int deviceID)
+        private DS4State s = new DS4State();
+        private DS4Device dev = null;
+        public ButtonMouse(int deviceID, DS4Device d)
         {
             deviceNum = deviceID;
+            dev = d;
         }
 
         public override string ToString()
@@ -45,21 +48,22 @@ namespace DS4Control
                 coefficient *= touchDistance / 960.0;
                 InputMethods.MouseWheel((int)(coefficient * (lastMidY - currentMidY)), (int)(coefficient * (currentMidX - lastMidX)));
             }
-            synthesizeMouseButtons(arg.sensors, false);
+            synthesizeMouseButtons(false);
         }
 
         public void touchesBegan(object sender, TouchpadEventArgs arg)
         {
-            synthesizeMouseButtons(arg.sensors, false);
+            synthesizeMouseButtons(false);
         }
 
         public void touchesEnded(object sender, TouchpadEventArgs arg)
         {
-            synthesizeMouseButtons(arg.sensors, true);
+            synthesizeMouseButtons(true);
         }
 
-        private void synthesizeMouseButtons(DS4State s, bool justRelease)
+        private void synthesizeMouseButtons(bool justRelease)
         {
+            dev.getCurrentState(s);   
             bool previousLeftButton = leftButton, previousMiddleButton = middleButton, previousRightButton = rightButton;
             if (justRelease)
             {

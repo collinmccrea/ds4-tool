@@ -37,7 +37,7 @@ namespace DS4Library
         private byte[] inputReport = new byte[64];
         private byte[] btInputReport = null;
         private byte[] outputReport = null;
-        public readonly DS4Touchpad touchpad = null;
+        private readonly DS4Touchpad touchpad = null;
         private byte lightRumble;
         private byte heavyRumble;
         private DS4Color ligtBarColor;
@@ -386,12 +386,22 @@ namespace DS4Library
 
         public DS4State getCurrentState()
         {
-            return cState;
+            return cState.Clone();
         }
 
         public DS4State getPreviousState()
         {
-            return pState;
+            return pState.Clone();
+        }
+
+        public void getCurrentState(DS4State state)
+        {
+            cState.Copy(state);
+        }
+
+        public void getPreviousState(DS4State state)
+        {
+            pState.Copy(state);
         }
 
         override

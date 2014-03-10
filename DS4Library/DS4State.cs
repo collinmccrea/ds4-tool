@@ -59,7 +59,7 @@ namespace DS4Library
             return new DS4State(this);
         }
 
-        public DS4State Copy(DS4State state)
+        public void Copy(DS4State state)
         {
             state.Square = Square;
             state.Triangle = Triangle;
@@ -86,7 +86,6 @@ namespace DS4Library
             state.LY = LY;
             state.RY = RY;
             state.Battery = Battery;
-            return state;
         }
 
     }
