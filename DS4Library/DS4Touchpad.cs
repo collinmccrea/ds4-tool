@@ -54,6 +54,7 @@ namespace DS4Library
         public event EventHandler<TouchpadEventArgs> TouchesEnded = null;
         public event EventHandler<TouchpadEventArgs> TouchButtonDown = null;
         public event EventHandler<TouchpadEventArgs> TouchButtonUp = null;
+        public event EventHandler<TouchpadEventArgs> Untouched = null;
         public readonly static int TOUCHPAD_DATA_OFFSET = 35;
         internal static int lastTouchPadX, lastTouchPadY,
             lastTouchPadX2, lastTouchPadY2; // tracks 0, 1 or 2 touches; we maintain touch 1 and 2 separately
@@ -103,19 +104,16 @@ namespace DS4Library
 
                 if (!lastIsActive || (sensors.Touch2 && !lastIsActive2))
                 {
-                    if (TouchesBegan != null)
+                    TouchpadEventArgs args = null;
+                    Touch t0 = new Touch(currentX, currentY, touchID);
+                    if (sensors.Touch2 && !lastIsActive2)
                     {
-                        TouchpadEventArgs args = null;
-                        Touch t0 = new Touch(currentX, currentY, touchID);
-                        if (sensors.Touch2 && !lastIsActive2)
-                        {
-                            Touch t1 = new Touch(currentX2, currentY2, touchID2);
-                            args = new TouchpadEventArgs(sensors.TouchButton, t0, t1);
-                        }
-                        else
-                            args = new TouchpadEventArgs(sensors.TouchButton, t0);
-                        TouchesBegan(this, args);
+                        Touch t1 = new Touch(currentX2, currentY2, touchID2);
+                        args = new TouchpadEventArgs(sensors.TouchButton, t0, t1);
                     }
+                    else
+                        args = new TouchpadEventArgs(sensors.TouchButton, t0);
+                    TouchesBegan(this, args);
                 }
                 else if (lastIsActive)
                 {
@@ -145,31 +143,34 @@ namespace DS4Library
             }
             else
             {
+                bool eventPerformed = false;
                 if (lastIsActive)
                 {
-                    if (TouchesEnded != null)
+                    TouchpadEventArgs args = null;
+                    Touch t0 = new Touch(currentX, currentY, touchID);
+                    if (lastIsActive2)
                     {
-                        TouchpadEventArgs args = null;
-                        Touch t0 = new Touch(currentX, currentY, touchID);
-                        if (lastIsActive2)
-                        {
-                            Touch t1 = new Touch(currentX2, currentY2, touchID2);
-                            args = new TouchpadEventArgs(sensors.TouchButton, t0, t1);
-                        }
-                        else
-                            args = new TouchpadEventArgs(sensors.TouchButton, t0);
-                        TouchesEnded(this, args);
+                        Touch t1 = new Touch(currentX2, currentY2, touchID2);
+                        args = new TouchpadEventArgs(sensors.TouchButton, t0, t1);
                     }
+                    else
+                        args = new TouchpadEventArgs(sensors.TouchButton, t0);
+                    TouchesEnded(this, args);
+                    eventPerformed = true;
                 }
 
                 if (touchPadIsDown && !lastTouchPadIsDown)
                 {
                     TouchButtonDown(this, new TouchpadEventArgs(sensors.TouchButton, null, null));
+                    eventPerformed = true;
                 }
                 else if (!touchPadIsDown && lastTouchPadIsDown)
                 {
                     TouchButtonUp(this, new TouchpadEventArgs(sensors.TouchButton, null, null));
+                    eventPerformed = true;
                 }
+                if (!eventPerformed)
+                    Untouched(this, null);
             }
 
             lastIsActive = sensors.Touch1;

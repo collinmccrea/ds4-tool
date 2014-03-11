@@ -110,6 +110,8 @@ namespace DS4Control
             }
         }
 
+        public void untouched(object sender, TouchpadEventArgs nullUnused) { }
+
         bool mapTouchPad(DS4Controls padControl, bool release = false)
         {
             ushort key = Global.getCustomKey(padControl);

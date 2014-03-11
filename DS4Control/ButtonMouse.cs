@@ -11,6 +11,7 @@ namespace DS4Control
         private int deviceNum;
         private bool leftButton, middleButton, rightButton;
         private DS4State s = new DS4State();
+        private bool buttonLock; // Toggled with a two-finger touchpad push, we accept and absorb button input without any fingers on a touchpad, helping with drag-and-drop.
         private DS4Device dev = null;
         public ButtonMouse(int deviceID, DS4Device d)
         {
@@ -51,6 +52,14 @@ namespace DS4Control
             synthesizeMouseButtons(false);
         }
 
+        public void untouched(object sender, TouchpadEventArgs unused)
+        {
+            if (buttonLock)
+                synthesizeMouseButtons(false);
+            else
+                dev.getCurrentState(s);
+        }
+
         public void touchesBegan(object sender, TouchpadEventArgs arg)
         {
             synthesizeMouseButtons(false);
@@ -58,12 +67,15 @@ namespace DS4Control
 
         public void touchesEnded(object sender, TouchpadEventArgs arg)
         {
-            synthesizeMouseButtons(true);
+            if (!buttonLock)
+                synthesizeMouseButtons(true);
+            else
+                dev.getCurrentState(s);
         }
 
         private void synthesizeMouseButtons(bool justRelease)
         {
-            dev.getCurrentState(s);   
+            dev.getCurrentState(s);
             bool previousLeftButton = leftButton, previousMiddleButton = middleButton, previousRightButton = rightButton;
             if (justRelease)
             {
@@ -89,9 +101,7 @@ namespace DS4Control
         {
             if (arg.touches == null) //No touches, finger on upper portion of touchpad
                 mapTouchPad(DS4Controls.TouchUpper, true);
-            else if (arg.touches.Length > 1)
-                mapTouchPad(DS4Controls.TouchMulti, true);
-            else
+            else if (arg.touches.Length == 1)
                 mapTouchPad(DS4Controls.TouchButton, true);
         }
 
@@ -99,10 +109,10 @@ namespace DS4Control
         {
             if (arg.touches == null) //No touches, finger on upper portion of touchpad
                 mapTouchPad(DS4Controls.TouchUpper, false);
-            else if (arg.touches.Length > 1)
-                mapTouchPad(DS4Controls.TouchMulti, false);
-            else
+            else if (arg.touches.Length == 1)
                 mapTouchPad(DS4Controls.TouchButton, false);
+            else
+                buttonLock = !buttonLock;
         }
 
         bool mapTouchPad(DS4Controls padControl, bool release)

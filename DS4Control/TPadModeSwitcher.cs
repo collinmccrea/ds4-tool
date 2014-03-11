@@ -28,6 +28,7 @@ namespace DS4Control
             device.Touchpad.TouchesBegan -= currentMode.touchesBegan;
             device.Touchpad.TouchesMoved -= currentMode.touchesMoved;
             device.Touchpad.TouchesEnded -= currentMode.touchesEnded;
+            device.Touchpad.Untouched -= currentMode.untouched;
             setMode(ind);
         }
         
@@ -39,6 +40,7 @@ namespace DS4Control
             device.Touchpad.TouchesBegan += tmode.touchesBegan;
             device.Touchpad.TouchesMoved += tmode.touchesMoved;
             device.Touchpad.TouchesEnded += tmode.touchesEnded;
+            device.Touchpad.Untouched += tmode.untouched;
             currentTypeInd = ind;
             LogDebug("Touchpad mode for " + device.MacAddress + " is now " + tmode.ToString());
         }
