@@ -54,6 +54,16 @@ namespace DS4Control
 
         public void untouched(object sender, TouchpadEventArgs unused)
         {
+            /*
+            if (buttonLock)
+                synthesizeMouseButtons(false);
+            else
+                dev.getCurrentState(s);
+             */
+        }
+
+        public void untouched()
+        {
             if (buttonLock)
                 synthesizeMouseButtons(false);
             else

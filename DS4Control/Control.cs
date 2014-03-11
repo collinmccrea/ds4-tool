@@ -176,7 +176,11 @@ namespace DS4Control
                  DS4State cState;
                 if (modeSwitcher[ind].getCurrentMode() is ButtonMouse)
                 {
+                    device.getCurrentState(CurrentState[ind]); 
+                    cState = CurrentState[ind];
                     ButtonMouse mode = (ButtonMouse)modeSwitcher[ind].getCurrentMode();
+                    if (!cState.Touch1 && !cState.Touch2 && !cState.TouchButton)
+                        mode.untouched();
                     cState = mode.getDS4State();
                 }
                 else
