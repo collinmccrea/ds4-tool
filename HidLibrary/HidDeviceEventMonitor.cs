@@ -29,7 +29,7 @@ namespace HidLibrary
             if (_device.IsTimedOut && Removed != null)
                 Removed();
 
-            Thread.Sleep(500);
+            Thread.Sleep(100);
             if (_device.MonitorDeviceEvents) Init();
         }
 

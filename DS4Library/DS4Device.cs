@@ -169,13 +169,7 @@ namespace DS4Library
         private void updateCurrentState()
         {
             while (true)
-            {                 
-                if (hDevice.IsTimedOut)
-                {
-                    if (Removal != null)
-                        Removal(this, EventArgs.Empty);
-                    return;
-                }
+            {
                 if (conType != ConnectionType.USB)
                     if (hDevice.ReadFile(btInputReport) == HidDevice.ReadStatus.Success)
                     {
@@ -183,9 +177,12 @@ namespace DS4Library
                     }
                     else
                     {
+                        sendOutputReport(); // not sure why but without this Windows 
+                        //will not mark timed out controller as disonnected
                         if (Removal != null)
                             Removal(this, EventArgs.Empty);
                         return; 
+                       
                     }
                 else if (hDevice.ReadFile(inputReport) != HidDevice.ReadStatus.Success) 
                 {

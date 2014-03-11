@@ -71,6 +71,7 @@ namespace ScpServer
         protected void Form_Load(object sender, EventArgs e)
         {
             Icon = Properties.Resources.DS4;
+            notifyIcon1.Icon = Properties.Resources.DS4;
             rootHub = new DS4Control.Control();
             rootHub.Debug += On_Debug;
             tmrUpdate.Enabled = true;
@@ -240,6 +241,11 @@ namespace ScpServer
             AboutBox box = new AboutBox();
             box.Icon = this.Icon;
             box.ShowDialog();
+        }
+
+        private void lvDebug_ItemActivate(object sender, EventArgs e)
+        {
+            MessageBox.Show(((ListView)sender).FocusedItem.SubItems[1].Text,"Log");
         }
 
     }

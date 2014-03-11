@@ -156,6 +156,7 @@ namespace DS4Control
                 x360Bus.Unplug(ind + 1);
                 LogDebug("Controller " + device.MacAddress + " was removed or lost connection");
                 DS4Controllers[ind] = null;
+                modeSwitcher[ind] = null;
             }
         }
 

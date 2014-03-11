@@ -35,7 +35,7 @@
             // 
             // OkButton
             // 
-            this.OkButton.Location = new System.Drawing.Point(113, 188);
+            this.OkButton.Location = new System.Drawing.Point(113, 202);
             this.OkButton.Name = "OkButton";
             this.OkButton.Size = new System.Drawing.Size(75, 23);
             this.OkButton.TabIndex = 0;
@@ -47,21 +47,21 @@
             // 
             this.textBox1.BackColor = System.Drawing.SystemColors.Control;
             this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBox1.Location = new System.Drawing.Point(12, 12);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(260, 115);
+            this.textBox1.Size = new System.Drawing.Size(260, 155);
             this.textBox1.TabIndex = 1;
             this.textBox1.Text = "DS4 Tool 1.3 RC2\r\n\r\nCreated By:\r\n\r\nArtur Dzmitryieu(InhexSTER)\r\nHecticSeptic\r\nele" +
-    "ctrobrains\r\n\r\n";
+    "ctrobrains\r\n\r\nBased on DS3 Scp Server from\r\nScarlet.Crush";
             this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // linkLabel1
             // 
             this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(59, 149);
+            this.linkLabel1.Location = new System.Drawing.Point(59, 175);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(183, 13);
             this.linkLabel1.TabIndex = 2;
@@ -73,7 +73,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 221);
+            this.ClientSize = new System.Drawing.Size(284, 230);
             this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.OkButton);

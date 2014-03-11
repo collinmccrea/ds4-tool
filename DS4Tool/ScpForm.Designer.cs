@@ -75,6 +75,7 @@
             this.lvDebug.TabIndex = 0;
             this.lvDebug.UseCompatibleStateImageBehavior = false;
             this.lvDebug.View = System.Windows.Forms.View.Details;
+            this.lvDebug.ItemActivate += new System.EventHandler(this.lvDebug_ItemActivate);
             // 
             // chTime
             // 

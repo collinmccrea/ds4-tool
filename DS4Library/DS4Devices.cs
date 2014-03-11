@@ -20,7 +20,8 @@ namespace DS4Library
 
                 foreach (HidDevice hDevice in hDevices)
                 {
-                    hDevice.OpenDevice(isExclusiveMode);
+                    if (!hDevice.IsOpen)
+                        hDevice.OpenDevice(isExclusiveMode);
                     if (hDevice.IsOpen)
                     {
                         if (Devices.ContainsKey(hDevice.readSerial()))
@@ -35,7 +36,7 @@ namespace DS4Library
                     }
                     else
                     {
-                        throw new Exception("Can't open DS4 Controller");
+                        throw new Exception("ERROR: Can't open DS4 Controller. Try quitting other applications like Steam, Uplay, etc.)");
                     }
                 }
                 
