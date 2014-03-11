@@ -177,6 +177,7 @@ namespace DS4Library
                     }
                     else
                     {
+                        isDirty = true;
                         sendOutputReport(); // not sure why but without this Windows 
                         //will not mark timed out controller as disonnected
                         if (Removal != null)
