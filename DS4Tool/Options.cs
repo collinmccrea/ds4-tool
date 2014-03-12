@@ -47,6 +47,13 @@ namespace ScpServer
             lowBlueValLabel.Text = lowColor.blue.ToString();
 
             #region watch sixaxis data
+            // Control Positioning
+            int horizontalOffset = lbSixaxis.Location.X - 50, 
+                verticalOffset = lbSixaxis.Location.Y + lbSixaxis.Height + 5,
+                tWidth = 100, tHeight = 19, 
+                horizontalMargin = 10 + tWidth,
+                verticalMargin = 1 + tHeight;
+
             Timer sixaxisTimer = new Timer();
             sixaxisTimer.Tick +=
             (delegate
@@ -69,26 +76,26 @@ namespace ScpServer
                             t.Enabled = false;
                             t.Minimum = -0x8000;
                             t.Maximum = 0x7fff;
-                            t.Size = new Size(100, 19);
+                            t.Size = new Size(tWidth, tHeight);
                             t.TickFrequency = 0x2000; // calibrated to ~1G
                         }
                         // tBsixaxisGyroX
-                        tBsixaxisGyroX.Location = new Point(450, 248);
+                        tBsixaxisGyroX.Location = new Point(horizontalOffset, verticalOffset);
                         tBsixaxisGyroX.Name = "tBsixaxisGyroX";
                         // tBsixaxisGyroY
-                        tBsixaxisGyroY.Location = new Point(450, 248 + 20);
+                        tBsixaxisGyroY.Location = new Point(horizontalOffset, verticalOffset + verticalMargin);
                         tBsixaxisGyroY.Name = "tBsixaxisGyroY";
                         // tBsixaxisGyroZ
-                        tBsixaxisGyroZ.Location = new Point(450, 248 + 20 + 20);
+                        tBsixaxisGyroZ.Location = new Point(horizontalOffset, verticalOffset + verticalMargin * 2);
                         tBsixaxisGyroZ.Name = "tBsixaxisGyroZ";
                         // tBsixaxisAccelX
-                        tBsixaxisAccelX.Location = new Point(450 + 100 + 10, 248);
+                        tBsixaxisAccelX.Location = new Point(horizontalOffset + horizontalMargin, verticalOffset);
                         tBsixaxisAccelX.Name = "tBsixaxisAccelX";
                         // tBsixaxisAccelY
-                        tBsixaxisAccelY.Location = new Point(450 + 100 + 10, 248 + 20);
+                        tBsixaxisAccelY.Location = new Point(horizontalOffset + horizontalMargin, verticalOffset + verticalMargin);
                         tBsixaxisAccelY.Name = "tBsixaxisAccelY";
                         // tBsixaxisAccelZ
-                        tBsixaxisAccelZ.Location = new Point(450 + 100 + 10, 248 + 20 + 20);
+                        tBsixaxisAccelZ.Location = new Point(horizontalOffset + horizontalMargin, verticalOffset + verticalMargin * 2);
                         tBsixaxisAccelZ.Name = "tBsixaxisAccelZ";
                         foreach (TrackBar t in allSixAxes)
                         {
