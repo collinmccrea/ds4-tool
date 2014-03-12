@@ -38,8 +38,8 @@ namespace DS4Library
         private byte[] btInputReport = null;
         private byte[] outputReport = null;
         private readonly DS4Touchpad touchpad = null;
-        private byte lightRumble;
-        private byte heavyRumble;
+        private byte rightLightFastRumble;
+        private byte leftHeavySlowRumble;
         private DS4Color ligtBarColor;
         private byte ledFlashOn, ledFlashOff;
         private bool isDirty = false;
@@ -56,24 +56,24 @@ namespace DS4Library
 
         public int Battery { get { return battery; } }
 
-        public byte LightRumble
+        public byte RightLightFastRumble
         {
-            get { return lightRumble; }
+            get { return rightLightFastRumble; }
             set
             {
-                if (value == lightRumble) return;
-                lightRumble = value;
+                if (value == rightLightFastRumble) return;
+                rightLightFastRumble = value;
                 isDirty = true;
             }
         }
 
-        public byte HeavyRumble
+        public byte LeftHeavySlowRumble
         {
-            get { return heavyRumble; }
+            get { return leftHeavySlowRumble; }
             set
             {
-                if (value == heavyRumble) return;
-                heavyRumble = value;
+                if (value == leftHeavySlowRumble) return;
+                leftHeavySlowRumble = value;
                 isDirty = true;
             }
         }
@@ -287,8 +287,8 @@ namespace DS4Library
                     outputReport[0] = 0x11;
                     outputReport[1] = 128;
                     outputReport[3] = 0xff;
-                    outputReport[6] = lightRumble; //fast motor
-                    outputReport[7] = heavyRumble; //slow motor
+                    outputReport[6] = rightLightFastRumble; //fast motor
+                    outputReport[7] = leftHeavySlowRumble; //slow motor
                     outputReport[8] = LightBarColor.red; //red
                     outputReport[9] = LightBarColor.green; //green
                     outputReport[10] = LightBarColor.blue; //blue
@@ -302,8 +302,8 @@ namespace DS4Library
                 {
                     outputReport[0] = 0x5;
                     outputReport[1] = 0xFF;
-                    outputReport[4] = lightRumble; //fast motor
-                    outputReport[5] = heavyRumble; //slow  motor
+                    outputReport[4] = rightLightFastRumble; //fast motor
+                    outputReport[5] = leftHeavySlowRumble; //slow  motor
                     outputReport[6] = LightBarColor.red; //red
                     outputReport[7] = LightBarColor.green; //green
                     outputReport[8] = LightBarColor.blue; //blue
@@ -376,10 +376,10 @@ namespace DS4Library
             LightBarOnDuration = onDuration;
         }
 
-        public void setRumble(byte lightMotor, byte heavyMotor)
+        public void setRumble(byte rightLightFastMotor, byte leftHeavySlowMotor)
         {
-            LightRumble = lightMotor;
-            HeavyRumble = heavyMotor;
+            RightLightFastRumble = rightLightFastMotor;
+            LeftHeavySlowRumble = leftHeavySlowMotor;
         }
 
         public DS4State getCurrentState()
