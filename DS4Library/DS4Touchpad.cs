@@ -54,7 +54,6 @@ namespace DS4Library
         public event EventHandler<TouchpadEventArgs> TouchesEnded = null;
         public event EventHandler<TouchpadEventArgs> TouchButtonDown = null;
         public event EventHandler<TouchpadEventArgs> TouchButtonUp = null;
-        public event EventHandler<TouchpadEventArgs> Untouched = null;
         public readonly static int TOUCHPAD_DATA_OFFSET = 35;
         internal static int lastTouchPadX, lastTouchPadY,
             lastTouchPadX2, lastTouchPadY2; // tracks 0, 1 or 2 touches; we maintain touch 1 and 2 separately
@@ -113,7 +112,8 @@ namespace DS4Library
                     }
                     else
                         args = new TouchpadEventArgs(sensors.TouchButton, t0);
-                    TouchesBegan(this, args);
+                    if (TouchesBegan!=null)
+                        TouchesBegan(this, args);
                 }
                 else if (lastIsActive)
                 {
@@ -143,7 +143,6 @@ namespace DS4Library
             }
             else
             {
-                bool eventPerformed = false;
                 if (lastIsActive)
                 {
                     TouchpadEventArgs args = null;
@@ -155,22 +154,18 @@ namespace DS4Library
                     }
                     else
                         args = new TouchpadEventArgs(sensors.TouchButton, t0);
-                    TouchesEnded(this, args);
-                    eventPerformed = true;
+                    if (TouchesEnded!=null)
+                        TouchesEnded(this, args);
                 }
 
-                if (touchPadIsDown && !lastTouchPadIsDown)
+                if (touchPadIsDown && !lastTouchPadIsDown && TouchButtonDown!=null)
                 {
                     TouchButtonDown(this, new TouchpadEventArgs(sensors.TouchButton, null, null));
-                    eventPerformed = true;
                 }
-                else if (!touchPadIsDown && lastTouchPadIsDown)
+                else if (!touchPadIsDown && lastTouchPadIsDown && TouchButtonUp!=null)
                 {
                     TouchButtonUp(this, new TouchpadEventArgs(sensors.TouchButton, null, null));
-                    eventPerformed = true;
                 }
-                if (!eventPerformed)
-                    Untouched(this, null);
             }
 
             lastIsActive = sensors.Touch1;

@@ -12,6 +12,5 @@ namespace DS4Control
         void touchButtonUp(object sender, TouchpadEventArgs arg);
         void touchButtonDown(object sender, TouchpadEventArgs arg);
         void touchesEnded(object sender, TouchpadEventArgs arg);
-        void untouched(object sender, TouchpadEventArgs nullUnused);
     }
 }

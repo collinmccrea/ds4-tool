@@ -32,6 +32,13 @@ namespace ScpServer
             }
         }
 
+        protected void ShowNotification(object sender, DebugEventArgs args)
+        {
+            notifyIcon1.BalloonTipText = args.Data;
+            notifyIcon1.BalloonTipTitle = "DS4 Tool";
+            notifyIcon1.ShowBalloonTip(1);
+        }
+
         protected void Form_Resize(object sender, EventArgs e)
         {
             if (FormWindowState.Minimized == this.WindowState)
@@ -74,6 +81,8 @@ namespace ScpServer
             notifyIcon1.Icon = Properties.Resources.DS4;
             rootHub = new DS4Control.Control();
             rootHub.Debug += On_Debug;
+            Log.GuiLog += On_Debug;
+            Log.TrayIconLog += ShowNotification;
             tmrUpdate.Enabled = true;
             Global.Load();
             hideDS4CheckBox.CheckedChanged -= hideDS4CheckBox_CheckedChanged;

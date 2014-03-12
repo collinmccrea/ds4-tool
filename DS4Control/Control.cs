@@ -52,7 +52,6 @@ namespace DS4Control
                     {
                         LogDebug("Found Controller: " + device.MacAddress);
                         DS4Controllers[ind] = device;
-                        device.Report += this.On_Report;
                         device.Removal += this.On_DS4Removal;
                         TPadModeSwitcher m_switcher = new TPadModeSwitcher(device, ind);
                         m_switcher.Debug += OnDebug;
@@ -61,8 +60,10 @@ namespace DS4Control
                         DS4Color color = Global.loadColor(ind);
                         device.LightBarColor = color;
                         x360Bus.Plugin(ind + 1);
+                        device.Report += this.On_Report;
                         ind++;
                         LogDebug("Controller: " + device.MacAddress + " is ready to use");
+                        Log.LogToTray("Controller: " + device.MacAddress + " is ready to use");
                     }
                 }
                 catch (Exception e)
@@ -83,9 +84,12 @@ namespace DS4Control
                 LogDebug("Stopping X360 Controllers");
                 for (int i = 0; i < DS4Controllers.Length; i++)
                 {
-                    x360Bus.Unplug(i + 1);
-                    DS4Controllers[i] = null;
-                    modeSwitcher[i] = null;
+                    if (DS4Controllers[i] != null)
+                    {
+                        x360Bus.Unplug(i + 1);
+                        DS4Controllers[i] = null;
+                        modeSwitcher[i] = null;
+                    }
                 }
                 x360Bus.Stop();
                 LogDebug("Stopping DS4 Controllers");
@@ -155,6 +159,7 @@ namespace DS4Control
             {
                 x360Bus.Unplug(ind + 1);
                 LogDebug("Controller " + device.MacAddress + " was removed or lost connection");
+                Log.LogToTray("Controller " + device.MacAddress + " was removed or lost connection");
                 DS4Controllers[ind] = null;
                 modeSwitcher[ind] = null;
             }
