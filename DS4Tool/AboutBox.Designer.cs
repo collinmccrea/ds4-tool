@@ -54,7 +54,7 @@
             this.textBox1.ReadOnly = true;
             this.textBox1.Size = new System.Drawing.Size(260, 155);
             this.textBox1.TabIndex = 1;
-            this.textBox1.Text = "DS4 Tool 1.3 RC2\r\n\r\nCreated By:\r\n\r\nArtur Dzmitryieu(InhexSTER)\r\nHecticSeptic\r\nele" +
+            this.textBox1.Text = "DS4 Tool 1.3 RC3\r\n\r\nCreated By:\r\n\r\nArtur Dzmitryieu(InhexSTER)\r\nHecticSeptic\r\nele" +
     "ctrobrains\r\n\r\nBased on DS3 Scp Server from\r\nScarlet.Crush";
             this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 

@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="ButtonMouse.cs" />
     <Compile Include="CursorOnlyMode.cs" />
+    <Compile Include="Log.cs" />
     <Compile Include="TouchpadDisabled.cs" />
     <Compile Include="TPadModeSwitcher.cs" />
     <Compile Include="DS4LightBar.cs" />

@@ -14,6 +14,8 @@ namespace DS4Control
         private DS4State[] MappedState = new DS4State[4];
         private DS4State[] CurrentState = new DS4State[4];
         private DS4State[] PreviousState = new DS4State[4];
+        public DS4StateExposed[] ExposedState = new DS4StateExposed[4];
+
         public event EventHandler<DebugEventArgs> Debug = null;
 
         private class X360Data
@@ -32,6 +34,7 @@ namespace DS4Control
                 MappedState[i] = new DS4State();
                 CurrentState[i] = new DS4State();
                 PreviousState[i] = new DS4State();
+                ExposedState[i] = new DS4StateExposed(CurrentState[i]);
             }
         }
 
@@ -52,7 +55,6 @@ namespace DS4Control
                     {
                         LogDebug("Found Controller: " + device.MacAddress);
                         DS4Controllers[ind] = device;
-                        device.Report += this.On_Report;
                         device.Removal += this.On_DS4Removal;
                         TPadModeSwitcher m_switcher = new TPadModeSwitcher(device, ind);
                         m_switcher.Debug += OnDebug;
@@ -61,8 +63,10 @@ namespace DS4Control
                         DS4Color color = Global.loadColor(ind);
                         device.LightBarColor = color;
                         x360Bus.Plugin(ind + 1);
+                        device.Report += this.On_Report;
                         ind++;
                         LogDebug("Controller: " + device.MacAddress + " is ready to use");
+                        Log.LogToTray("Controller: " + device.MacAddress + " is ready to use");
                     }
                 }
                 catch (Exception e)
@@ -83,9 +87,12 @@ namespace DS4Control
                 LogDebug("Stopping X360 Controllers");
                 for (int i = 0; i < DS4Controllers.Length; i++)
                 {
-                    x360Bus.Unplug(i + 1);
-                    DS4Controllers[i] = null;
-                    modeSwitcher[i] = null;
+                    if (DS4Controllers[i] != null)
+                    {
+                        x360Bus.Unplug(i + 1);
+                        DS4Controllers[i] = null;
+                        modeSwitcher[i] = null;
+                    }
                 }
                 x360Bus.Stop();
                 LogDebug("Stopping DS4 Controllers");
@@ -155,6 +162,7 @@ namespace DS4Control
             {
                 x360Bus.Unplug(ind + 1);
                 LogDebug("Controller " + device.MacAddress + " was removed or lost connection");
+                Log.LogToTray("Controller " + device.MacAddress + " was removed or lost connection");
                 DS4Controllers[ind] = null;
                 modeSwitcher[ind] = null;
             }
@@ -176,7 +184,7 @@ namespace DS4Control
                  DS4State cState;
                 if (modeSwitcher[ind].getCurrentMode() is ButtonMouse)
                 {
-                    device.getCurrentState(CurrentState[ind]); 
+                    device.getExposedState(ExposedState[ind], CurrentState[ind]); 
                     cState = CurrentState[ind];
                     ButtonMouse mode = (ButtonMouse)modeSwitcher[ind].getCurrentMode();
                     if (!cState.Touch1 && !cState.Touch2 && !cState.TouchButton)
@@ -185,7 +193,7 @@ namespace DS4Control
                 }
                 else
                 {
-                    device.getCurrentState(CurrentState[ind]); 
+                    device.getExposedState(ExposedState[ind], CurrentState[ind]); 
                     cState = CurrentState[ind];
                 }
                 device.getPreviousState(PreviousState[ind]);

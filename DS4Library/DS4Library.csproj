@@ -43,6 +43,7 @@
     <Compile Include="DS4Device.cs" />
     <Compile Include="DS4Devices.cs" />
     <Compile Include="DS4State.cs" />
+    <Compile Include="DS4StateExposed.cs" />
     <Compile Include="NativeMethods.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DS4Touchpad.cs" />

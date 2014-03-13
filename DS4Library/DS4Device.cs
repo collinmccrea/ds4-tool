@@ -34,12 +34,14 @@ namespace DS4Library
         private DS4State cState = new DS4State();
         private DS4State pState = new DS4State();
         private ConnectionType conType;
+        private byte[] accel = new byte[6];
+        private byte[] gyro = new byte[6];
         private byte[] inputReport = new byte[64];
         private byte[] btInputReport = null;
         private byte[] outputReport = null;
         private readonly DS4Touchpad touchpad = null;
-        private byte lightRumble;
-        private byte heavyRumble;
+        private byte rightLightFastRumble;
+        private byte leftHeavySlowRumble;
         private DS4Color ligtBarColor;
         private byte ledFlashOn, ledFlashOff;
         private bool isDirty = false;
@@ -58,22 +60,22 @@ namespace DS4Library
 
         public byte LightRumble
         {
-            get { return lightRumble; }
+            get { return rightLightFastRumble; }
             set
             {
-                if (value == lightRumble) return;
-                lightRumble = value;
+                if (value == rightLightFastRumble) return;
+                rightLightFastRumble = value;
                 isDirty = true;
             }
         }
 
         public byte HeavyRumble
         {
-            get { return heavyRumble; }
+            get { return leftHeavySlowRumble; }
             set
             {
-                if (value == heavyRumble) return;
-                heavyRumble = value;
+                if (value == leftHeavySlowRumble) return;
+                leftHeavySlowRumble = value;
                 isDirty = true;
             }
         }
@@ -242,6 +244,9 @@ namespace DS4Library
                 cState.PS = ((byte)inputReport[7] & (1 << 0)) != 0;
                 cState.TouchButton = (inputReport[7] & (1 << 2 - 1)) != 0;
 
+                // Store Gyro and Accel values
+                Array.Copy(inputReport, 14, accel, 0, 6);
+                Array.Copy(inputReport, 20, gyro, 0, 6);
 
                 int charge = 0;
                 if (conType == ConnectionType.USB)
@@ -287,8 +292,8 @@ namespace DS4Library
                     outputReport[0] = 0x11;
                     outputReport[1] = 128;
                     outputReport[3] = 0xff;
-                    outputReport[6] = lightRumble; //fast motor
-                    outputReport[7] = heavyRumble; //slow motor
+                    outputReport[6] = rightLightFastRumble; //fast motor
+                    outputReport[7] = leftHeavySlowRumble; //slow motor
                     outputReport[8] = LightBarColor.red; //red
                     outputReport[9] = LightBarColor.green; //green
                     outputReport[10] = LightBarColor.blue; //blue
@@ -302,8 +307,8 @@ namespace DS4Library
                 {
                     outputReport[0] = 0x5;
                     outputReport[1] = 0xFF;
-                    outputReport[4] = lightRumble; //fast motor
-                    outputReport[5] = heavyRumble; //slow  motor
+                    outputReport[4] = rightLightFastRumble; //fast motor
+                    outputReport[5] = leftHeavySlowRumble; //slow  motor
                     outputReport[6] = LightBarColor.red; //red
                     outputReport[7] = LightBarColor.green; //green
                     outputReport[8] = LightBarColor.blue; //blue
@@ -390,6 +395,13 @@ namespace DS4Library
         public DS4State getPreviousState()
         {
             return pState.Clone();
+        }
+
+        public void getExposedState(DS4StateExposed expState, DS4State state)
+        {
+            cState.Copy(state);
+            expState.Accel = accel;
+            expState.Gyro = gyro;
         }
 
         public void getCurrentState(DS4State state)

@@ -82,7 +82,7 @@
             this.rightTriggerMiddlePoint = new System.Windows.Forms.TextBox();
             this.leftTriggerMiddlePoint = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
-            this.lbSixaxis = new System.Windows.Forms.Label();
+            this.cbSixaxis = new System.Windows.Forms.CheckBox();
             this.flushHIDQueue = new System.Windows.Forms.CheckBox();
             this.touchpadJitterCompensation = new System.Windows.Forms.CheckBox();
             this.advColorDialog = new ScpServer.AdvancedColorDialog();
@@ -686,15 +686,16 @@
             this.label9.TabIndex = 74;
             this.label9.Text = "Trigger Threshold";
             // 
-            // lbSixaxis
+            // cbSixaxis
             // 
-            this.lbSixaxis.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.lbSixaxis.AutoSize = true;
-            this.lbSixaxis.Location = new System.Drawing.Point(474, 224);
-            this.lbSixaxis.Name = "lbSixaxis";
-            this.lbSixaxis.Size = new System.Drawing.Size(122, 13);
-            this.lbSixaxis.TabIndex = 79;
-            this.lbSixaxis.Text = "Sixaxis Gyro/Accel Data";
+            this.cbSixaxis.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.cbSixaxis.AutoSize = true;
+            this.cbSixaxis.Location = new System.Drawing.Point(469, 220);
+            this.cbSixaxis.Name = "cbSixaxis";
+            this.cbSixaxis.Size = new System.Drawing.Size(141, 17);
+            this.cbSixaxis.TabIndex = 79;
+            this.cbSixaxis.Text = "Sixaxis Gyro/Accel Data";
+            this.cbSixaxis.CheckedChanged += new System.EventHandler(this.cbSixaxis_CheckedChanged);
             // 
             // flushHIDQueue
             // 
@@ -736,7 +737,7 @@
             this.ClientSize = new System.Drawing.Size(827, 310);
             this.Controls.Add(this.touchpadJitterCompensation);
             this.Controls.Add(this.flushHIDQueue);
-            this.Controls.Add(this.lbSixaxis);
+            this.Controls.Add(this.cbSixaxis);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.rightTriggerMiddlePoint);
@@ -863,7 +864,7 @@
         private System.Windows.Forms.TextBox rightTriggerMiddlePoint;
         private System.Windows.Forms.TextBox leftTriggerMiddlePoint;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label lbSixaxis;
+        private System.Windows.Forms.CheckBox cbSixaxis;
         private System.Windows.Forms.CheckBox flushHIDQueue;
         private System.Windows.Forms.CheckBox touchpadJitterCompensation;
     }

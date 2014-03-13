@@ -13,6 +13,7 @@ namespace ScpServer
         Byte[] oldLedColor, oldLowLedColor;
         TrackBar tBsixaxisGyroX, tBsixaxisGyroY, tBsixaxisGyroZ,
             tBsixaxisAccelX, tBsixaxisAccelY, tBsixaxisAccelZ;
+        Timer sixaxisTimer = new Timer();
 
         public Options(DS4Control.Control bus_device, int deviceNum)
         {
@@ -48,13 +49,12 @@ namespace ScpServer
 
             #region watch sixaxis data
             // Control Positioning
-            int horizontalOffset = lbSixaxis.Location.X - 50, 
-                verticalOffset = lbSixaxis.Location.Y + lbSixaxis.Height + 5,
+            int horizontalOffset = cbSixaxis.Location.X - 50, 
+                verticalOffset = cbSixaxis.Location.Y + cbSixaxis.Height + 5,
                 tWidth = 100, tHeight = 19, 
                 horizontalMargin = 10 + tWidth,
                 verticalMargin = 1 + tHeight;
 
-            Timer sixaxisTimer = new Timer();
             sixaxisTimer.Tick +=
             (delegate
                 {
@@ -103,38 +103,61 @@ namespace ScpServer
                             ((System.ComponentModel.ISupportInitialize)(t)).EndInit();
                         }
                     }
-                    byte[] inputData = null;// scpDevice.GetInputData(device);
-                    if (inputData != null)
+                    //byte[] inputData = null;// scpDevice.GetInputData(device);
+                    //if (inputData != null)
                     {
                         // MEMS gyro data is all calibrated to roughly -1G..1G for values -0x2000..0x1fff
                         // Enough additional acceleration and we are no longer mostly measuring Earth's gravity...
                         // We should try to indicate setpoints of the calibration when exposing this measurement....
-
-                        // R side of controller upward
-                        Int16 x = (Int16)((UInt16)(inputData[20] << 8) | inputData[21]);
-                        tBsixaxisGyroX.Value = (x + tBsixaxisGyroX.Value * 2) / 3;
-                        // touchpad and button face side of controller upward
-                        Int16 y = (Int16)((UInt16)(inputData[22] << 8) | inputData[23]);
-                        tBsixaxisGyroY.Value = (y + tBsixaxisGyroY.Value * 2) / 3;
-                        // audio/expansion ports upward and light bar/shoulders/bumpers/USB port downward
-                        Int16 z = (Int16)((UInt16)(inputData[24] << 8) | inputData[25]);
-                        tBsixaxisGyroZ.Value = (z + tBsixaxisGyroZ.Value * 2) / 3;
-                        // pitch upward/backward
-                        Int16 pitch = (Int16)((UInt16)(inputData[14] << 8) | inputData[15]);
-                        tBsixaxisAccelX.Value = (pitch + tBsixaxisAccelX.Value * 2) / 3; // smooth out
-                        // yaw leftward/counter-clockwise/turn to port or larboard side
-                        Int16 yaw = (Int16)((UInt16)(inputData[16] << 8) | inputData[17]);
-                        tBsixaxisAccelY.Value = (yaw + tBsixaxisAccelY.Value * 2) / 3;
-                        // roll left/L side of controller down/starboard raising up
-                        Int16 roll = (Int16)((UInt16)(inputData[18] << 8) | inputData[19]);
-                        tBsixaxisAccelZ.Value = (roll + tBsixaxisAccelZ.Value * 2) / 3;
-
+                        SetDynamicTrackBarValue(tBsixaxisGyroX, (scpDevice.ExposedState[device].GyroX + tBsixaxisGyroX.Value * 2) / 3);
+                        SetDynamicTrackBarValue(tBsixaxisGyroY, (scpDevice.ExposedState[device].GyroY + tBsixaxisGyroY.Value * 2) / 3);
+                        SetDynamicTrackBarValue(tBsixaxisGyroZ, (scpDevice.ExposedState[device].GyroZ + tBsixaxisGyroZ.Value * 2) / 3);
+                        SetDynamicTrackBarValue(tBsixaxisAccelX, (scpDevice.ExposedState[device].AccelX + tBsixaxisAccelX.Value * 2) / 3);
+                        SetDynamicTrackBarValue(tBsixaxisAccelY, (scpDevice.ExposedState[device].AccelY + tBsixaxisAccelY.Value * 2) / 3);
+                        SetDynamicTrackBarValue(tBsixaxisAccelZ, (scpDevice.ExposedState[device].AccelZ + tBsixaxisAccelZ.Value * 2) / 3);
                     }
                 });
             sixaxisTimer.Interval = 1000 / 60;
-            this.FormClosing += delegate { sixaxisTimer.Stop(); };
-            sixaxisTimer.Start();
+            this.FormClosing += delegate { if (sixaxisTimer.Enabled) sixaxisTimer.Stop(); };
+            if (cbSixaxis.Checked)
+                sixaxisTimer.Start();
             #endregion
+        }
+
+        private void cbSixaxis_CheckedChanged(object sender, EventArgs e)
+        {
+            if (cbSixaxis.Checked)
+            {
+                sixaxisTimer.Start();
+                if (tBsixaxisGyroX != null)
+                {
+                    tBsixaxisGyroX.Visible = true;
+                    tBsixaxisGyroY.Visible = true;
+                    tBsixaxisGyroZ.Visible = true;
+                    tBsixaxisAccelX.Visible = true;
+                    tBsixaxisAccelY.Visible = true;
+                    tBsixaxisAccelZ.Visible = true;
+                }
+            }
+            else
+            {
+                sixaxisTimer.Stop();
+                tBsixaxisGyroX.Visible = false;
+                tBsixaxisGyroY.Visible = false;
+                tBsixaxisGyroZ.Visible = false;
+                tBsixaxisAccelX.Visible = false;
+                tBsixaxisAccelY.Visible = false;
+                tBsixaxisAccelZ.Visible = false;
+            }
+        }
+
+        private void SetDynamicTrackBarValue(TrackBar trackBar, int value)
+        {
+            if (trackBar.Maximum < value)
+                trackBar.Maximum = value;
+            else if (trackBar.Minimum > value)
+                trackBar.Minimum = value;
+            trackBar.Value = value;
         }
 
         private void CustomMappingButton_Click(object sender, EventArgs e)
