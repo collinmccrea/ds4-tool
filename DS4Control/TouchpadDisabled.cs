@@ -10,7 +10,7 @@ namespace DS4Control
     {
         public override string ToString()
         {
-            return "disabled";
+            return "Disabled";
         }
 
         public static readonly TouchpadDisabled singleton = new TouchpadDisabled();

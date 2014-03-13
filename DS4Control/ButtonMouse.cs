@@ -21,7 +21,7 @@ namespace DS4Control
 
         public override string ToString()
         {
-            return "physical-button scrollable mouse";
+            return "Button Mode";
         }
 
         public void touchesMoved(object sender, TouchpadEventArgs arg)
@@ -94,25 +94,79 @@ namespace DS4Control
                 InputMethods.MouseEvent(middleButton ? InputMethods.MOUSEEVENTF_MIDDLEDOWN : InputMethods.MOUSEEVENTF_MIDDLEUP);
             if (rightButton != previousRightButton)
                 InputMethods.MouseEvent(rightButton ? InputMethods.MOUSEEVENTF_RIGHTDOWN : InputMethods.MOUSEEVENTF_RIGHTUP);
-        
+
+        }
+
+        // touch area stuff
+        private bool leftDown, rightDown, upperDown;
+        private bool isLeft(Touch t)
+        {
+            return t.hwX < 1920 * 2 / 5;
+        }
+
+        private bool isRight(Touch t)
+        {
+            return t.hwX >= 1920 * 3 / 5;
         }
 
         public void touchButtonUp(object sender, TouchpadEventArgs arg)
         {
-            if (arg.touches == null) //No touches, finger on upper portion of touchpad
+            if (upperDown)
+            {
                 mapTouchPad(DS4Controls.TouchUpper, true);
-            else if (arg.touches.Length == 1)
+                upperDown = false;
+            }
+            if (leftDown)
+            {
                 mapTouchPad(DS4Controls.TouchButton, true);
+                leftDown = false;
+            }
+            if (rightDown)
+            {
+                mapTouchPad(DS4Controls.TouchMulti, true);
+                rightDown = false;
+            }
+            dev.setRumble(0, 0);
         }
 
         public void touchButtonDown(object sender, TouchpadEventArgs arg)
         {
+            byte leftRumble, rightRumble;
             if (arg.touches == null) //No touches, finger on upper portion of touchpad
+            {
                 mapTouchPad(DS4Controls.TouchUpper, false);
+                upperDown = true;
+                leftRumble = rightRumble = 127;
+            }
             else if (arg.touches.Length == 1)
-                mapTouchPad(DS4Controls.TouchButton, false);
+            {
+                if (isLeft(arg.touches[0]))
+                {
+                    mapTouchPad(DS4Controls.TouchButton, false);
+                    leftDown = true;
+                    leftRumble = 63;
+                    rightRumble = 0;
+                }
+                else if (isRight(arg.touches[0]))
+                {
+                    mapTouchPad(DS4Controls.TouchMulti, false);
+                    rightDown = true;
+                    leftRumble = 0;
+                    rightRumble = 63;
+                }
+                else
+                {
+                    mapTouchPad(DS4Controls.TouchUpper, false); // ambiguous = same as upper
+                    upperDown = true;
+                    leftRumble = rightRumble = 127;
+                }
+            }
             else
+            {
                 buttonLock = !buttonLock;
+                leftRumble = rightRumble = (byte)(buttonLock ? 255 : 63);
+            }
+            dev.setRumble(rightRumble, leftRumble); // sustain while pressed
         }
 
         bool mapTouchPad(DS4Controls padControl, bool release)
@@ -143,3 +197,4 @@ namespace DS4Control
 
     }
 }
+

@@ -16,7 +16,7 @@ namespace DS4Control
 
         public override string ToString()
         {
-            return "cursor movement only";
+            return "Cursor Mode";
         }
 
         public void touchesMoved(object sender, TouchpadEventArgs arg)

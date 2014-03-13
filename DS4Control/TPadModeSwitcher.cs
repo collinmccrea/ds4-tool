@@ -18,6 +18,7 @@ namespace DS4Control
             modes.Add(new Mouse(deviceID));
             modes.Add(new ButtonMouse(deviceID, device));
             modes.Add(new MouseCursorOnly(deviceID));
+            modes.Add(new DragMouse(deviceID));
         }
 
         public void switchMode(int ind)

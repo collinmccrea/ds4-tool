@@ -4,26 +4,24 @@ using System.Linq;
 using System.Text;
 using System.Runtime.InteropServices;
 using DS4Library;
+
 namespace DS4Control
 {
-    public class Mouse : ITouchpadBehaviour
+    class DragMouse: Mouse
     {
-        protected DateTime pastTime;
-        protected Touch firstTouch;
-        protected int deviceNum;
-        protected bool rightClick = false;
+        protected bool leftClick = false;
 
-        public Mouse(int deviceID)
+        public DragMouse(int deviceID):base(deviceID)
         {
-            deviceNum = deviceID;
+
         }
 
         public override string ToString()
         {
-            return "Standard Mode";
+            return "Drag Mode";
         }
 
-        public virtual void touchesMoved(object sender, TouchpadEventArgs arg)
+        public override void touchesMoved(object sender, TouchpadEventArgs arg)
         {
             if (arg.touches.Length == 1)
             {
@@ -32,7 +30,7 @@ namespace DS4Control
                 int mouseDeltaY = (int)(sensitivity * (arg.touches[0].deltaY));
                 InputMethods.MoveCursorBy(mouseDeltaX, mouseDeltaY);
             }
-            else if (arg.touches.Length == 2)
+            else if (arg.touches.Length == 2 && !leftClick)
             {
                 Touch lastT0 = arg.touches[0].previousTouch;
                 Touch lastT1 = arg.touches[1].previousTouch;
@@ -48,15 +46,16 @@ namespace DS4Control
                 coefficient *= touchDistance / 960.0;
                 InputMethods.MouseWheel((int)(coefficient * (lastMidY - currentMidY)), (int)(coefficient * (currentMidX - lastMidX)));
             }
+            else
+            {
+                double sensitivity = Global.getTouchSensitivity(deviceNum) / 100.0;
+                int mouseDeltaX = (int)(sensitivity * (arg.touches[1].deltaX));
+                int mouseDeltaY = (int)(sensitivity * (arg.touches[1].deltaY));
+                InputMethods.MoveCursorBy(mouseDeltaX, mouseDeltaY);
+            }
         }
 
-        public virtual void touchesBegan(object sender, TouchpadEventArgs arg)
-        {
-            pastTime = DateTime.Now;
-            firstTouch = arg.touches[0];
-        }
-
-        public virtual void touchesEnded(object sender, TouchpadEventArgs arg)
+        public override void touchesEnded(object sender, TouchpadEventArgs arg)
         {
             if (Global.getTapSensitivity(deviceNum) != 0)
             {
@@ -65,74 +64,54 @@ namespace DS4Control
                 {
                     if (Math.Abs(firstTouch.hwX - arg.touches[0].hwX) < 10 &&
                         Math.Abs(firstTouch.hwY - arg.touches[0].hwY) < 10)
+                    {
                         InputMethods.performLeftClick();
+                    }
                 }
             }
         }
 
-        public virtual void touchButtonUp(object sender, TouchpadEventArgs arg)
+        public override void touchButtonUp(object sender, TouchpadEventArgs arg)
         {
             if (arg.touches == null)
             {
                 //No touches, finger on upper portion of touchpad
-                mapTouchPad(DS4Controls.TouchUpper,true);
+                mapTouchPad(DS4Controls.TouchUpper, true);
             }
             else if (arg.touches.Length > 1)
                 mapTouchPad(DS4Controls.TouchMulti, true);
             else if (!rightClick && arg.touches.Length == 1 && !mapTouchPad(DS4Controls.TouchButton, true))
             {
                 InputMethods.MouseEvent(InputMethods.MOUSEEVENTF_LEFTUP);
+                leftClick = false;
             }
         }
 
-        public virtual void touchButtonDown(object sender, TouchpadEventArgs arg)
+        public override void touchButtonDown(object sender, TouchpadEventArgs arg)
         {
             if (arg.touches == null)
             {
                 //No touches, finger on upper portion of touchpad
-                if(!mapTouchPad(DS4Controls.TouchUpper))
+                if (!mapTouchPad(DS4Controls.TouchUpper))
                     InputMethods.performMiddleClick();
             }
-            else if (!Global.getLowerRCOff(deviceNum) && arg.touches[0].hwX > (1920 * 3)/4
-                && arg.touches[0].hwY > (960 * 3)/4)
+            else if (!Global.getLowerRCOff(deviceNum) && arg.touches[0].hwX > (1920 * 3) / 4
+                && arg.touches[0].hwY > (960 * 3) / 4)
             {
                 rightClick = true;
                 InputMethods.performRightClick();
             }
-            else if (arg.touches.Length>1 && !mapTouchPad(DS4Controls.TouchMulti))
+            else if (arg.touches.Length > 1 && !mapTouchPad(DS4Controls.TouchMulti))
             {
                 rightClick = true;
                 InputMethods.performRightClick();
             }
-            else if (arg.touches.Length==1 && !mapTouchPad(DS4Controls.TouchButton))
+            else if (arg.touches.Length == 1 && !mapTouchPad(DS4Controls.TouchButton))
             {
                 rightClick = false;
                 InputMethods.MouseEvent(InputMethods.MOUSEEVENTF_LEFTDOWN);
+                leftClick = true;
             }
         }
-
-        public void untouched(object sender, TouchpadEventArgs nullUnused) { }
-
-        protected bool mapTouchPad(DS4Controls padControl, bool release = false)
-        {
-            ushort key = Global.getCustomKey(padControl);
-            if (key == 0)
-                return false;
-            else
-            {
-                DS4KeyType keyType = Global.getCustomKeyType(padControl);
-                if (!release)
-                    if (keyType.HasFlag(DS4KeyType.ScanCode))
-                        InputMethods.performSCKeyPress(key);
-                    else InputMethods.performKeyPress(key);
-                else
-                    if (!keyType.HasFlag(DS4KeyType.Repeat))
-                        if (keyType.HasFlag(DS4KeyType.ScanCode))
-                            InputMethods.performSCKeyRelease(key);
-                        else InputMethods.performKeyRelease(key);
-                return true;
-            }
-        }
-
     }
 }
