@@ -121,13 +121,13 @@ namespace DS4Control
                         if (DS4Controllers[Index] == null)
                         {
                             DS4Controllers[Index] = device;
-                            device.Report += this.On_Report;
                             device.Removal += this.On_DS4Removal;
                             TPadModeSwitcher m_switcher = new TPadModeSwitcher(device, Index);
                             m_switcher.Debug += OnDebug;
                             modeSwitcher[Index] = m_switcher;
                             m_switcher.setMode(Global.getTouchEnabled(Index) ? 1 : 0);
                             device.LightBarColor = Global.loadColor(Index);
+                            device.Report += this.On_Report;
                             x360Bus.Plugin(Index + 1);
                             break;
                         }
