@@ -58,7 +58,7 @@ namespace DS4Library
 
         public int Battery { get { return battery; } }
 
-        public byte LightRumble
+        public byte RightLightFastRumble
         {
             get { return rightLightFastRumble; }
             set
@@ -69,7 +69,7 @@ namespace DS4Library
             }
         }
 
-        public byte HeavyRumble
+        public byte LeftHeavySlowRumble
         {
             get { return leftHeavySlowRumble; }
             set
@@ -381,10 +381,10 @@ namespace DS4Library
             LightBarOnDuration = onDuration;
         }
 
-        public void setRumble(byte lightMotor, byte heavyMotor)
+        public void setRumble(byte rightLightFastMotor, byte leftHeavySlowMotor)
         {
-            LightRumble = lightMotor;
-            HeavyRumble = heavyMotor;
+            RightLightFastRumble = rightLightFastMotor;
+            LeftHeavySlowRumble = leftHeavySlowMotor;
         }
 
         public DS4State getCurrentState()
