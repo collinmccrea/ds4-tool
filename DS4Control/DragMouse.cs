@@ -4,16 +4,24 @@ using System.Linq;
 using System.Text;
 using System.Runtime.InteropServices;
 using DS4Library;
+using System.Threading;
 
 namespace DS4Control
 {
     class DragMouse: Mouse
     {
         protected bool leftClick = false;
+        protected Timer timer;
 
         public DragMouse(int deviceID):base(deviceID)
         {
-
+            timer = new System.Threading.Timer((a) =>
+            {
+                InputMethods.MouseEvent(InputMethods.MOUSEEVENTF_LEFTUP);
+                leftClick = false;
+            }, null, 
+            System.Threading.Timeout.Infinite, 
+            System.Threading.Timeout.Infinite); 
         }
 
         public override string ToString()
@@ -55,6 +63,14 @@ namespace DS4Control
             }
         }
 
+        public override void touchesBegan(object sender, TouchpadEventArgs arg)
+        {
+            pastTime = DateTime.Now;
+            firstTouch = arg.touches[0];
+            if (leftClick)
+                timer.Change(System.Threading.Timeout.Infinite, System.Threading.Timeout.Infinite);
+        }
+
         public override void touchesEnded(object sender, TouchpadEventArgs arg)
         {
             if (Global.getTapSensitivity(deviceNum) != 0)
@@ -65,8 +81,18 @@ namespace DS4Control
                     if (Math.Abs(firstTouch.hwX - arg.touches[0].hwX) < 10 &&
                         Math.Abs(firstTouch.hwY - arg.touches[0].hwY) < 10)
                     {
-                        InputMethods.performLeftClick();
+                        if (!leftClick)
+                        {
+                            leftClick = true;
+                            InputMethods.MouseEvent(InputMethods.MOUSEEVENTF_LEFTDOWN);
+                            timer.Change(Global.getTapSensitivity(deviceNum) * 2, System.Threading.Timeout.Infinite);
+                        }
                     }
+                }
+                else if (leftClick)
+                {
+                    InputMethods.MouseEvent(InputMethods.MOUSEEVENTF_LEFTUP);
+                    leftClick = false;
                 }
             }
         }
