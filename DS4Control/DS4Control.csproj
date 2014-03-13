@@ -44,7 +44,6 @@
     <Compile Include="ButtonMouse.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="CursorOnlyMode.cs" />
-    <Compile Include="Log.cs" />
     <Compile Include="DragMouse.cs" />
     <Compile Include="TouchpadDisabled.cs" />
     <Compile Include="TPadModeSwitcher.cs" />
