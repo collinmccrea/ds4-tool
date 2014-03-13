@@ -81,12 +81,12 @@ namespace DS4Control
                     if (Math.Abs(firstTouch.hwX - arg.touches[0].hwX) < 10 &&
                         Math.Abs(firstTouch.hwY - arg.touches[0].hwY) < 10)
                     {
-                        if (!leftClick)
-                        {
-                            leftClick = true;
-                            InputMethods.MouseEvent(InputMethods.MOUSEEVENTF_LEFTDOWN);
-                            timer.Change(Global.getTapSensitivity(deviceNum) * 2, System.Threading.Timeout.Infinite);
-                        }
+                        if (leftClick)
+                            InputMethods.MouseEvent(InputMethods.MOUSEEVENTF_LEFTUP);
+
+                        leftClick = true;
+                        InputMethods.MouseEvent(InputMethods.MOUSEEVENTF_LEFTDOWN);
+                        timer.Change(Global.getTapSensitivity(deviceNum) * 2, System.Threading.Timeout.Infinite);
                     }
                 }
                 else if (leftClick)
