@@ -67,6 +67,8 @@ namespace DS4Control
                         ind++;
                         LogDebug("Controller: " + device.MacAddress + " is ready to use");
                         Log.LogToTray("Controller: " + device.MacAddress + " is ready to use");
+                        if (ind >= 4)
+                            break;
                     }
                 }
                 catch (Exception e)
