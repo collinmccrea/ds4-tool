@@ -12,7 +12,8 @@ namespace DS4Control
     public enum DS4KeyType : byte { None = 0, ScanCode = 1, Repeat = 2 }; //Increment by exponents of 2*, starting at 2^0
     public enum Ds3PadId : byte { None = 0xFF, One = 0x00, Two = 0x01, Three = 0x02, Four = 0x03, All = 0x04 };
     public enum DS4Controls : byte { LXNeg, LXPos, LYNeg, LYPos, RXNeg, RXPos, RYNeg, RYPos, L1, L2, L3, R1, R2, R3, Square, Triangle, Circle, Cross, DpadUp, DpadRight, DpadDown, DpadLeft, PS, TouchButton, TouchUpper, TouchMulti, Share, Options };
-    public enum X360Controls : byte { LXNeg, LXPos, LYNeg, LYPos, RXNeg, RXPos, RYNeg, RYPos, LB, LT, LS, RB, RT, RS, X, Y, B, A, DpadUp, DpadRight, DpadDown, DpadLeft, Guide, Back, Start, LeftMouse, RightMouse, MiddleMouse, Unbound };
+    public enum X360Controls : byte { LXNeg, LXPos, LYNeg, LYPos, RXNeg, RXPos, RYNeg, RYPos, LB, LT, LS, RB, RT, RS, X, Y, B, A, DpadUp, DpadRight, DpadDown, DpadLeft, Guide, Back, Start, LeftMouse, RightMouse, MiddleMouse, Unbound,
+    MouseLeft, MouseRight, MouseDown, MouseUp};
 
     public class DebugEventArgs : EventArgs
     {
@@ -654,6 +655,10 @@ namespace DS4Control
                 case "Click": return X360Controls.LeftMouse;
                 case "Right Click": return X360Controls.RightMouse;
                 case "Middle Click": return X360Controls.MiddleMouse;
+                case "Mouse Up": return X360Controls.MouseUp;
+                case "Mouse Down": return X360Controls.MouseDown;
+                case "Mouse Left": return X360Controls.MouseLeft;
+                case "Mouse Right": return X360Controls.MouseRight;
                 case "(Unbound)": return X360Controls.Unbound;
 
             }

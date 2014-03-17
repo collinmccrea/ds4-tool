@@ -52,7 +52,7 @@ namespace DS4Control
 
         public virtual void touchesBegan(object sender, TouchpadEventArgs arg)
         {
-            pastTime = DateTime.Now;
+            pastTime = arg.timeStamp;
             firstTouch = arg.touches[0];
         }
 
@@ -60,7 +60,7 @@ namespace DS4Control
         {
             if (Global.getTapSensitivity(deviceNum) != 0)
             {
-                DateTime test = DateTime.Now;
+                DateTime test = arg.timeStamp;
                 if (test <= (pastTime + TimeSpan.FromMilliseconds((double)Global.getTapSensitivity(deviceNum) * 2)) && !arg.touchButtonPressed)
                 {
                     if (Math.Abs(firstTouch.hwX - arg.touches[0].hwX) < 10 &&
@@ -110,8 +110,6 @@ namespace DS4Control
                 InputMethods.MouseEvent(InputMethods.MOUSEEVENTF_LEFTDOWN);
             }
         }
-
-        public void untouched(object sender, TouchpadEventArgs nullUnused) { }
 
         protected bool mapTouchPad(DS4Controls padControl, bool release = false)
         {

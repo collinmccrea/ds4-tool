@@ -65,7 +65,7 @@ namespace DS4Control
 
         public override void touchesBegan(object sender, TouchpadEventArgs arg)
         {
-            pastTime = DateTime.Now;
+            pastTime = arg.timeStamp;
             firstTouch = arg.touches[0];
             if (leftClick)
                 timer.Change(System.Threading.Timeout.Infinite, System.Threading.Timeout.Infinite);
@@ -75,7 +75,7 @@ namespace DS4Control
         {
             if (Global.getTapSensitivity(deviceNum) != 0)
             {
-                DateTime test = DateTime.Now;
+                DateTime test = arg.timeStamp;
                 if (test <= (pastTime + TimeSpan.FromMilliseconds((double)Global.getTapSensitivity(deviceNum) * 2)) && !arg.touchButtonPressed)
                 {
                     if (Math.Abs(firstTouch.hwX - arg.touches[0].hwX) < 10 &&

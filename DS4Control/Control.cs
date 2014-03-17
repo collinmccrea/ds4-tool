@@ -54,6 +54,12 @@ namespace DS4Control
                     foreach (DS4Device device in devices)
                     {
                         LogDebug("Found Controller: " + device.MacAddress);
+                        if (device.MacAddress == "00:00:00:00:00:00")
+                        {
+                            LogDebug("WARNING: If you are seing all zeroes as controller ID");
+                            LogDebug("You might be running not fully supported BT dongle");
+                            LogDebug("Only some basic functionality is enabled");
+                        }
                         DS4Controllers[ind] = device;
                         device.Removal += this.On_DS4Removal;
                         TPadModeSwitcher m_switcher = new TPadModeSwitcher(device, ind);
