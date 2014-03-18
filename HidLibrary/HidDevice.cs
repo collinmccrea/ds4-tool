@@ -327,7 +327,15 @@ namespace HidLibrary
             }
         }
 
-        public bool WriteOutputReportViaInterrupt(byte[] outputBuffer, int timeout)
+        public bool WriteFile(byte[] buffer)
+        {
+            uint bytesWritten = 0;
+            if ( NativeMethods.WriteFile(safeReadHandle.DangerousGetHandle(), buffer, (uint)buffer.Length, out bytesWritten, IntPtr.Zero) && bytesWritten > 0)
+                return true;
+            else
+                return false;
+        }
+        public bool WriteOutputReportViaInterrupt(byte[] outputBuffer)
         {
             try
             {
@@ -401,6 +409,8 @@ namespace HidLibrary
                 byte[] buffer = new byte[126];
                 NativeMethods.HidD_GetSerialNumberString(safeReadHandle.DangerousGetHandle(), buffer, (ulong)buffer.Length);
                 string MACAddr = System.Text.Encoding.Unicode.GetString(buffer).Replace("\0", string.Empty).ToUpper();
+                if (MACAddr == null || MACAddr == String.Empty)
+                    MACAddr = "000000000000";
                 MACAddr = String.Format("{0}{1}:{2}{3}:{4}{5}:{6}{7}:{8}{9}:{10}{11}",
                     MACAddr[0], MACAddr[1], MACAddr[2], MACAddr[3], MACAddr[4],
                     MACAddr[5], MACAddr[6], MACAddr[7], MACAddr[8],

@@ -24,6 +24,9 @@ namespace DS4Library
                         hDevice.OpenDevice(isExclusiveMode);
                     if (hDevice.IsOpen)
                     {
+                        byte[] buffer = new byte[38];
+                        buffer[0] = 0x2;
+                        hDevice.readFeatureData(buffer);
                         if (Devices.ContainsKey(hDevice.readSerial()))
                             continue;
                         else

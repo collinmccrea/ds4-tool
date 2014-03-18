@@ -47,9 +47,13 @@ namespace DS4Library
         private bool isDirty = false;
         private Thread updaterThread = null;
         private int battery;
+        private int idleTimeout = 1200;
+        private DateTime lastActive = DateTime.Now;
         public event EventHandler<EventArgs> Report = null;
         public event EventHandler<EventArgs> Removal = null;
 
+        public int IdleTimeout { get { return idleTimeout; }
+            set { idleTimeout = value;  } }
         public HidDevice HidDevice { get { return hDevice; } }
 
         public string MacAddress { get { return Mac; } }
@@ -137,6 +141,8 @@ namespace DS4Library
                 outputReport = new byte[BT_OUTPUT_REPORT_LENGTH];
             }
             touchpad = new DS4Touchpad();
+            isDirty = true;
+            sendOutputReport();
         }
 
         public void StartUpdate()
@@ -193,7 +199,11 @@ namespace DS4Library
                         Removal(this, EventArgs.Empty);
                     return; 
                 }
-
+                if (ConnectionType == ConnectionType.BT && btInputReport[0] != 0x11)
+                {
+                    //Received incorrect report, skip it
+                    continue;
+                }
                 if (cState == null)
                     cState = new DS4State();
                 cState.LX = inputReport[1];
@@ -267,6 +277,18 @@ namespace DS4Library
 
                 cState.Touch1 = (inputReport[0 + DS4Touchpad.TOUCHPAD_DATA_OFFSET] >> 7) != 0 ? false : true; // >= 1 touch detected
                 cState.Touch2 = (inputReport[4 + DS4Touchpad.TOUCHPAD_DATA_OFFSET] >> 7) != 0 ? false : true; // 2 touches detected
+                
+                cState.ReportTimeStamp = DateTime.UtcNow;
+
+                if (ConnectionType == ConnectionType.BT && !isIdle(cState))
+                {
+                    lastActive = DateTime.Now;
+                }
+                if (ConnectionType == ConnectionType.BT && lastActive + TimeSpan.FromSeconds(idleTimeout) < DateTime.Now)
+                {
+                    DisconnectBT();
+                }
+
                 touchpad.handleTouchpad(inputReport, cState);
 
                 sendOutputReport();
@@ -314,7 +336,7 @@ namespace DS4Library
                     outputReport[8] = LightBarColor.blue; //blue
                     outputReport[9] = ledFlashOn; //flash on duration
                     outputReport[10] = ledFlashOff; //flash off duration
-                    if (hDevice.WriteOutputReportViaInterrupt(outputReport, 8))
+                    if (hDevice.WriteOutputReportViaInterrupt(outputReport))
                     {
                         isDirty = false;
                     }
@@ -412,6 +434,25 @@ namespace DS4Library
         public void getPreviousState(DS4State state)
         {
             pState.Copy(state);
+        }
+
+        private bool isIdle(DS4State cState)
+        {
+            if (cState.Square || cState.Cross || cState.Circle || cState.Triangle)
+                return false;
+            if (cState.DpadUp || cState.DpadLeft || cState.DpadDown || cState.DpadRight)
+                return false;
+            if (cState.L3 || cState.R3 || cState.L1 || cState.R1 || cState.Share || cState.Options)
+                return false;
+            if (cState.L2 != 0 || cState.R2 != 0)
+                return false;
+            if (Math.Abs(cState.LX - 127) > 10 || (Math.Abs(cState.LY - 127) > 10 ))
+                return false;
+            if (Math.Abs(cState.RX - 127) > 10 || (Math.Abs(cState.RY - 127) > 10))
+                return false;
+            if (cState.Touch1 || cState.Touch2 || cState.TouchButton)
+                return false;
+            return true;
         }
 
         override

@@ -51,6 +51,15 @@ namespace ScpServer
             cbTouchUpper.Items.Add(cbTouchUpper.Text);
             cbTouchMulti.Items.Clear();
             cbTouchMulti.Items.Add(cbTouchMulti.Text);
+
+            ComboBox[] boxes = { cbLX, cbLX2, cbLY, cbLY2, cbRX, cbRX2, cbRY, cbRY2 };
+            foreach (ComboBox box in boxes)
+            {
+                box.Items.Add("Mouse Up");
+                box.Items.Add("Mouse Left");
+                box.Items.Add("Mouse Down");
+                box.Items.Add("Mouse Right");
+            }
             Global.loadCustomMapping(Global.getCustomMap(device), comboBoxes.ToArray());
         }
 

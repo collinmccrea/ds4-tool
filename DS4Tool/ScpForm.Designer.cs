@@ -89,7 +89,6 @@
             // 
             // tmrUpdate
             // 
-            this.tmrUpdate.Interval = 1;
             this.tmrUpdate.Tick += new System.EventHandler(this.tmrUpdate_Tick);
             // 
             // pnlButton
@@ -327,7 +326,7 @@
             this.Controls.Add(this.pnlStatus);
             this.MinimumSize = new System.Drawing.Size(750, 192);
             this.Name = "ScpForm";
-            this.Text = "DS4 to XInput Mapper 1.3 RC3";
+            this.Text = "DS4 to XInput Mapper 1.3 RC4";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form_Close);
             this.Load += new System.EventHandler(this.Form_Load);
             this.Resize += new System.EventHandler(this.Form_Resize);
@@ -345,7 +344,6 @@
         private System.Windows.Forms.ListView lvDebug;
         private System.Windows.Forms.ColumnHeader chTime;
         private System.Windows.Forms.ColumnHeader chData;
-        private System.Windows.Forms.Timer tmrUpdate;
         private System.Windows.Forms.Panel pnlButton;
         private System.Windows.Forms.Button btnStop;
         private System.Windows.Forms.Button btnStartStop;
@@ -365,6 +363,7 @@
         private System.Windows.Forms.Label lbLastMessage;
         private System.Windows.Forms.LinkLabel lnkControllers;
         private System.Windows.Forms.Button AboutButton;
+        private System.Windows.Forms.Timer tmrUpdate;
     }
 }
 

@@ -164,7 +164,9 @@ namespace ScpServer
             bool optionsEnabled = false;
             for (Int32 Index = 0; Index < Pad.Length; Index++)
             {
-                Pad[Index].Text = rootHub.getDS4ControllerInfo(Index);
+                string contollerInfo =  rootHub.getDS4ControllerInfo(Index);
+
+                Pad[Index].Text = contollerInfo;
                 if (Pad[Index].Text != null && Pad[Index].Text != "")
                 {
                     Pad[Index].Enabled = true;

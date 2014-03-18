@@ -13,9 +13,10 @@ namespace DS4Library
         public bool Share, Options, PS, Touch1, Touch2, TouchButton;
         public byte LX, RX, LY, RY, L2, R2;
         public int Battery;
-
+        public DateTime ReportTimeStamp;
         public DS4State()
         {
+            ReportTimeStamp = DateTime.UtcNow;
             Square = Triangle = Circle = Cross = false;
             DpadUp = DpadDown = DpadLeft = DpadRight = false;
             L1 = L3 = R1 = R3 = false;
@@ -52,6 +53,7 @@ namespace DS4Library
             LY = state.LY;
             RY = state.RY;
             Battery = state.Battery;
+            ReportTimeStamp = state.ReportTimeStamp;
         }
 
         public DS4State Clone()
@@ -86,6 +88,7 @@ namespace DS4Library
             state.LY = LY;
             state.RY = RY;
             state.Battery = Battery;
+            state.ReportTimeStamp = ReportTimeStamp;
         }
 
     }

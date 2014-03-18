@@ -11,6 +11,15 @@ namespace ScpServer
         [STAThread]
         static void Main() 
         {
+            System.Runtime.GCSettings.LatencyMode = System.Runtime.GCLatencyMode.LowLatency;
+	        try
+	        {
+	            System.Diagnostics.Process.GetCurrentProcess().PriorityClass = System.Diagnostics.ProcessPriorityClass.High;
+	        }
+	        catch
+	        {
+	            // Ignore problems raising the priority.
+	        }
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new ScpForm());
