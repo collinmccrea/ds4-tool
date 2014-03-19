@@ -8,7 +8,7 @@ using System.Threading;
 
 namespace DS4Control
 {
-    class DragMouse: Mouse
+    class DragMouse: Mouse, IDisposable
     {
         protected bool leftClick = false;
         protected Timer timer;
@@ -138,6 +138,12 @@ namespace DS4Control
                 InputMethods.MouseEvent(InputMethods.MOUSEEVENTF_LEFTDOWN);
                 leftClick = true;
             }
+        }
+
+        //CA1001 TypesThatOwnDisposableFieldsShouldBeDisposable
+        public void Dispose()
+        {
+            timer.Dispose();
         }
     }
 }

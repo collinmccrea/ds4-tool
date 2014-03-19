@@ -5,7 +5,7 @@ using System.Text;
 using DS4Library;
 namespace DS4Control
 {
-    public class Control
+    public class Control: IDisposable
     {
         X360Device x360Bus;
         DS4Device[] DS4Controllers = new DS4Device[4];
@@ -271,6 +271,12 @@ namespace DS4Control
             if (heavyBoosted > 255)
                 heavyBoosted = 255;
             DS4Controllers[deviceNum].setRumble((byte)lightBoosted, (byte)heavyBoosted);
+        }
+
+        //CA1001 TypesThatOwnDisposableFieldsShouldBeDisposable
+        public void Dispose()
+        {
+            x360Bus.Dispose();
         }
     }
 }
