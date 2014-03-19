@@ -71,7 +71,8 @@ namespace ScpServer
                         foreach (TrackBar t in allSixAxes)
                         {
                             ((System.ComponentModel.ISupportInitialize)(t)).BeginInit();
-                            t.Anchor = AnchorStyles.Bottom;
+                            t.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+                            t.BackColor = SystemColors.ControlLightLight;
                             t.AutoSize = false;
                             t.Enabled = false;
                             t.Minimum = -0x8000;
@@ -99,7 +100,7 @@ namespace ScpServer
                         tBsixaxisAccelZ.Name = "tBsixaxisAccelZ";
                         foreach (TrackBar t in allSixAxes)
                         {
-                            Controls.Add(t);
+                            tabTuning.Controls.Add(t);
                             ((System.ComponentModel.ISupportInitialize)(t)).EndInit();
                         }
                     }
@@ -526,6 +527,7 @@ namespace ScpServer
         {
             Global.setFlushHIDQueue(device, flushHIDQueue.Checked);
         }
+
 
     }
 

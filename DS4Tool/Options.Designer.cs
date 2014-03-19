@@ -85,6 +85,11 @@
             this.cbSixaxis = new System.Windows.Forms.CheckBox();
             this.flushHIDQueue = new System.Windows.Forms.CheckBox();
             this.touchpadJitterCompensation = new System.Windows.Forms.CheckBox();
+            this.tabOptions = new System.Windows.Forms.TabControl();
+            this.tabLightBar = new System.Windows.Forms.TabPage();
+            this.tabTouchPad = new System.Windows.Forms.TabPage();
+            this.tabRumble = new System.Windows.Forms.TabPage();
+            this.tabTuning = new System.Windows.Forms.TabPage();
             this.advColorDialog = new ScpServer.AdvancedColorDialog();
             ((System.ComponentModel.ISupportInitialize)(this.blueBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.greenBar)).BeginInit();
@@ -98,13 +103,17 @@
             ((System.ComponentModel.ISupportInitialize)(this.tapSensitivityBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.scrollSensitivityBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
+            this.tabOptions.SuspendLayout();
+            this.tabLightBar.SuspendLayout();
+            this.tabTouchPad.SuspendLayout();
+            this.tabRumble.SuspendLayout();
+            this.tabTuning.SuspendLayout();
             this.SuspendLayout();
             // 
             // BlueLabel
             // 
-            this.BlueLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.BlueLabel.AutoSize = true;
-            this.BlueLabel.Location = new System.Drawing.Point(20, 127);
+            this.BlueLabel.Location = new System.Drawing.Point(20, 101);
             this.BlueLabel.Name = "BlueLabel";
             this.BlueLabel.Size = new System.Drawing.Size(28, 13);
             this.BlueLabel.TabIndex = 15;
@@ -112,9 +121,8 @@
             // 
             // GreenLabel
             // 
-            this.GreenLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.GreenLabel.AutoSize = true;
-            this.GreenLabel.Location = new System.Drawing.Point(16, 96);
+            this.GreenLabel.Location = new System.Drawing.Point(16, 70);
             this.GreenLabel.Name = "GreenLabel";
             this.GreenLabel.Size = new System.Drawing.Size(36, 13);
             this.GreenLabel.TabIndex = 14;
@@ -122,9 +130,8 @@
             // 
             // RedLabel
             // 
-            this.RedLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.RedLabel.AutoSize = true;
-            this.RedLabel.Location = new System.Drawing.Point(20, 67);
+            this.RedLabel.Location = new System.Drawing.Point(20, 41);
             this.RedLabel.Name = "RedLabel";
             this.RedLabel.Size = new System.Drawing.Size(27, 13);
             this.RedLabel.TabIndex = 13;
@@ -132,11 +139,13 @@
             // 
             // blueBar
             // 
-            this.blueBar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.blueBar.Location = new System.Drawing.Point(58, 122);
+            this.blueBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.blueBar.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.blueBar.Location = new System.Drawing.Point(63, 100);
             this.blueBar.Maximum = 255;
             this.blueBar.Name = "blueBar";
-            this.blueBar.Size = new System.Drawing.Size(242, 45);
+            this.blueBar.Size = new System.Drawing.Size(288, 45);
             this.blueBar.TabIndex = 12;
             this.blueBar.TickFrequency = 25;
             this.blueBar.TickStyle = System.Windows.Forms.TickStyle.None;
@@ -144,11 +153,13 @@
             // 
             // greenBar
             // 
-            this.greenBar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.greenBar.Location = new System.Drawing.Point(58, 93);
+            this.greenBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.greenBar.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.greenBar.Location = new System.Drawing.Point(63, 70);
             this.greenBar.Maximum = 255;
             this.greenBar.Name = "greenBar";
-            this.greenBar.Size = new System.Drawing.Size(242, 45);
+            this.greenBar.Size = new System.Drawing.Size(288, 45);
             this.greenBar.TabIndex = 11;
             this.greenBar.TickFrequency = 25;
             this.greenBar.TickStyle = System.Windows.Forms.TickStyle.None;
@@ -156,11 +167,13 @@
             // 
             // redBar
             // 
-            this.redBar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.redBar.Location = new System.Drawing.Point(58, 64);
+            this.redBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.redBar.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.redBar.Location = new System.Drawing.Point(63, 40);
             this.redBar.Maximum = 255;
             this.redBar.Name = "redBar";
-            this.redBar.Size = new System.Drawing.Size(242, 45);
+            this.redBar.Size = new System.Drawing.Size(288, 45);
             this.redBar.TabIndex = 10;
             this.redBar.TickFrequency = 25;
             this.redBar.TickStyle = System.Windows.Forms.TickStyle.None;
@@ -168,7 +181,7 @@
             // 
             // blueValLabel
             // 
-            this.blueValLabel.Location = new System.Drawing.Point(2, 60);
+            this.blueValLabel.Location = new System.Drawing.Point(2, 59);
             this.blueValLabel.Name = "blueValLabel";
             this.blueValLabel.Size = new System.Drawing.Size(30, 13);
             this.blueValLabel.TabIndex = 16;
@@ -177,7 +190,7 @@
             // 
             // greenValLabel
             // 
-            this.greenValLabel.Location = new System.Drawing.Point(2, 31);
+            this.greenValLabel.Location = new System.Drawing.Point(2, 30);
             this.greenValLabel.Name = "greenValLabel";
             this.greenValLabel.Size = new System.Drawing.Size(30, 13);
             this.greenValLabel.TabIndex = 17;
@@ -186,7 +199,7 @@
             // 
             // redValLabel
             // 
-            this.redValLabel.Location = new System.Drawing.Point(2, 2);
+            this.redValLabel.Location = new System.Drawing.Point(2, 1);
             this.redValLabel.Name = "redValLabel";
             this.redValLabel.Size = new System.Drawing.Size(30, 13);
             this.redValLabel.TabIndex = 18;
@@ -196,7 +209,7 @@
             // rumbleBoostMotorValLabel
             // 
             this.rumbleBoostMotorValLabel.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.rumbleBoostMotorValLabel.Location = new System.Drawing.Point(652, 68);
+            this.rumbleBoostMotorValLabel.Location = new System.Drawing.Point(354, 43);
             this.rumbleBoostMotorValLabel.Name = "rumbleBoostMotorValLabel";
             this.rumbleBoostMotorValLabel.Size = new System.Drawing.Size(30, 13);
             this.rumbleBoostMotorValLabel.TabIndex = 27;
@@ -206,7 +219,7 @@
             // leftMotorValLabel
             // 
             this.leftMotorValLabel.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.leftMotorValLabel.Location = new System.Drawing.Point(652, 97);
+            this.leftMotorValLabel.Location = new System.Drawing.Point(354, 72);
             this.leftMotorValLabel.Name = "leftMotorValLabel";
             this.leftMotorValLabel.Size = new System.Drawing.Size(30, 13);
             this.leftMotorValLabel.TabIndex = 26;
@@ -216,7 +229,7 @@
             // rightMotorValLabel
             // 
             this.rightMotorValLabel.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.rightMotorValLabel.Location = new System.Drawing.Point(652, 128);
+            this.rightMotorValLabel.Location = new System.Drawing.Point(354, 103);
             this.rightMotorValLabel.Name = "rightMotorValLabel";
             this.rightMotorValLabel.Size = new System.Drawing.Size(30, 13);
             this.rightMotorValLabel.TabIndex = 25;
@@ -227,7 +240,7 @@
             // 
             this.rightMotorLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.rightMotorLabel.AutoSize = true;
-            this.rightMotorLabel.Location = new System.Drawing.Point(414, 127);
+            this.rightMotorLabel.Location = new System.Drawing.Point(9, 108);
             this.rightMotorLabel.Name = "rightMotorLabel";
             this.rightMotorLabel.Size = new System.Drawing.Size(30, 13);
             this.rightMotorLabel.TabIndex = 24;
@@ -237,7 +250,7 @@
             // 
             this.leftMotorLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.leftMotorLabel.AutoSize = true;
-            this.leftMotorLabel.Location = new System.Drawing.Point(410, 96);
+            this.leftMotorLabel.Location = new System.Drawing.Point(5, 77);
             this.leftMotorLabel.Name = "leftMotorLabel";
             this.leftMotorLabel.Size = new System.Drawing.Size(38, 13);
             this.leftMotorLabel.TabIndex = 23;
@@ -247,7 +260,7 @@
             // 
             this.rumbleBoostLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.rumbleBoostLabel.AutoSize = true;
-            this.rumbleBoostLabel.Location = new System.Drawing.Point(412, 67);
+            this.rumbleBoostLabel.Location = new System.Drawing.Point(7, 48);
             this.rumbleBoostLabel.Name = "rumbleBoostLabel";
             this.rumbleBoostLabel.Size = new System.Drawing.Size(34, 13);
             this.rumbleBoostLabel.TabIndex = 22;
@@ -256,10 +269,11 @@
             // rightMotorBar
             // 
             this.rightMotorBar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.rightMotorBar.Location = new System.Drawing.Point(452, 123);
+            this.rightMotorBar.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.rightMotorBar.Location = new System.Drawing.Point(63, 100);
             this.rightMotorBar.Maximum = 255;
             this.rightMotorBar.Name = "rightMotorBar";
-            this.rightMotorBar.Size = new System.Drawing.Size(194, 45);
+            this.rightMotorBar.Size = new System.Drawing.Size(288, 45);
             this.rightMotorBar.TabIndex = 21;
             this.rightMotorBar.TickFrequency = 25;
             this.rightMotorBar.TickStyle = System.Windows.Forms.TickStyle.None;
@@ -268,10 +282,11 @@
             // leftMotorBar
             // 
             this.leftMotorBar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.leftMotorBar.Location = new System.Drawing.Point(452, 94);
+            this.leftMotorBar.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.leftMotorBar.Location = new System.Drawing.Point(63, 70);
             this.leftMotorBar.Maximum = 255;
             this.leftMotorBar.Name = "leftMotorBar";
-            this.leftMotorBar.Size = new System.Drawing.Size(194, 45);
+            this.leftMotorBar.Size = new System.Drawing.Size(288, 45);
             this.leftMotorBar.TabIndex = 20;
             this.leftMotorBar.TickFrequency = 25;
             this.leftMotorBar.TickStyle = System.Windows.Forms.TickStyle.None;
@@ -280,10 +295,11 @@
             // rumbleBoostBar
             // 
             this.rumbleBoostBar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.rumbleBoostBar.Location = new System.Drawing.Point(452, 65);
+            this.rumbleBoostBar.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.rumbleBoostBar.Location = new System.Drawing.Point(63, 40);
             this.rumbleBoostBar.Maximum = 200;
             this.rumbleBoostBar.Name = "rumbleBoostBar";
-            this.rumbleBoostBar.Size = new System.Drawing.Size(194, 45);
+            this.rumbleBoostBar.Size = new System.Drawing.Size(288, 45);
             this.rumbleBoostBar.TabIndex = 19;
             this.rumbleBoostBar.TickFrequency = 25;
             this.rumbleBoostBar.TickStyle = System.Windows.Forms.TickStyle.None;
@@ -293,25 +309,27 @@
             // rumbleLabel
             // 
             this.rumbleLabel.AutoSize = true;
-            this.rumbleLabel.Location = new System.Drawing.Point(410, 9);
+            this.rumbleLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rumbleLabel.Location = new System.Drawing.Point(3, 23);
             this.rumbleLabel.Name = "rumbleLabel";
-            this.rumbleLabel.Size = new System.Drawing.Size(77, 13);
+            this.rumbleLabel.Size = new System.Drawing.Size(44, 13);
             this.rumbleLabel.TabIndex = 28;
-            this.rumbleLabel.Text = "Rumble motors";
+            this.rumbleLabel.Text = "Levels";
             // 
             // colorLabel
             // 
             this.colorLabel.AutoSize = true;
-            this.colorLabel.Location = new System.Drawing.Point(16, 9);
+            this.colorLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.colorLabel.Location = new System.Drawing.Point(16, 20);
             this.colorLabel.Name = "colorLabel";
-            this.colorLabel.Size = new System.Drawing.Size(76, 13);
+            this.colorLabel.Size = new System.Drawing.Size(36, 13);
             this.colorLabel.TabIndex = 29;
-            this.colorLabel.Text = "Light Bar Color";
+            this.colorLabel.Text = "Color";
             // 
             // setButton
             // 
-            this.setButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.setButton.Location = new System.Drawing.Point(659, 269);
+            this.setButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.setButton.Location = new System.Drawing.Point(12, 214);
             this.setButton.Name = "setButton";
             this.setButton.Size = new System.Drawing.Size(75, 23);
             this.setButton.TabIndex = 30;
@@ -321,10 +339,10 @@
             // 
             // CustomMappingButton
             // 
-            this.CustomMappingButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.CustomMappingButton.Location = new System.Drawing.Point(36, 269);
+            this.CustomMappingButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.CustomMappingButton.Location = new System.Drawing.Point(300, 214);
             this.CustomMappingButton.Name = "CustomMappingButton";
-            this.CustomMappingButton.Size = new System.Drawing.Size(172, 23);
+            this.CustomMappingButton.Size = new System.Drawing.Size(141, 23);
             this.CustomMappingButton.TabIndex = 31;
             this.CustomMappingButton.Text = "Custom Control Mapping";
             this.CustomMappingButton.UseVisualStyleBackColor = true;
@@ -332,8 +350,8 @@
             // 
             // saveButton
             // 
-            this.saveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.saveButton.Location = new System.Drawing.Point(740, 269);
+            this.saveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.saveButton.Location = new System.Drawing.Point(93, 214);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(75, 23);
             this.saveButton.TabIndex = 32;
@@ -343,13 +361,13 @@
             // 
             // batteryLed
             // 
-            this.batteryLed.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.batteryLed.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.batteryLed.AutoSize = true;
-            this.batteryLed.Location = new System.Drawing.Point(16, 186);
+            this.batteryLed.Location = new System.Drawing.Point(149, 136);
             this.batteryLed.Name = "batteryLed";
-            this.batteryLed.Size = new System.Drawing.Size(200, 17);
+            this.batteryLed.Size = new System.Drawing.Size(115, 17);
             this.batteryLed.TabIndex = 33;
-            this.batteryLed.Text = "Light Bar Color indicates battery level";
+            this.batteryLed.Text = "Battery Level Color";
             this.batteryLed.UseVisualStyleBackColor = true;
             this.batteryLed.CheckedChanged += new System.EventHandler(this.ledAsBatteryIndicator_CheckedChanged);
             // 
@@ -357,36 +375,36 @@
             // 
             this.flashLed.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.flashLed.AutoSize = true;
-            this.flashLed.Location = new System.Drawing.Point(16, 209);
+            this.flashLed.Location = new System.Drawing.Point(9, 136);
             this.flashLed.Name = "flashLed";
-            this.flashLed.Size = new System.Drawing.Size(192, 17);
+            this.flashLed.Size = new System.Drawing.Size(116, 17);
             this.flashLed.TabIndex = 34;
-            this.flashLed.Text = "Flash pattern indicates battery level";
+            this.flashLed.Text = "Battery Level Flash";
             this.flashLed.UseVisualStyleBackColor = true;
             this.flashLed.CheckedChanged += new System.EventHandler(this.flashWhenLowBattery_CheckedChanged);
             // 
             // touchCheckBox
             // 
-            this.touchCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.touchCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.touchCheckBox.AutoSize = true;
-            this.touchCheckBox.Location = new System.Drawing.Point(665, 176);
+            this.touchCheckBox.Location = new System.Drawing.Point(9, 136);
             this.touchCheckBox.Name = "touchCheckBox";
-            this.touchCheckBox.Size = new System.Drawing.Size(148, 17);
+            this.touchCheckBox.Size = new System.Drawing.Size(113, 17);
             this.touchCheckBox.TabIndex = 35;
-            this.touchCheckBox.Text = "Enable Touchpad at Start";
+            this.touchCheckBox.Text = "Enable on Launch";
             this.touchCheckBox.UseVisualStyleBackColor = true;
             this.touchCheckBox.CheckedChanged += new System.EventHandler(this.touchAtStartCheckBox_CheckedChanged);
             // 
             // touchSensitivityBar
             // 
-            this.touchSensitivityBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.touchSensitivityBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.touchSensitivityBar.Location = new System.Drawing.Point(703, 38);
+            this.touchSensitivityBar.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.touchSensitivityBar.Location = new System.Drawing.Point(63, 40);
             this.touchSensitivityBar.Maximum = 150;
             this.touchSensitivityBar.Minimum = 10;
             this.touchSensitivityBar.Name = "touchSensitivityBar";
-            this.touchSensitivityBar.Orientation = System.Windows.Forms.Orientation.Vertical;
-            this.touchSensitivityBar.Size = new System.Drawing.Size(45, 111);
+            this.touchSensitivityBar.Size = new System.Drawing.Size(288, 45);
             this.touchSensitivityBar.TabIndex = 36;
             this.touchSensitivityBar.TickStyle = System.Windows.Forms.TickStyle.None;
             this.touchSensitivityBar.Value = 100;
@@ -395,17 +413,17 @@
             // label1
             // 
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label1.Location = new System.Drawing.Point(709, 9);
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(9, 18);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(106, 13);
             this.label1.TabIndex = 37;
-            this.label1.Text = "Touchpad Sensitivity";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label1.Text = "Sensitivity";
             // 
             // sensitivityValLabel
             // 
-            this.sensitivityValLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.sensitivityValLabel.Location = new System.Drawing.Point(703, 152);
+            this.sensitivityValLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.sensitivityValLabel.Location = new System.Drawing.Point(356, 43);
             this.sensitivityValLabel.Name = "sensitivityValLabel";
             this.sensitivityValLabel.Size = new System.Drawing.Size(25, 13);
             this.sensitivityValLabel.TabIndex = 38;
@@ -416,17 +434,17 @@
             // 
             this.lowerRCOffCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lowerRCOffCheckBox.AutoSize = true;
-            this.lowerRCOffCheckBox.Location = new System.Drawing.Point(665, 199);
+            this.lowerRCOffCheckBox.Location = new System.Drawing.Point(284, 136);
             this.lowerRCOffCheckBox.Name = "lowerRCOffCheckBox";
-            this.lowerRCOffCheckBox.Size = new System.Drawing.Size(151, 17);
+            this.lowerRCOffCheckBox.Size = new System.Drawing.Size(109, 17);
             this.lowerRCOffCheckBox.TabIndex = 39;
-            this.lowerRCOffCheckBox.Text = "Turn Off Lower Right Click";
+            this.lowerRCOffCheckBox.Text = "Lower Right Click";
             this.lowerRCOffCheckBox.UseVisualStyleBackColor = true;
             this.lowerRCOffCheckBox.CheckedChanged += new System.EventHandler(this.lowerRCOffCheckBox_CheckedChanged);
             // 
             // lowRedValLabel
             // 
-            this.lowRedValLabel.Location = new System.Drawing.Point(36, 44);
+            this.lowRedValLabel.Location = new System.Drawing.Point(36, 43);
             this.lowRedValLabel.Name = "lowRedValLabel";
             this.lowRedValLabel.Size = new System.Drawing.Size(30, 13);
             this.lowRedValLabel.TabIndex = 40;
@@ -435,7 +453,7 @@
             // 
             // lowGreenValLabel
             // 
-            this.lowGreenValLabel.Location = new System.Drawing.Point(36, 73);
+            this.lowGreenValLabel.Location = new System.Drawing.Point(36, 72);
             this.lowGreenValLabel.Name = "lowGreenValLabel";
             this.lowGreenValLabel.Size = new System.Drawing.Size(30, 13);
             this.lowGreenValLabel.TabIndex = 41;
@@ -444,7 +462,7 @@
             // 
             // lowBlueValLabel
             // 
-            this.lowBlueValLabel.Location = new System.Drawing.Point(36, 102);
+            this.lowBlueValLabel.Location = new System.Drawing.Point(36, 101);
             this.lowBlueValLabel.Name = "lowBlueValLabel";
             this.lowBlueValLabel.Size = new System.Drawing.Size(30, 13);
             this.lowBlueValLabel.TabIndex = 42;
@@ -454,7 +472,7 @@
             // fullColorLabel
             // 
             this.fullColorLabel.AutoSize = true;
-            this.fullColorLabel.Location = new System.Drawing.Point(3, 26);
+            this.fullColorLabel.Location = new System.Drawing.Point(3, 20);
             this.fullColorLabel.Name = "fullColorLabel";
             this.fullColorLabel.Size = new System.Drawing.Size(23, 13);
             this.fullColorLabel.TabIndex = 43;
@@ -463,7 +481,7 @@
             // lowColorLabel
             // 
             this.lowColorLabel.AutoSize = true;
-            this.lowColorLabel.Location = new System.Drawing.Point(36, 26);
+            this.lowColorLabel.Location = new System.Drawing.Point(36, 20);
             this.lowColorLabel.Name = "lowColorLabel";
             this.lowColorLabel.Size = new System.Drawing.Size(27, 13);
             this.lowColorLabel.TabIndex = 44;
@@ -471,27 +489,27 @@
             // 
             // lowLedCheckBox
             // 
-            this.lowLedCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.lowLedCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lowLedCheckBox.AutoSize = true;
-            this.lowLedCheckBox.Location = new System.Drawing.Point(232, 186);
+            this.lowLedCheckBox.Location = new System.Drawing.Point(284, 136);
             this.lowLedCheckBox.Name = "lowLedCheckBox";
-            this.lowLedCheckBox.Size = new System.Drawing.Size(173, 17);
+            this.lowLedCheckBox.Size = new System.Drawing.Size(128, 17);
             this.lowLedCheckBox.TabIndex = 45;
-            this.lowLedCheckBox.Text = "Set Low-Battery Light Bar Color";
+            this.lowLedCheckBox.Text = "Set Low-Battery Color";
             this.lowLedCheckBox.UseVisualStyleBackColor = true;
             this.lowLedCheckBox.Visible = false;
             this.lowLedCheckBox.CheckedChanged += new System.EventHandler(this.lowBatteryLed_CheckedChanged);
             // 
             // lowLedPanel
             // 
-            this.lowLedPanel.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.lowLedPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lowLedPanel.Controls.Add(this.lowColorChooserButton);
             this.lowLedPanel.Controls.Add(this.fullColorLabel);
             this.lowLedPanel.Controls.Add(this.lowRedValLabel);
             this.lowLedPanel.Controls.Add(this.lowColorLabel);
             this.lowLedPanel.Controls.Add(this.lowGreenValLabel);
             this.lowLedPanel.Controls.Add(this.lowBlueValLabel);
-            this.lowLedPanel.Location = new System.Drawing.Point(303, 23);
+            this.lowLedPanel.Location = new System.Drawing.Point(356, 4);
             this.lowLedPanel.Name = "lowLedPanel";
             this.lowLedPanel.Size = new System.Drawing.Size(63, 129);
             this.lowLedPanel.TabIndex = 46;
@@ -501,7 +519,7 @@
             // 
             this.lowColorChooserButton.BackColor = System.Drawing.Color.White;
             this.lowColorChooserButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.lowColorChooserButton.Location = new System.Drawing.Point(42, 9);
+            this.lowColorChooserButton.Location = new System.Drawing.Point(42, 3);
             this.lowColorChooserButton.Name = "lowColorChooserButton";
             this.lowColorChooserButton.Size = new System.Drawing.Size(13, 13);
             this.lowColorChooserButton.TabIndex = 49;
@@ -510,21 +528,21 @@
             // 
             // fullLedPanel
             // 
-            this.fullLedPanel.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.fullLedPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.fullLedPanel.Controls.Add(this.redValLabel);
             this.fullLedPanel.Controls.Add(this.blueValLabel);
             this.fullLedPanel.Controls.Add(this.greenValLabel);
-            this.fullLedPanel.Location = new System.Drawing.Point(302, 65);
+            this.fullLedPanel.Location = new System.Drawing.Point(355, 46);
             this.fullLedPanel.Name = "fullLedPanel";
             this.fullLedPanel.Size = new System.Drawing.Size(28, 83);
             this.fullLedPanel.TabIndex = 47;
             // 
             // colorChooserButton
             // 
-            this.colorChooserButton.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.colorChooserButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.colorChooserButton.BackColor = System.Drawing.Color.White;
             this.colorChooserButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.colorChooserButton.Location = new System.Drawing.Point(311, 32);
+            this.colorChooserButton.Location = new System.Drawing.Point(364, 7);
             this.colorChooserButton.Name = "colorChooserButton";
             this.colorChooserButton.Size = new System.Drawing.Size(13, 13);
             this.colorChooserButton.TabIndex = 48;
@@ -533,8 +551,8 @@
             // 
             // tapSensitivityValLabel
             // 
-            this.tapSensitivityValLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.tapSensitivityValLabel.Location = new System.Drawing.Point(746, 152);
+            this.tapSensitivityValLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.tapSensitivityValLabel.Location = new System.Drawing.Point(356, 72);
             this.tapSensitivityValLabel.Name = "tapSensitivityValLabel";
             this.tapSensitivityValLabel.Size = new System.Drawing.Size(25, 13);
             this.tapSensitivityValLabel.TabIndex = 50;
@@ -543,21 +561,21 @@
             // 
             // tapSensitivityBar
             // 
-            this.tapSensitivityBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.tapSensitivityBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tapSensitivityBar.Location = new System.Drawing.Point(746, 38);
+            this.tapSensitivityBar.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.tapSensitivityBar.Location = new System.Drawing.Point(63, 70);
             this.tapSensitivityBar.Maximum = 150;
             this.tapSensitivityBar.Name = "tapSensitivityBar";
-            this.tapSensitivityBar.Orientation = System.Windows.Forms.Orientation.Vertical;
-            this.tapSensitivityBar.Size = new System.Drawing.Size(45, 111);
+            this.tapSensitivityBar.Size = new System.Drawing.Size(288, 45);
             this.tapSensitivityBar.TabIndex = 49;
             this.tapSensitivityBar.TickStyle = System.Windows.Forms.TickStyle.None;
             this.tapSensitivityBar.ValueChanged += new System.EventHandler(this.tapSensitivityBar_ValueChanged);
             // 
             // scrollSensitivityValLabel
             // 
-            this.scrollSensitivityValLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.scrollSensitivityValLabel.Location = new System.Drawing.Point(789, 152);
+            this.scrollSensitivityValLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.scrollSensitivityValLabel.Location = new System.Drawing.Point(356, 102);
             this.scrollSensitivityValLabel.Name = "scrollSensitivityValLabel";
             this.scrollSensitivityValLabel.Size = new System.Drawing.Size(25, 13);
             this.scrollSensitivityValLabel.TabIndex = 52;
@@ -566,14 +584,14 @@
             // 
             // scrollSensitivityBar
             // 
-            this.scrollSensitivityBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.scrollSensitivityBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.scrollSensitivityBar.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.scrollSensitivityBar.LargeChange = 2;
-            this.scrollSensitivityBar.Location = new System.Drawing.Point(789, 38);
+            this.scrollSensitivityBar.Location = new System.Drawing.Point(63, 100);
             this.scrollSensitivityBar.Minimum = -10;
             this.scrollSensitivityBar.Name = "scrollSensitivityBar";
-            this.scrollSensitivityBar.Orientation = System.Windows.Forms.Orientation.Vertical;
-            this.scrollSensitivityBar.Size = new System.Drawing.Size(45, 111);
+            this.scrollSensitivityBar.Size = new System.Drawing.Size(288, 45);
             this.scrollSensitivityBar.TabIndex = 51;
             this.scrollSensitivityBar.TickFrequency = 5;
             this.scrollSensitivityBar.TickStyle = System.Windows.Forms.TickStyle.None;
@@ -581,8 +599,7 @@
             // 
             // label4
             // 
-            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label4.Location = new System.Drawing.Point(734, 25);
+            this.label4.Location = new System.Drawing.Point(9, 70);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(48, 13);
             this.label4.TabIndex = 53;
@@ -591,8 +608,7 @@
             // 
             // label5
             // 
-            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label5.Location = new System.Drawing.Point(691, 25);
+            this.label5.Location = new System.Drawing.Point(9, 41);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(48, 13);
             this.label5.TabIndex = 54;
@@ -601,8 +617,7 @@
             // 
             // label6
             // 
-            this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label6.Location = new System.Drawing.Point(777, 25);
+            this.label6.Location = new System.Drawing.Point(9, 100);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(48, 13);
             this.label6.TabIndex = 55;
@@ -611,9 +626,9 @@
             // 
             // realTimeChangesCheckBox
             // 
-            this.realTimeChangesCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.realTimeChangesCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.realTimeChangesCheckBox.AutoSize = true;
-            this.realTimeChangesCheckBox.Location = new System.Drawing.Point(665, 245);
+            this.realTimeChangesCheckBox.Location = new System.Drawing.Point(177, 13);
             this.realTimeChangesCheckBox.Name = "realTimeChangesCheckBox";
             this.realTimeChangesCheckBox.Size = new System.Drawing.Size(115, 17);
             this.realTimeChangesCheckBox.TabIndex = 56;
@@ -623,12 +638,12 @@
             // 
             // pictureBox
             // 
-            this.pictureBox.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.pictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox.BackColor = System.Drawing.Color.Aqua;
             this.pictureBox.Image = global::ScpServer.Properties.Resources._1;
-            this.pictureBox.Location = new System.Drawing.Point(251, 222);
+            this.pictureBox.Location = new System.Drawing.Point(247, 214);
             this.pictureBox.Name = "pictureBox";
-            this.pictureBox.Size = new System.Drawing.Size(140, 70);
+            this.pictureBox.Size = new System.Drawing.Size(47, 23);
             this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox.TabIndex = 73;
             this.pictureBox.TabStop = false;
@@ -636,9 +651,8 @@
             // 
             // label11
             // 
-            this.label11.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(598, 169);
+            this.label11.Location = new System.Drawing.Point(93, 41);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(21, 13);
             this.label11.TabIndex = 78;
@@ -646,9 +660,8 @@
             // 
             // label10
             // 
-            this.label10.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(542, 169);
+            this.label10.Location = new System.Drawing.Point(37, 41);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(19, 13);
             this.label10.TabIndex = 77;
@@ -656,8 +669,7 @@
             // 
             // rightTriggerMiddlePoint
             // 
-            this.rightTriggerMiddlePoint.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.rightTriggerMiddlePoint.Location = new System.Drawing.Point(582, 184);
+            this.rightTriggerMiddlePoint.Location = new System.Drawing.Point(77, 56);
             this.rightTriggerMiddlePoint.Margin = new System.Windows.Forms.Padding(2);
             this.rightTriggerMiddlePoint.MaxLength = 20;
             this.rightTriggerMiddlePoint.Name = "rightTriggerMiddlePoint";
@@ -667,8 +679,7 @@
             // 
             // leftTriggerMiddlePoint
             // 
-            this.leftTriggerMiddlePoint.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.leftTriggerMiddlePoint.Location = new System.Drawing.Point(526, 184);
+            this.leftTriggerMiddlePoint.Location = new System.Drawing.Point(21, 56);
             this.leftTriggerMiddlePoint.Margin = new System.Windows.Forms.Padding(2);
             this.leftTriggerMiddlePoint.MaxLength = 20;
             this.leftTriggerMiddlePoint.Name = "leftTriggerMiddlePoint";
@@ -678,9 +689,8 @@
             // 
             // label9
             // 
-            this.label9.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(431, 187);
+            this.label9.Location = new System.Drawing.Point(34, 13);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(90, 13);
             this.label9.TabIndex = 74;
@@ -688,9 +698,9 @@
             // 
             // cbSixaxis
             // 
-            this.cbSixaxis.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.cbSixaxis.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.cbSixaxis.AutoSize = true;
-            this.cbSixaxis.Location = new System.Drawing.Point(469, 220);
+            this.cbSixaxis.Location = new System.Drawing.Point(177, 59);
             this.cbSixaxis.Name = "cbSixaxis";
             this.cbSixaxis.Size = new System.Drawing.Size(141, 17);
             this.cbSixaxis.TabIndex = 79;
@@ -703,7 +713,7 @@
             this.flushHIDQueue.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.flushHIDQueue.AutoSize = true;
             this.flushHIDQueue.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.flushHIDQueue.Location = new System.Drawing.Point(16, 232);
+            this.flushHIDQueue.Location = new System.Drawing.Point(177, 36);
             this.flushHIDQueue.Name = "flushHIDQueue";
             this.flushHIDQueue.Size = new System.Drawing.Size(195, 17);
             this.flushHIDQueue.TabIndex = 80;
@@ -713,15 +723,112 @@
             // 
             // touchpadJitterCompensation
             // 
-            this.touchpadJitterCompensation.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.touchpadJitterCompensation.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.touchpadJitterCompensation.AutoSize = true;
-            this.touchpadJitterCompensation.Location = new System.Drawing.Point(665, 222);
+            this.touchpadJitterCompensation.Location = new System.Drawing.Point(149, 136);
             this.touchpadJitterCompensation.Name = "touchpadJitterCompensation";
             this.touchpadJitterCompensation.Size = new System.Drawing.Size(118, 17);
             this.touchpadJitterCompensation.TabIndex = 81;
             this.touchpadJitterCompensation.Text = "Jitter Compensation";
             this.touchpadJitterCompensation.UseVisualStyleBackColor = true;
             this.touchpadJitterCompensation.CheckedChanged += new System.EventHandler(this.touchpadJitterCompensation_CheckedChanged);
+            // 
+            // tabOptions
+            // 
+            this.tabOptions.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabOptions.Controls.Add(this.tabLightBar);
+            this.tabOptions.Controls.Add(this.tabTouchPad);
+            this.tabOptions.Controls.Add(this.tabRumble);
+            this.tabOptions.Controls.Add(this.tabTuning);
+            this.tabOptions.Location = new System.Drawing.Point(12, 12);
+            this.tabOptions.Name = "tabOptions";
+            this.tabOptions.SelectedIndex = 0;
+            this.tabOptions.Size = new System.Drawing.Size(433, 196);
+            this.tabOptions.TabIndex = 82;
+            // 
+            // tabLightBar
+            // 
+            this.tabLightBar.Controls.Add(this.flashLed);
+            this.tabLightBar.Controls.Add(this.lowLedCheckBox);
+            this.tabLightBar.Controls.Add(this.batteryLed);
+            this.tabLightBar.Controls.Add(this.colorChooserButton);
+            this.tabLightBar.Controls.Add(this.fullLedPanel);
+            this.tabLightBar.Controls.Add(this.blueBar);
+            this.tabLightBar.Controls.Add(this.greenBar);
+            this.tabLightBar.Controls.Add(this.colorLabel);
+            this.tabLightBar.Controls.Add(this.RedLabel);
+            this.tabLightBar.Controls.Add(this.redBar);
+            this.tabLightBar.Controls.Add(this.GreenLabel);
+            this.tabLightBar.Controls.Add(this.BlueLabel);
+            this.tabLightBar.Controls.Add(this.lowLedPanel);
+            this.tabLightBar.Location = new System.Drawing.Point(4, 22);
+            this.tabLightBar.Name = "tabLightBar";
+            this.tabLightBar.Padding = new System.Windows.Forms.Padding(3);
+            this.tabLightBar.Size = new System.Drawing.Size(425, 170);
+            this.tabLightBar.TabIndex = 0;
+            this.tabLightBar.Text = "Light Bar";
+            this.tabLightBar.UseVisualStyleBackColor = true;
+            // 
+            // tabTouchPad
+            // 
+            this.tabTouchPad.Controls.Add(this.lowerRCOffCheckBox);
+            this.tabTouchPad.Controls.Add(this.touchCheckBox);
+            this.tabTouchPad.Controls.Add(this.touchpadJitterCompensation);
+            this.tabTouchPad.Controls.Add(this.scrollSensitivityBar);
+            this.tabTouchPad.Controls.Add(this.tapSensitivityBar);
+            this.tabTouchPad.Controls.Add(this.label1);
+            this.tabTouchPad.Controls.Add(this.touchSensitivityBar);
+            this.tabTouchPad.Controls.Add(this.label5);
+            this.tabTouchPad.Controls.Add(this.label4);
+            this.tabTouchPad.Controls.Add(this.label6);
+            this.tabTouchPad.Controls.Add(this.sensitivityValLabel);
+            this.tabTouchPad.Controls.Add(this.tapSensitivityValLabel);
+            this.tabTouchPad.Controls.Add(this.scrollSensitivityValLabel);
+            this.tabTouchPad.Location = new System.Drawing.Point(4, 22);
+            this.tabTouchPad.Name = "tabTouchPad";
+            this.tabTouchPad.Size = new System.Drawing.Size(425, 170);
+            this.tabTouchPad.TabIndex = 2;
+            this.tabTouchPad.Text = "Touch Pad";
+            this.tabTouchPad.UseVisualStyleBackColor = true;
+            // 
+            // tabRumble
+            // 
+            this.tabRumble.Controls.Add(this.rightMotorBar);
+            this.tabRumble.Controls.Add(this.leftMotorBar);
+            this.tabRumble.Controls.Add(this.rumbleLabel);
+            this.tabRumble.Controls.Add(this.rumbleBoostBar);
+            this.tabRumble.Controls.Add(this.rumbleBoostLabel);
+            this.tabRumble.Controls.Add(this.leftMotorLabel);
+            this.tabRumble.Controls.Add(this.rightMotorLabel);
+            this.tabRumble.Controls.Add(this.rightMotorValLabel);
+            this.tabRumble.Controls.Add(this.leftMotorValLabel);
+            this.tabRumble.Controls.Add(this.rumbleBoostMotorValLabel);
+            this.tabRumble.Location = new System.Drawing.Point(4, 22);
+            this.tabRumble.Name = "tabRumble";
+            this.tabRumble.Padding = new System.Windows.Forms.Padding(3);
+            this.tabRumble.Size = new System.Drawing.Size(425, 170);
+            this.tabRumble.TabIndex = 1;
+            this.tabRumble.Text = "Rumble";
+            this.tabRumble.UseVisualStyleBackColor = true;
+            // 
+            // tabTuning
+            // 
+            this.tabTuning.Controls.Add(this.cbSixaxis);
+            this.tabTuning.Controls.Add(this.label11);
+            this.tabTuning.Controls.Add(this.realTimeChangesCheckBox);
+            this.tabTuning.Controls.Add(this.flushHIDQueue);
+            this.tabTuning.Controls.Add(this.label10);
+            this.tabTuning.Controls.Add(this.label9);
+            this.tabTuning.Controls.Add(this.rightTriggerMiddlePoint);
+            this.tabTuning.Controls.Add(this.leftTriggerMiddlePoint);
+            this.tabTuning.Location = new System.Drawing.Point(4, 22);
+            this.tabTuning.Name = "tabTuning";
+            this.tabTuning.Size = new System.Drawing.Size(425, 170);
+            this.tabTuning.TabIndex = 3;
+            this.tabTuning.Text = "Tuning";
+            this.tabTuning.UseVisualStyleBackColor = true;
             // 
             // advColorDialog
             // 
@@ -734,57 +841,13 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(244)))), ((int)(((byte)(244)))));
-            this.ClientSize = new System.Drawing.Size(827, 310);
-            this.Controls.Add(this.touchpadJitterCompensation);
-            this.Controls.Add(this.flushHIDQueue);
-            this.Controls.Add(this.cbSixaxis);
-            this.Controls.Add(this.label11);
-            this.Controls.Add(this.label10);
-            this.Controls.Add(this.rightTriggerMiddlePoint);
-            this.Controls.Add(this.leftTriggerMiddlePoint);
-            this.Controls.Add(this.label9);
+            this.ClientSize = new System.Drawing.Size(454, 244);
             this.Controls.Add(this.pictureBox);
-            this.Controls.Add(this.realTimeChangesCheckBox);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.scrollSensitivityValLabel);
-            this.Controls.Add(this.scrollSensitivityBar);
-            this.Controls.Add(this.tapSensitivityValLabel);
-            this.Controls.Add(this.tapSensitivityBar);
-            this.Controls.Add(this.colorChooserButton);
-            this.Controls.Add(this.fullLedPanel);
-            this.Controls.Add(this.lowLedCheckBox);
-            this.Controls.Add(this.lowerRCOffCheckBox);
-            this.Controls.Add(this.sensitivityValLabel);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.touchSensitivityBar);
-            this.Controls.Add(this.touchCheckBox);
-            this.Controls.Add(this.flashLed);
-            this.Controls.Add(this.batteryLed);
+            this.Controls.Add(this.tabOptions);
             this.Controls.Add(this.saveButton);
             this.Controls.Add(this.CustomMappingButton);
             this.Controls.Add(this.setButton);
-            this.Controls.Add(this.colorLabel);
-            this.Controls.Add(this.rumbleLabel);
-            this.Controls.Add(this.rumbleBoostMotorValLabel);
-            this.Controls.Add(this.leftMotorValLabel);
-            this.Controls.Add(this.rightMotorValLabel);
-            this.Controls.Add(this.rightMotorLabel);
-            this.Controls.Add(this.leftMotorLabel);
-            this.Controls.Add(this.rumbleBoostLabel);
-            this.Controls.Add(this.rightMotorBar);
-            this.Controls.Add(this.leftMotorBar);
-            this.Controls.Add(this.rumbleBoostBar);
-            this.Controls.Add(this.BlueLabel);
-            this.Controls.Add(this.GreenLabel);
-            this.Controls.Add(this.RedLabel);
-            this.Controls.Add(this.blueBar);
-            this.Controls.Add(this.greenBar);
-            this.Controls.Add(this.redBar);
-            this.Controls.Add(this.lowLedPanel);
-            this.MaximumSize = new System.Drawing.Size(886, 359);
-            this.MinimumSize = new System.Drawing.Size(797, 303);
+            this.MinimumSize = new System.Drawing.Size(470, 282);
             this.Name = "Options";
             this.Text = "Options";
             ((System.ComponentModel.ISupportInitialize)(this.blueBar)).EndInit();
@@ -800,8 +863,16 @@
             ((System.ComponentModel.ISupportInitialize)(this.tapSensitivityBar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.scrollSensitivityBar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
+            this.tabOptions.ResumeLayout(false);
+            this.tabLightBar.ResumeLayout(false);
+            this.tabLightBar.PerformLayout();
+            this.tabTouchPad.ResumeLayout(false);
+            this.tabTouchPad.PerformLayout();
+            this.tabRumble.ResumeLayout(false);
+            this.tabRumble.PerformLayout();
+            this.tabTuning.ResumeLayout(false);
+            this.tabTuning.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -867,5 +938,10 @@
         private System.Windows.Forms.CheckBox cbSixaxis;
         private System.Windows.Forms.CheckBox flushHIDQueue;
         private System.Windows.Forms.CheckBox touchpadJitterCompensation;
+        private System.Windows.Forms.TabControl tabOptions;
+        private System.Windows.Forms.TabPage tabLightBar;
+        private System.Windows.Forms.TabPage tabRumble;
+        private System.Windows.Forms.TabPage tabTouchPad;
+        private System.Windows.Forms.TabPage tabTuning;
     }
 }
