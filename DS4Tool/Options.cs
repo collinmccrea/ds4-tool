@@ -188,7 +188,7 @@ namespace ScpServer
             scpDevice.setRumble((byte)leftMotorBar.Value, (byte)rightMotorBar.Value,device);
             Global.setTouchSensitivity(device, (byte)touchSensitivityBar.Value);
             Global.setTouchpadJitterCompensation(device, touchpadJitterCompensation.Checked);
-            Global.setLowerRCOff(device, lowerRCOffCheckBox.Checked);
+            Global.setLowerRCOff(device, !lowerRCOffCheckBox.Checked);
             Global.setTapSensitivity(device, (byte)tapSensitivityBar.Value);
             Global.setScrollSensitivity(device, scrollSensitivityBar.Value);
         }
