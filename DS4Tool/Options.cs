@@ -434,7 +434,7 @@ namespace ScpServer
         private void lowerRCOffCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             if (realTimeChangesCheckBox.Checked)
-                Global.setLowerRCOff(device, lowerRCOffCheckBox.Checked);
+                Global.setLowerRCOff(device, !lowerRCOffCheckBox.Checked);
         }
 
         private void touchpadJitterCompensation_CheckedChanged(object sender, EventArgs e)
