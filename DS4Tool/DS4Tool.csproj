@@ -169,6 +169,7 @@
     <Content Include="Resources\7.png" />
     <Content Include="Resources\8.png" />
     <Content Include="Resources\9.png" />
+    <None Include="Resources\DS4 More Red %28small%29.png" />
     <Content Include="Resources\DS4.ico" />
     <Content Include="Resources\Scp_All.ico" />
   </ItemGroup>
