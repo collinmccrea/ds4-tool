@@ -21,6 +21,7 @@ namespace ScpServer
         private ComboBox lastSelected;
         private Dictionary<DS4Controls, GraphicsPath> pictureBoxZones = new Dictionary<DS4Controls, GraphicsPath>();
         private DS4Control.Control rootHub = null;
+        private System.Windows.Forms.Control mappingControl = null;
 
         //Below used to capture control zones
         //GraphicsPath test = new System.Drawing.Drawing2D.GraphicsPath();
@@ -342,6 +343,21 @@ namespace ScpServer
                 //    txtZone.Text += String.Format("new Point({0}, {1}), ", test.PathPoints[i].X, test.PathPoints[i].Y);
                 //lastPoint = Point.Empty;
                 //test = new GraphicsPath();
+                foreach (KeyValuePair<DS4Controls, GraphicsPath> zone in pictureBoxZones)
+                    if (zone.Value.IsVisible(e.Location))
+                    {
+                        mappingControl = Controls.Find(getNameByDS4Controls(zone.Key), false).FirstOrDefault();
+
+                        if (mappingControl == cbLX || mappingControl == cbLX2 || mappingControl == cbRX || mappingControl == cbRX2)
+                            contextMenuStrip1.Items.Find("mouseMovementToolStripMenuItem", true).FirstOrDefault().Visible = true;
+                        else if (mappingControl == cbLY || mappingControl == cbLY2 || mappingControl == cbRY || mappingControl == cbRY2)
+                            contextMenuStrip1.Items.Find("mouseMovementToolStripMenuItem", true).FirstOrDefault().Visible = true;
+                        else
+                            contextMenuStrip1.Items.Find("mouseMovementToolStripMenuItem", true).FirstOrDefault().Visible = false;
+
+
+                        contextMenuStrip1.Show(pictureBox, e.Location);
+                    }
             }
         }
 
@@ -393,6 +409,75 @@ namespace ScpServer
                 case DS4Controls.TouchUpper: return "cbTouchUpper";
             }
             return string.Empty;
+        }
+
+        private string getX360InputNameFromEnum(X360Controls control)
+        {
+            switch (control)
+            {
+                case X360Controls.Back: return "Back";
+                case X360Controls.LS: return "Left Stick";
+                case X360Controls.RS: return "Right Stick";
+                case X360Controls.Start: return "Start";
+                case X360Controls.DpadUp: return "Up Button";
+                case X360Controls.DpadRight: return "Right Button";
+                case X360Controls.DpadDown: return "Down Button";
+                case X360Controls.DpadLeft: return "Left Button";
+
+                case X360Controls.LB: return  "Left Bumper";
+                case X360Controls.RB: return "Right Bumper";
+                case X360Controls.Y: return "Y Button";
+                case X360Controls.B: return "B Button";
+                case X360Controls.A: return "A Button";
+                case X360Controls.X: return "X Button";
+
+                case X360Controls.Guide: return "Guide";
+                case X360Controls.LXNeg: return "Left X-Axis-";
+                case X360Controls.LYNeg: return "Left Y-Axis-";
+                case X360Controls.RXNeg: return "Right X-Axis-";
+                case X360Controls.RYNeg: return "Right Y-Axis-";
+
+                case X360Controls.LXPos: return "Left X-Axis+";
+                case X360Controls.LYPos: return "Left Y-Axis+";
+                case X360Controls.RXPos: return "Right X-Axis+";
+                case X360Controls.RYPos: return "Right Y-Axis+";
+                case X360Controls.LT: return "Left Trigger";
+                case X360Controls.RT: return "Right Trigger";
+                case X360Controls.LeftMouse: return "Click";
+                case X360Controls.RightMouse: return "Right Click";
+                case X360Controls.MiddleMouse: return  "Middle Click";
+                case X360Controls.MouseUp: return "Mouse Up";
+                case X360Controls.MouseDown: return "Mouse Down";
+                case X360Controls.MouseLeft: return "Mouse Left";
+                case X360Controls.MouseRight: return "Mouse Right";
+                case X360Controls.Unbound: return "(Unbound)";
+
+            }
+            return "(Unbound)";
+        }
+
+        private void x360ControlsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ReadInputForm inputForm = new ReadInputForm();
+            inputForm.DS4Device = rootHub.getDS4Controller(device);
+            inputForm.ShowDialog();
+            X360Controls control = inputForm.X360Input;
+            mappingControl.Text = getX360InputNameFromEnum(control);
+            inputForm.Dispose();
+        }
+
+        private void keystrokeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ReadInputForm inputForm = new ReadInputForm();
+            inputForm.ShowDialog();
+            mappingControl.Text = inputForm.KeyCode.ToString();
+            inputForm.Dispose();
+        }
+
+        private void mouseMovementToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ToolStripMenuItem  menuItem = (ToolStripMenuItem) sender;
+            mappingControl.Text = menuItem.Text;
         }
     }
 }

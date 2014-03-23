@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.pictureBox = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -86,7 +87,16 @@
             this.label23 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
             this.txtZone = new System.Windows.Forms.TextBox();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.x360ControlsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.keystrokeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mouseMovementToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mouseUpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mouseLeftToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mouseRightToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mouseDownToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // pictureBox
@@ -697,6 +707,68 @@
             this.txtZone.TabIndex = 53;
             this.txtZone.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.x360ControlsToolStripMenuItem,
+            this.keystrokeToolStripMenuItem,
+            this.mouseMovementToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(172, 92);
+            // 
+            // x360ControlsToolStripMenuItem
+            // 
+            this.x360ControlsToolStripMenuItem.Name = "x360ControlsToolStripMenuItem";
+            this.x360ControlsToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.x360ControlsToolStripMenuItem.Text = "X360 Controls";
+            this.x360ControlsToolStripMenuItem.Click += new System.EventHandler(this.x360ControlsToolStripMenuItem_Click);
+            // 
+            // keystrokeToolStripMenuItem
+            // 
+            this.keystrokeToolStripMenuItem.Name = "keystrokeToolStripMenuItem";
+            this.keystrokeToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.keystrokeToolStripMenuItem.Text = "Keystroke";
+            this.keystrokeToolStripMenuItem.Click += new System.EventHandler(this.keystrokeToolStripMenuItem_Click);
+            // 
+            // mouseMovementToolStripMenuItem
+            // 
+            this.mouseMovementToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mouseUpToolStripMenuItem,
+            this.mouseLeftToolStripMenuItem,
+            this.mouseRightToolStripMenuItem,
+            this.mouseDownToolStripMenuItem});
+            this.mouseMovementToolStripMenuItem.Name = "mouseMovementToolStripMenuItem";
+            this.mouseMovementToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.mouseMovementToolStripMenuItem.Text = "Mouse Movement";
+            // 
+            // mouseUpToolStripMenuItem
+            // 
+            this.mouseUpToolStripMenuItem.Name = "mouseUpToolStripMenuItem";
+            this.mouseUpToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.mouseUpToolStripMenuItem.Text = "Mouse Up";
+            this.mouseUpToolStripMenuItem.Click += new System.EventHandler(this.mouseMovementToolStripMenuItem_Click);
+            // 
+            // mouseLeftToolStripMenuItem
+            // 
+            this.mouseLeftToolStripMenuItem.Name = "mouseLeftToolStripMenuItem";
+            this.mouseLeftToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.mouseLeftToolStripMenuItem.Text = "Mouse Left";
+            this.mouseLeftToolStripMenuItem.Click += new System.EventHandler(this.mouseMovementToolStripMenuItem_Click);
+            // 
+            // mouseRightToolStripMenuItem
+            // 
+            this.mouseRightToolStripMenuItem.Name = "mouseRightToolStripMenuItem";
+            this.mouseRightToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.mouseRightToolStripMenuItem.Text = "Mouse Right";
+            this.mouseRightToolStripMenuItem.Click += new System.EventHandler(this.mouseMovementToolStripMenuItem_Click);
+            // 
+            // mouseDownToolStripMenuItem
+            // 
+            this.mouseDownToolStripMenuItem.Name = "mouseDownToolStripMenuItem";
+            this.mouseDownToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.mouseDownToolStripMenuItem.Text = "Mouse Down";
+            this.mouseDownToolStripMenuItem.Click += new System.EventHandler(this.mouseMovementToolStripMenuItem_Click);
+            // 
             // CustomMapping
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -765,6 +837,7 @@
             this.Name = "CustomMapping";
             this.Text = "Custom Mapping";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
+            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -830,5 +903,13 @@
         private System.Windows.Forms.Label label23;
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.TextBox txtZone;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem x360ControlsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem keystrokeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mouseMovementToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mouseUpToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mouseLeftToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mouseRightToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mouseDownToolStripMenuItem;
     }
 }

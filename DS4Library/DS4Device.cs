@@ -204,82 +204,85 @@ namespace DS4Library
                     //Received incorrect report, skip it
                     continue;
                 }
-                if (cState == null)
-                    cState = new DS4State();
-                cState.LX = inputReport[1];
-                cState.LY = inputReport[2];
-                cState.RX = inputReport[3];
-                cState.RY = inputReport[4];
-                cState.L2 = inputReport[8];
-                cState.R2 = inputReport[9];
 
-                cState.Triangle = ((byte)inputReport[5] & (1 << 7)) != 0;
-                cState.Circle = ((byte)inputReport[5] & (1 << 6)) != 0;
-                cState.Cross = ((byte)inputReport[5] & (1 << 5)) != 0;
-                cState.Square = ((byte)inputReport[5] & (1 << 4)) != 0;
-                cState.DpadUp = ((byte)inputReport[5] & (1 << 3)) != 0;
-                cState.DpadDown = ((byte)inputReport[5] & (1 << 2)) != 0;
-                cState.DpadLeft = ((byte)inputReport[5] & (1 << 1)) != 0;
-                cState.DpadRight = ((byte)inputReport[5] & (1 << 0)) != 0;
-
-                //Convert dpad into individual On/Off bits instead of a clock representation
-                byte dpad_state = 0;
-
-                dpad_state = (byte)(
-                ((cState.DpadRight ? 1 : 0) << 0) |
-                ((cState.DpadLeft ? 1 : 0) << 1) |
-	            ((cState.DpadDown ? 1 : 0) << 2) |
-                ((cState.DpadUp ? 1 : 0) << 3));
-
-                switch (dpad_state)
+                lock (cState)
                 {
-                    case 0: cState.DpadUp = true; cState.DpadDown = false; cState.DpadLeft = false; cState.DpadRight = false; break;
-                    case 1: cState.DpadUp = true; cState.DpadDown = false; cState.DpadLeft = false; cState.DpadRight = true; break;
-                    case 2: cState.DpadUp = false; cState.DpadDown = false; cState.DpadLeft = false; cState.DpadRight = true; break;
-                    case 3: cState.DpadUp = false; cState.DpadDown = true; cState.DpadLeft = false; cState.DpadRight = true; break;
-                    case 4: cState.DpadUp = false; cState.DpadDown = true; cState.DpadLeft = false; cState.DpadRight = false; break;
-                    case 5: cState.DpadUp = false; cState.DpadDown = true; cState.DpadLeft = true; cState.DpadRight = false; break;
-                    case 6: cState.DpadUp = false; cState.DpadDown = false; cState.DpadLeft = true; cState.DpadRight = false; break;
-                    case 7: cState.DpadUp = true; cState.DpadDown = false; cState.DpadLeft = true; cState.DpadRight = false; break;
-                    case 8: cState.DpadUp = false; cState.DpadDown = false; cState.DpadLeft = false; cState.DpadRight = false; break;
+                    if (cState == null)
+                        cState = new DS4State();
+                    cState.LX = inputReport[1];
+                    cState.LY = inputReport[2];
+                    cState.RX = inputReport[3];
+                    cState.RY = inputReport[4];
+                    cState.L2 = inputReport[8];
+                    cState.R2 = inputReport[9];
+
+                    cState.Triangle = ((byte)inputReport[5] & (1 << 7)) != 0;
+                    cState.Circle = ((byte)inputReport[5] & (1 << 6)) != 0;
+                    cState.Cross = ((byte)inputReport[5] & (1 << 5)) != 0;
+                    cState.Square = ((byte)inputReport[5] & (1 << 4)) != 0;
+                    cState.DpadUp = ((byte)inputReport[5] & (1 << 3)) != 0;
+                    cState.DpadDown = ((byte)inputReport[5] & (1 << 2)) != 0;
+                    cState.DpadLeft = ((byte)inputReport[5] & (1 << 1)) != 0;
+                    cState.DpadRight = ((byte)inputReport[5] & (1 << 0)) != 0;
+
+                    //Convert dpad into individual On/Off bits instead of a clock representation
+                    byte dpad_state = 0;
+
+                    dpad_state = (byte)(
+                    ((cState.DpadRight ? 1 : 0) << 0) |
+                    ((cState.DpadLeft ? 1 : 0) << 1) |
+                    ((cState.DpadDown ? 1 : 0) << 2) |
+                    ((cState.DpadUp ? 1 : 0) << 3));
+
+                    switch (dpad_state)
+                    {
+                        case 0: cState.DpadUp = true; cState.DpadDown = false; cState.DpadLeft = false; cState.DpadRight = false; break;
+                        case 1: cState.DpadUp = true; cState.DpadDown = false; cState.DpadLeft = false; cState.DpadRight = true; break;
+                        case 2: cState.DpadUp = false; cState.DpadDown = false; cState.DpadLeft = false; cState.DpadRight = true; break;
+                        case 3: cState.DpadUp = false; cState.DpadDown = true; cState.DpadLeft = false; cState.DpadRight = true; break;
+                        case 4: cState.DpadUp = false; cState.DpadDown = true; cState.DpadLeft = false; cState.DpadRight = false; break;
+                        case 5: cState.DpadUp = false; cState.DpadDown = true; cState.DpadLeft = true; cState.DpadRight = false; break;
+                        case 6: cState.DpadUp = false; cState.DpadDown = false; cState.DpadLeft = true; cState.DpadRight = false; break;
+                        case 7: cState.DpadUp = true; cState.DpadDown = false; cState.DpadLeft = true; cState.DpadRight = false; break;
+                        case 8: cState.DpadUp = false; cState.DpadDown = false; cState.DpadLeft = false; cState.DpadRight = false; break;
+                    }
+
+                    cState.R3 = ((byte)inputReport[6] & (1 << 7)) != 0;
+                    cState.L3 = ((byte)inputReport[6] & (1 << 6)) != 0;
+                    cState.Options = ((byte)inputReport[6] & (1 << 5)) != 0;
+                    cState.Share = ((byte)inputReport[6] & (1 << 4)) != 0;
+                    cState.R1 = ((byte)inputReport[6] & (1 << 1)) != 0;
+                    cState.L1 = ((byte)inputReport[6] & (1 << 0)) != 0;
+
+                    cState.PS = ((byte)inputReport[7] & (1 << 0)) != 0;
+                    cState.TouchButton = (inputReport[7] & (1 << 2 - 1)) != 0;
+
+                    // Store Gyro and Accel values
+                    Array.Copy(inputReport, 14, accel, 0, 6);
+                    Array.Copy(inputReport, 20, gyro, 0, 6);
+
+                    int charge = 0;
+                    if (conType == ConnectionType.USB)
+                    {
+                        charge = (inputReport[30] - 16) * 10;
+                        if (charge > 100)
+                            charge = 100;
+                    }
+                    else
+                    {
+                        charge = (inputReport[30] + 1) * 10;
+                        if (charge > 100)
+                            charge = 100;
+                    }
+
+                    cState.Battery = charge;
+                    battery = charge;
+
+                    cState.Touch1 = (inputReport[0 + DS4Touchpad.TOUCHPAD_DATA_OFFSET] >> 7) != 0 ? false : true; // >= 1 touch detected
+                    cState.Touch2 = (inputReport[4 + DS4Touchpad.TOUCHPAD_DATA_OFFSET] >> 7) != 0 ? false : true; // 2 touches detected
+
+                    cState.ReportTimeStamp = DateTime.UtcNow;
                 }
-
-                cState.R3 = ((byte)inputReport[6] & (1 << 7)) != 0;
-                cState.L3 = ((byte)inputReport[6] & (1 << 6)) != 0;
-                cState.Options = ((byte)inputReport[6] & (1 << 5)) != 0;
-                cState.Share = ((byte)inputReport[6] & (1 << 4)) != 0;
-                cState.R1 = ((byte)inputReport[6] & (1 << 1)) != 0;
-                cState.L1 = ((byte)inputReport[6] & (1 << 0)) != 0;
-
-                cState.PS = ((byte)inputReport[7] & (1 << 0)) != 0;
-                cState.TouchButton = (inputReport[7] & (1 << 2 - 1)) != 0;
-
-                // Store Gyro and Accel values
-                Array.Copy(inputReport, 14, accel, 0, 6);
-                Array.Copy(inputReport, 20, gyro, 0, 6);
-
-                int charge = 0;
-                if (conType == ConnectionType.USB)
-                {
-                    charge = (inputReport[30] - 16) * 10;
-                    if (charge > 100)
-                        charge = 100;
-                }
-                else
-                {
-                    charge = (inputReport[30] + 1) * 10;
-                    if (charge > 100)
-                        charge = 100;
-                }
-
-                cState.Battery = charge;
-                battery = charge;
-
-                cState.Touch1 = (inputReport[0 + DS4Touchpad.TOUCHPAD_DATA_OFFSET] >> 7) != 0 ? false : true; // >= 1 touch detected
-                cState.Touch2 = (inputReport[4 + DS4Touchpad.TOUCHPAD_DATA_OFFSET] >> 7) != 0 ? false : true; // 2 touches detected
-                
-                cState.ReportTimeStamp = DateTime.UtcNow;
-
                 if (ConnectionType == ConnectionType.BT && !isIdle(cState))
                 {
                     lastActive = DateTime.Now;
@@ -299,9 +302,12 @@ namespace DS4Library
                 }
                 if (Report != null)
                     Report(this, EventArgs.Empty);
-                if (pState == null)
-                    pState = new DS4State();
-                cState.Copy(pState);
+                lock (pState)
+                {
+                    if (pState == null)
+                        pState = new DS4State();
+                    cState.Copy(pState);
+                }
             }
         }
 
@@ -411,12 +417,18 @@ namespace DS4Library
 
         public DS4State getCurrentState()
         {
-            return cState.Clone();
+            lock (cState)
+            {
+                return cState.Clone();
+            }
         }
 
         public DS4State getPreviousState()
         {
-            return pState.Clone();
+            lock (pState)
+            {
+                return pState.Clone();
+            }
         }
 
         public void getExposedState(DS4StateExposed expState, DS4State state)
@@ -428,12 +440,18 @@ namespace DS4Library
 
         public void getCurrentState(DS4State state)
         {
-            cState.Copy(state);
+            lock (cState)
+            {
+                cState.Copy(state);
+            }
         }
 
         public void getPreviousState(DS4State state)
         {
-            pState.Copy(state);
+            lock (pState)
+            {
+                pState.Copy(state);
+            }
         }
 
         private bool isIdle(DS4State cState)

@@ -273,6 +273,11 @@ namespace DS4Control
             DS4Controllers[deviceNum].setRumble((byte)lightBoosted, (byte)heavyBoosted);
         }
 
+        public DS4Device getDS4Controller(int deviceNum)
+        {
+            return DS4Controllers[deviceNum];
+        }
+
         //CA1001 TypesThatOwnDisposableFieldsShouldBeDisposable
         public void Dispose()
         {
