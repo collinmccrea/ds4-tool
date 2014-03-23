@@ -164,7 +164,7 @@ namespace ScpServer
         private void CustomMappingButton_Click(object sender, EventArgs e)
         {
             // open a custom mapping form
-            CustomMapping cmForm = new CustomMapping(device);
+            CustomMapping cmForm = new CustomMapping(scpDevice, device);
             cmForm.Icon = this.Icon;
             cmForm.Show();
         }

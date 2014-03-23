@@ -20,14 +20,16 @@ namespace ScpServer
         private Dictionary<string, string> defaults = new Dictionary<string, string>();
         private ComboBox lastSelected;
         private Dictionary<DS4Controls, GraphicsPath> pictureBoxZones = new Dictionary<DS4Controls, GraphicsPath>();
+        private DS4Control.Control rootHub = null;
 
         //Below used to capture control zones
         //GraphicsPath test = new System.Drawing.Drawing2D.GraphicsPath();
         //Point lastPoint = Point.Empty;
 
-        public CustomMapping(int deviceNum)
+        public CustomMapping(DS4Control.Control rootHub, int deviceNum)
         {
             InitializeComponent();
+            this.rootHub = rootHub;
             device = deviceNum;
             DS4Color color = Global.loadColor(device);
             pictureBox.BackColor = Color.FromArgb(color.red, color.green, color.blue);
