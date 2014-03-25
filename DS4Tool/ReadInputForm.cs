@@ -20,7 +20,8 @@ namespace ScpServer
         private X360Controls X360Control = X360Controls.Unbound;
         private int timeOut = 10;
         private bool finished = false;
-        private InputType inputType;    
+        private InputType inputType;
+        private bool readingKey = false;
 
         public bool RepeatKey { get { return repeatKey; } }
         public X360Controls X360Input { get { return X360Control; } }
@@ -43,11 +44,12 @@ namespace ScpServer
 
         private void ReadInputForm_KeyDown(object sender, KeyEventArgs e)
         {
-            if (inputType == InputType.Keyboard)
+            if (inputType == InputType.Keyboard && !readingKey)
             {
                 startTime = DateTime.UtcNow;
                 this.keyCode = e.KeyCode;
                 this.keyValue = e.KeyValue;
+                readingKey = true;
             }
         }
 
@@ -55,10 +57,11 @@ namespace ScpServer
         {
             if (inputType == InputType.Keyboard)
             {
-                if (this.keyCode == e.KeyCode && (startTime + TimeSpan.FromSeconds(3)) < DateTime.Now)
+                if (this.keyCode == e.KeyCode && (startTime + TimeSpan.FromSeconds(3)) < DateTime.UtcNow)
                     repeatKey = true;
                 this.keyCode = e.KeyCode;
                 this.keyValue = e.KeyValue;
+                readingKey = false;
                 finished = true;
                 this.Close();
             }
