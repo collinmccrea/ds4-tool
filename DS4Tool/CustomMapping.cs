@@ -40,7 +40,6 @@ namespace ScpServer
                 {
                     comboBoxes.Add((ComboBox)control);
                     availableButtons.Add(control.Text);
-
                     // Add defaults
                     defaults.Add(((ComboBox)control).Name, ((ComboBox)control).Text);
                     // Add events here (easier for modification/addition)
@@ -49,6 +48,13 @@ namespace ScpServer
                     ((ComboBox)control).KeyDown += new System.Windows.Forms.KeyEventHandler(this.KeyDownCommand);
                     ((ComboBox)control).KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.KeyPressCommand);
                     ((ComboBox)control).PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.PreviewKeyDownCommand);
+                    // Add Color
+                    if (control is AdvancedComboBox)
+                    {
+                        ((AdvancedComboBox)control).Color = pictureBox.BackColor;
+                        ((AdvancedComboBox)control).Label.MouseMove += pictureBox_MouseMove;
+                        ((AdvancedComboBox)control).Label.MouseClick += pictureBox_MouseClick;
+                    }
                 }
             availableButtons.Sort();
             foreach (ComboBox comboBox in comboBoxes)
@@ -325,39 +331,38 @@ namespace ScpServer
         {
             if (e.Button == System.Windows.Forms.MouseButtons.Left)
             {
-                // Below used merely to add points easily (for now save region coords)
-                //if (lastPoint != Point.Empty)
-                //    test.AddLine(lastPoint, e.Location);
-                //lastPoint = e.Location;
-
                 foreach (KeyValuePair<DS4Controls, GraphicsPath> zone in pictureBoxZones)
-                    if (zone.Value.IsVisible(e.Location))
-                        Controls.Find(getNameByDS4Controls(zone.Key), false).FirstOrDefault().Focus();
+                    if (zone.Value.IsVisible(this.PointToClient(Cursor.Position)))
+                        ((ComboBox)(Controls.Find(getNameByDS4Controls(zone.Key), false).FirstOrDefault())).DroppedDown = true;
             }
             else if (e.Button == System.Windows.Forms.MouseButtons.Right)
             {
-                //Context menu
-                // Below used merely to add points easily
-                //txtZone.Text = string.Empty;
-                //for (int i = 0; i < test.PointCount; i++)
-                //    txtZone.Text += String.Format("new Point({0}, {1}), ", test.PathPoints[i].X, test.PathPoints[i].Y);
-                //lastPoint = Point.Empty;
-                //test = new GraphicsPath();
-                foreach (KeyValuePair<DS4Controls, GraphicsPath> zone in pictureBoxZones)
-                    if (zone.Value.IsVisible(e.Location))
-                    {
-                        mappingControl = Controls.Find(getNameByDS4Controls(zone.Key), false).FirstOrDefault();
+                if (sender is Label)
+                {
+                    mappingControl = (ComboBox)((Label)sender).Tag;
+                    if (mappingControl == cbLX || mappingControl == cbLX2 || mappingControl == cbRX || mappingControl == cbRX2)
+                        contextMenuStrip1.Items.Find("mouseMovementToolStripMenuItem", true).FirstOrDefault().Visible = true;
+                    else if (mappingControl == cbLY || mappingControl == cbLY2 || mappingControl == cbRY || mappingControl == cbRY2)
+                        contextMenuStrip1.Items.Find("mouseMovementToolStripMenuItem", true).FirstOrDefault().Visible = true;
+                    else
+                        contextMenuStrip1.Items.Find("mouseMovementToolStripMenuItem", true).FirstOrDefault().Visible = false;
 
-                        if (mappingControl == cbLX || mappingControl == cbLX2 || mappingControl == cbRX || mappingControl == cbRX2)
-                            contextMenuStrip1.Items.Find("mouseMovementToolStripMenuItem", true).FirstOrDefault().Visible = true;
-                        else if (mappingControl == cbLY || mappingControl == cbLY2 || mappingControl == cbRY || mappingControl == cbRY2)
-                            contextMenuStrip1.Items.Find("mouseMovementToolStripMenuItem", true).FirstOrDefault().Visible = true;
-                        else
-                            contextMenuStrip1.Items.Find("mouseMovementToolStripMenuItem", true).FirstOrDefault().Visible = false;
+                    contextMenuStrip1.Show(pictureBox, this.PointToClient(Cursor.Position));
+                }
+                else foreach (KeyValuePair<DS4Controls, GraphicsPath> zone in pictureBoxZones)
+                        if (zone.Value.IsVisible(this.PointToClient(Cursor.Position)))
+                        {
+                            mappingControl = Controls.Find(getNameByDS4Controls(zone.Key), false).FirstOrDefault();
 
+                            if (mappingControl == cbLX || mappingControl == cbLX2 || mappingControl == cbRX || mappingControl == cbRX2)
+                                contextMenuStrip1.Items.Find("mouseMovementToolStripMenuItem", true).FirstOrDefault().Visible = true;
+                            else if (mappingControl == cbLY || mappingControl == cbLY2 || mappingControl == cbRY || mappingControl == cbRY2)
+                                contextMenuStrip1.Items.Find("mouseMovementToolStripMenuItem", true).FirstOrDefault().Visible = true;
+                            else
+                                contextMenuStrip1.Items.Find("mouseMovementToolStripMenuItem", true).FirstOrDefault().Visible = false;
 
-                        contextMenuStrip1.Show(pictureBox, e.Location);
-                    }
+                            contextMenuStrip1.Show(pictureBox, this.PointToClient(Cursor.Position));
+                        }
             }
         }
 
@@ -365,11 +370,14 @@ namespace ScpServer
         {
             if (txtZone.Text != string.Empty)
                 txtZone.Text = string.Empty;
-            foreach (KeyValuePair<DS4Controls, GraphicsPath> zone in pictureBoxZones)
-                if (zone.Value.IsVisible(e.Location))
+            if (sender is Label)
+                txtZone.Text = getDS4ControlsByName(((ComboBox)((Label)sender).Tag).Name).ToString();
+            else foreach (KeyValuePair<DS4Controls, GraphicsPath> zone in pictureBoxZones)
+                if (zone.Value.IsVisible(this.PointToClient(Cursor.Position)))
                     txtZone.Text = (zone.Key.ToString());
         }
 
+        #region Utility methods
         private string getNameByDS4Controls(DS4Controls key)
         {
             switch (key)
@@ -410,7 +418,44 @@ namespace ScpServer
             }
             return string.Empty;
         }
+        private DS4Controls getDS4ControlsByName(string key)
+        {
+            switch (key)
+            {
+                case "cbShare": return DS4Controls.Share;
+                case "cbL3": return DS4Controls.L3;
+                case "cbR3": return DS4Controls.R3;
+                case "cbOptions": return DS4Controls.Options;
+                case "cbUp": return DS4Controls.DpadUp;
+                case "cbRight": return DS4Controls.DpadRight;
+                case "cbDown": return DS4Controls.DpadDown;
+                case "cbLeft": return DS4Controls.DpadLeft;
 
+                case "cbL1": return DS4Controls.L1;
+                case "cbR1": return DS4Controls.R1;
+                case "cbTriangle": return DS4Controls.Triangle;
+                case "cbCircle": return DS4Controls.Circle;
+                case "cbCross": return DS4Controls.Cross;
+                case "cbSquare": return DS4Controls.Square;
+
+                case "cbPS": return DS4Controls.PS;
+                case "cbLX": return DS4Controls.LXNeg;
+                case "cbLY": return DS4Controls.LYNeg;
+                case "cbRX": return DS4Controls.RXNeg;
+                case "cbRY": return DS4Controls.RYNeg;
+                case "cbLX2": return DS4Controls.LXPos;
+                case "cbLY2": return DS4Controls.LYPos;
+                case "cbRX2": return DS4Controls.RXPos;
+                case "cbRY2": return DS4Controls.RYPos;
+                case "cbL2": return DS4Controls.L2;
+                case "cbR2": return DS4Controls.R2;
+
+                case "cbTouchButton": return DS4Controls.TouchButton;
+                case "cbTouchMulti": return DS4Controls.TouchMulti;
+                case "cbTouchUpper": return DS4Controls.TouchUpper;
+            }
+            return 0;
+        }
         private string getX360InputNameFromEnum(X360Controls control)
         {
             switch (control)
@@ -455,6 +500,7 @@ namespace ScpServer
             }
             return "(Unbound)";
         }
+        #endregion
 
         private void x360ControlsToolStripMenuItem_Click(object sender, EventArgs e)
         {

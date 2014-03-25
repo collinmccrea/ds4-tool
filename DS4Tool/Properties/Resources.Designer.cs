@@ -303,6 +303,16 @@ namespace ScpServer.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap DS4_Control_Shadows__small_ {
+            get {
+                object obj = ResourceManager.GetObject("DS4 Control Shadows (small)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap DS4_More_Red__small_ {
             get {
                 object obj = ResourceManager.GetObject("DS4 More Red (small)", resourceCulture);
