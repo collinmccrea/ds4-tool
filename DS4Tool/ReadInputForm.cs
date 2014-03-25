@@ -15,12 +15,15 @@ namespace ScpServer
         private DateTime startTime;
         private bool repeatKey = false;
         private Keys keyCode;
+        private int keyValue;
         private X360Controls X360Control = X360Controls.Unbound;
         private int timeOut = 10;
-
+        private bool finished = false;
+            
         public bool RepeatKey { get { return repeatKey; } }
         public X360Controls X360Input { get { return X360Control; } }
         public Keys KeyCode { get { return keyCode; } }
+        public int KeyValue { get { return keyValue; } }
         public DS4Library.DS4Device DS4Device { set { device = value; } }
 
         public ReadInputForm()
@@ -39,6 +42,7 @@ namespace ScpServer
         {
             startTime = DateTime.UtcNow;
             this.keyCode = e.KeyCode;
+            this.keyValue = e.KeyValue;
         }
 
         private void ReadInputForm_KeyUp(object sender, KeyEventArgs e)
@@ -46,6 +50,8 @@ namespace ScpServer
             if ( this.keyCode == e.KeyCode && (startTime + TimeSpan.FromSeconds(3)) < DateTime.Now)
                 repeatKey = true;
             this.keyCode = e.KeyCode;
+            this.keyValue = e.KeyValue;
+            finished = true;
             this.Close();
         }
 
@@ -58,11 +64,10 @@ namespace ScpServer
 
         private void readX360Control()
         { 
-            bool finished = false;
             DS4Library.DS4State cState = new DS4Library.DS4State();
             X360Controls control = X360Controls.Unbound;
             DateTime timeStamp = DateTime.UtcNow;
-            while (!finished)
+            while (!finished && timeStamp + TimeSpan.FromSeconds(timeOut) > DateTime.UtcNow)
             {
                 device.getCurrentState(cState);
 
@@ -129,12 +134,13 @@ namespace ScpServer
                             Close(); 
                         }));
                 }
-                else
-                {
-                    if (timeStamp + TimeSpan.FromSeconds(timeOut) < DateTime.UtcNow)
-                        finished = true;
-                }
             }
+            if (!finished)
+                this.Invoke(new EventHandler(
+                    delegate
+                    {
+                        Close();
+                    }));
         }
     }
 }

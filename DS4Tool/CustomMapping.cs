@@ -460,17 +460,32 @@ namespace ScpServer
         {
             ReadInputForm inputForm = new ReadInputForm();
             inputForm.DS4Device = rootHub.getDS4Controller(device);
+            inputForm.Icon = this.Icon;
             inputForm.ShowDialog();
-            X360Controls control = inputForm.X360Input;
-            mappingControl.Text = getX360InputNameFromEnum(control);
+            if (inputForm.X360Input != X360Controls.Unbound)
+            {
+                mappingControl.Text = getX360InputNameFromEnum(inputForm.X360Input);
+                lastSelected = (ComboBox)mappingControl;
+                cbRepeat.Checked = false;
+                cbScanCode.Checked = false;
+            }
             inputForm.Dispose();
         }
 
         private void keystrokeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ReadInputForm inputForm = new ReadInputForm();
+            inputForm.Icon = this.Icon;
             inputForm.ShowDialog();
-            mappingControl.Text = inputForm.KeyCode.ToString();
+            if (inputForm.KeyCode != Keys.None)
+            {
+                mappingControl.Text = inputForm.KeyCode.ToString();
+                mappingControl.Tag = inputForm.KeyValue;
+                lastSelected = (ComboBox)mappingControl;
+                if (inputForm.RepeatKey)
+                    cbRepeat.Checked = true;
+                else cbRepeat.Checked = false;
+            }
             inputForm.Dispose();
         }
 
