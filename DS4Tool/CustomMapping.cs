@@ -461,6 +461,7 @@ namespace ScpServer
             ReadInputForm inputForm = new ReadInputForm();
             inputForm.DS4Device = rootHub.getDS4Controller(device);
             inputForm.Icon = this.Icon;
+            inputForm.InputType = InputType.Controller;
             inputForm.ShowDialog();
             if (inputForm.X360Input != X360Controls.Unbound)
             {
@@ -476,6 +477,7 @@ namespace ScpServer
         {
             ReadInputForm inputForm = new ReadInputForm();
             inputForm.Icon = this.Icon;
+            inputForm.InputType = InputType.Keyboard;
             inputForm.ShowDialog();
             if (inputForm.KeyCode != Keys.None)
             {
